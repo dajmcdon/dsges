@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.Rdata
+.httr-oauth
+.DS_Store
+dsges-github.Rproj
+dsgeManuscript_cache/
+waldman-triage_cache/
+waldman-triage_files/

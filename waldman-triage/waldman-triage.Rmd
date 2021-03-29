@@ -1,0 +1,323 @@
+---
+title: "Waldman triage"
+author: "DJM"
+date: "June 6, 2016"
+output: 
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    number_sections: yes
+---
+
+```{r knitr-setup, echo=FALSE,message=FALSE}
+library(knitr)
+opts_chunk$set(size="small",cache=TRUE, autodep=TRUE, echo=FALSE,
+               fig.align='center', fig.width=6, fig.height=4)
+# That is, don't run chunks if nothing has changed, and automatically keep
+# track of dependencies between chunks
+require(xtable)
+options(xtable.comment=FALSE)
+library(tidyverse)
+library(lubridate)
+theme_set(theme_minimal(base_family = 'Times'))
+green = '#00AF64'
+blue = '#0B61A4'
+red = '#FF4900'
+orange = '#FF9200'
+colvec = c(green,blue,red,orange)
+```
+
+```{r dsge-setup, echo=FALSE,message=FALSE}
+## Series flipping
+load('../../output/Perm/permOut.Rdata')
+load('../../data/SWDataDM.Rdata')
+source('../../code/functions/modelsol.R')
+source('../../code/functions/reparlogp.R')
+source('../../code/functions/SimsCodesFort.R')
+source('../../code/priorsetup.R')
+require(QZ)
+require(FKF)
+perms = perm(7,7)
+library(ggforce)
+SWPerm = c(4,7,5,3,1,2,6)
+truePerm = which.min(rowSums((perms-matrix(SWPerm,nrow=nrow(perms), ncol=7,byrow=TRUE))^2))
+pvec = output[truePerm,15:50]
+unPerm=t(apply(perms,1,function(x) match(1:7,x)))
+series = rownames(y)
+dt = seq(to=2013.75,by=.25,length=ncol(y))
+dt = yq(paste(dt %/% 1,dt %% 1 * 4 + 1, sep='-'))
+```
+
+Outline: see waldman-suggestions
+
+In order of decreasing priority (balancing ease of implementation against
+impact):
+
+\begin{enumerate}
+\item Suggestion 3.4: check whether the best permuted models swap hours worked
+  for ``another flow variable''.
+\item Suggestion 2.2: pick some of the best permutations and plot their
+  predictions along with those of the baseline, un-permuted model.
+\item Suggestion 3.3: a detailed examination of the best permuted model.
+\item Suggestion 1.4: do the ``deep'' parameters co-vary with the policy parameters?
+\item Suggestion 1.3: look at out-of-sample forecasts under a different policy
+  rule.
+\item Suggestion 3.1: $p$-value for how much the SW model is beaten by its
+  permutations.
+\end{enumerate}
+
+# Does the best (permuted) model swap hours worked?
+
+
+```{r, echo=FALSE}
+testerr = matrix(NA, nrow(perms),7)
+for(i in 1:nrow(output)) testerr[i,] = output[i,8:14][unPerm[i,]] # now sorted!!
+baseline = matrix(testerr[truePerm,],nrow=nrow(output),ncol=7) 
+
+# Percent improvement
+perc = log(testerr)-log(baseline)
+percent.improvement = perc
+perc.errs = rowMeans(percent.improvement)
+
+# Scaled MSE
+sc = apply(y,1,var)
+scaled.errors = scale(testerr, center=FALSE, scale=sc)
+sc.errs = rowMeans(scaled.errors)
+
+# Log-likelihood
+load('../../output/Perm/llikeCalc.Rdata')
+load('../../output/Perm/llikeCalcML.Rdata')
+load('../../output/Perm/llikeTestCalc.Rdata')
+
+# Best 20
+top20sc = sort(sc.errs, index.return=TRUE)$ix[1:20]
+top20perc = sort(perc.errs, index.return=TRUE)$ix[1:20]
+top20llike = sort(llike, index.return=TRUE)$ix[1:20]
+
+stuff = matrix(rownames(y)[perms[top20llike,]],nrow=20)
+colnames(stuff) = rownames(y)[SWPerm]
+kable(stuff, caption='Top 20 permutations based on (penalized) log-likelihood. The top row is the correct ordering. Hours worked should be in the first column.')
+```
+
+
+# Plot some predictions along with the best model
+
+The following plots show the top 20 flips based on "average percent improvement" (this is a post-hoc measure). Blue-dotted is observed data while red is the SW model.
+
+```{r perc-improve-preds, echo=FALSE}
+errs = list()
+preds = list()
+predPerms = c(truePerm, top20perc)
+predList = list() 
+for(i in 1:length(predPerms)){
+  ypermed = y[perms[predPerms[i],],]
+  filt = getFilterOutput(ypermed, output[predPerms[i],15:50])
+  errs[[i]] = filt$vt[unPerm[predPerms[i],],]
+  predList[[i]] = as.data.frame(t(y-errs[[i]]))
+  preds[[i]] = predList[[i]] %>% gather() %>% mutate(key=NULL)
+}
+
+ydf = as_tibble(t(y))
+ydf$date = dt
+ydf = ydf %>% gather(key='series',value='value',-date)
+allpreds = bind_cols(ydf, preds)
+names(allpreds)[3:4] = c('observed','SW_model')
+truth = allpreds %>% select(-starts_with('value')) %>% filter(date > yq('2006-1')) %>%
+  gather(key='key',value='value',-date,-series) 
+flips = allpreds %>% select(date, series, starts_with('value')) %>%
+  filter(date > yq('2006-1')) %>%
+  gather(key='key',value='value',-date,-series)
+```
+
+```{r pc-preds-p1, fig.width=6.5,fig.height=8}
+ggplot(flips, aes(x=date,y=value,grp=key)) +
+  geom_line(color='black',size=.1) + 
+  facet_wrap_paginate(~series, scales='free_y',ncol=1,nrow=4,page=1,
+                      strip.position = 'left') +
+  geom_line(data=truth, aes(color=key)) + 
+  geom_point(data=truth, aes(color=key), size=1.5) +
+  scale_color_manual(values=c(blue,red)) + 
+  theme(legend.position = 'bottom', legend.title = element_blank(), 
+        strip.placement = 'outside') +
+  xlab('') + ylab('')
+```
+
+```{r pc-preds-p2, fig.width=6.5,fig.height=6}
+ggplot(flips, aes(x=date,y=value,grp=key)) +
+  geom_line(color='black',size=.1) + 
+  facet_wrap_paginate(~series, scales='free_y',ncol=1,nrow=4,page=2,
+                      strip.position = 'left') +
+  geom_line(data=truth, aes(color=key)) + 
+  geom_point(data=truth, aes(color=key), size=1.5) +
+  scale_color_manual(values=c(blue,red)) + 
+  theme(legend.position = 'bottom', legend.title = element_blank(), 
+        strip.placement = 'outside') +
+  xlab('') + ylab('')
+```
+
+
+\clearpage
+
+The next set of plots is the Top 20 permutations by negative (penalized) log-likelihood.
+```{r llike-preds, echo=FALSE, fig.height=11,fig.width=6}
+errs1 = list()
+preds1 = list()
+predPerms1 = c(truePerm, top20llike)
+predList1 = list() 
+for(i in 1:length(predPerms)){
+  ypermed = y[perms[predPerms1[i],],]
+  filt = getFilterOutput(ypermed, output[predPerms1[i],15:50])
+  errs1[[i]] = filt$vt[unPerm[predPerms1[i],],]
+  predList1[[i]] = as.data.frame(t(y-errs1[[i]]))
+  preds1[[i]] = predList1[[i]] %>% gather() %>% mutate(key=NULL)
+}
+
+
+allpreds1 = bind_cols(ydf, preds1)
+names(allpreds1)[3:4] = c('observed','SW_model')
+truth = allpreds1 %>% select(-starts_with('value')) %>% filter(date > yq('2006-1')) %>%
+  gather(key='key',value='value',-date,-series) 
+flips = allpreds1 %>% select(date, series, starts_with('value')) %>%
+  filter(date > yq('2006-1')) %>%
+  gather(key='key',value='value',-date,-series)
+```
+
+```{r llike-preds-p1, fig.width=6.5,fig.height=8}
+ggplot(flips, aes(x=date,y=value,grp=key)) +
+  geom_line(color='black',size=.1) + 
+  facet_wrap_paginate(~series, scales='free_y',ncol=1,nrow=4,page=1,
+                      strip.position = 'left') +
+  geom_line(data=truth, aes(color=key)) + 
+  geom_point(data=truth, aes(color=key), size=1.5) +
+  scale_color_manual(values=c(blue,red)) + 
+  theme(legend.position = 'bottom', legend.title = element_blank(), 
+        strip.placement = 'outside') +
+  xlab('') + ylab('')
+```
+
+```{r llike-preds-p2, fig.width=6.5,fig.height=6}
+ggplot(flips, aes(x=date,y=value,grp=key)) +
+  geom_line(color='black',size=.1) + 
+  facet_wrap_paginate(~series, scales='free_y',ncol=1,nrow=4,page=2,
+                      strip.position = 'left') +
+  geom_line(data=truth, aes(color=key)) + 
+  geom_point(data=truth, aes(color=key), size=1.5) +
+  scale_color_manual(values=c(blue,red)) + 
+  theme(legend.position = 'bottom', legend.title = element_blank(), 
+        strip.placement = 'outside') +
+  xlab('') + ylab('')
+```
+
+
+\clearpage
+
+# Best model by penalized log-likelihood
+
+The true model is 
+
+`r rownames(y)[SWPerm]` 
+
+while the best one is 
+
+`r rownames(y)[perms[top20llike[1],]]`.
+
+This model is pretty clearly scary to a macroeconomist. First of all, the standard model says that the monetary authority sets the interest rate based on inflation and deviation of output from trend. This model reverses cause and effect: inflation is the control variable while the interest rate is the input to the Taylor rule. I think, actually, the most interesting exercise would be to copy and paste the first section of the SW paper, but change out all the notation.
+
+I think it's also important to note here, that the penalized negative log-likelihood is very flat relative to permutations. In terms of that metric, `r signif(mean(llike/llike[truePerm]<1.10),2)*100`% of permutations are within 10% of the true permutation.
+
+# Do the 'deep' parameters co-vary with the policy parameters?
+
+```{r deep-covariance, echo=FALSE}
+load('../../output/SimEst/parmEst.Rdata')
+express <- function(char.expressions){
+  return(parse(text=paste(char.expressions,collapse=";")))
+}
+parmGreek = c('sigma[a]','sigma[b]','sigma[g]','sigma[I]', 'sigma[r]', 'sigma[p]','sigma[w]',
+              'rho[a]', 'rho[b]', 'rho[g]', 'rho[I]', 'rho[r]', 'rho[p]','rho[w]', 'mu[p]',
+              'mu[w]', 'phi1', 'sigma[c]', 'h', 'xi[w]', 'sigma[l]', 'xi[p]', 'iota[w]',
+              'iota[p]', 'Psi', 'Phi', 'r[pi]', 'rho', 'r[y]', 'r[Delta][y]', 'bar(pi)', 
+              '100(beta^{-1} -1)', 'bar(l)', 'bar(gamma)', 'rho[ga]', 'alpha')
+# The 'deep' parameters begin with 'phi1'
+# The Taylor rule parameters are 'rho' (changes in the interest rate should be smooth)
+#             'r[pi]' (response to inflation)
+#             'r[y]' (response to deviation of output from potential)
+#             'r[Delta][y]' (response to changes in output deviation)
+pars = parmEst[,-c(1:5)]
+parmDeep = which(parmGreek=='phi1'):length(parmGreek)
+parmTaylor = seq(from=which(parmGreek=='r[pi]'),length.out = 4)
+covary = cor(pars)[parmDeep,parmTaylor]
+
+colnames(covary) = parmGreek[parmTaylor]
+rownames(covary) = parmGreek[parmDeep]
+
+knitr::kable(covary, digits=3, booktabs=TRUE, 
+             caption="Correlations between 'deep' parameters and Taylor rule parameters. From the 'Simulate and estimate' exercise.", escape=FALSE)
+```
+
+# Simulate from the model, change Taylor parameters, examine forecasts
+
+3) the point of micro foundations is that they are supposed to give good conditional forecasts conditional on a change in policy.  I think in the simulate, estimate, test out of sample effort it would be interesting to simulate, estimate, change policy parameters and test.  The problem with ad hoc reduced form models is supposed to be that they include parameters which are not deep and structural and the same for different policy regimes but which depend on the policy.  Changing the policy rule is supposed to illustrate the advantage of DSGE
+
+\begin{quotation} {\em Potentially interesting.  Presumably the model we use to
+    generate the new-policy trajectories would be SW.  How hard would this be
+    to do for a few of the best permutations?}
+\end{quotation}
+
+I'm not sure I see the relevance of this one. He seems to suggest simulating from the baseline many times, estimating on part of the time series, then changing the parameters and forecasting the rest of the time series (which was actually generated with different conditions). Is the goal to determine if conditional forecasts are accurate? It seems like we really want to do some sort of hypothesis test as follows:
+
+1. Generate data up to some change point $T_1$. At the change point, alter only the policy parameters and generate the future from $T_1$ to $T_2$.
+2. Estimate a model with a change point at $T_1$. See whether allowing only the policy parameters to vary is sufficient, or if we need to let all the 'deep' parameters vary.
+3. Test the null that the policy parameters are enough (LRT).
+
+Considering that we're generating data out of, and then using, the correct model, I find it hard to imagine we would reject the null (true) model with a change point.
+
+# P-value
+
+This is awful for the reasons previously discussed.
+
+# Another one (3.2)
+
+or the other way, what if the permuted model with the highest penalized likelihood were The Truth ?  How badly would the SW model fit and forecast ?  Here I actually guess it would do OK. 
+
+\begin{quotation} {\em This seems easy, and gets at the but-are-the-permutations-really-different question.}
+\end{quotation}
+
+Procedure:
+
+1. generate data out of the best permutation.
+2. get forecasts using it and the SW model (say 100 each). Which is better?
+
+```{r simulate-test-sw,echo=FALSE}
+bestLlikePvec = unlist(pars[top20llike[1],])
+newPaths = replicate(100, generate(200, bestLlikePvec, nburn=100))
+getMSEs <- function(paths, parm, drop = 1:100){
+  mses = double(dim(paths)[3])
+  preds = array(NA, dim(paths))
+  llike = double(dim(paths)[3])
+  simsout = gensolution(parm)
+  for(i in 1:dim(paths)[3]){
+    filt = ss.model(paths[,,i], simsout, output='all')
+    preds[,,i] = paths[,,i] - filt$vt
+    mses[i] = mean(filt$vt[,-drop]^2)
+    llike[i] = -1 * filt$logLik
+  }
+  return(list(llike = llike, mses=mses, preds=preds))
+}
+bestPreds = getMSEs(newPaths, bestLlikePvec)
+SWPreds = getMSEs(newPaths, pvec)
+```
+
+The average negative log-likelihood of the true model is `r signif(mean(bestPreds$llike),3)` compared to `r signif(mean(SWPreds$llike),3)` for the SW model. The MSEs are `r signif(mean(bestPreds$mses),3)` compared to `r signif(mean(SWPreds$mses),3)` respectively. The next set of figures shows the data (black), predictions from the true model (blue), and SW model (red).
+
+
+```{r sim-pred-sw, echo=FALSE,eval=FALSE}
+drop=1:100
+for(j in 1:dim(newPaths)[1]){
+  ylims = range(newPaths[j,-drop,], bestPreds$preds[j,-drop,], SWPreds$preds[j,-drop,])
+  par(mar=c(5,3,1,1))
+  matplot(newPaths[j,-drop,], ty='l', col=1, lty=1, lwd=.1, las=1, bty='n',
+       main='', ylab='', xlab=rownames(y)[j], ylim=ylims)
+  matlines(bestPreds$preds[j,-drop,], col=4, lty=1, lwd=.1)
+  matlines(SWPreds$preds[j,-drop,], col=2, lty=1, lwd=.1)
+}
+```

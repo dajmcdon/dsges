@@ -1,0 +1,81 @@
+% !TeX program = pdfLaTeX
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage[round,sort&compress]{natbib}
+\usepackage[letterpaper=true,colorlinks=true,pdfpagemode=none,urlcolor=blue,linkcolor=blue,citecolor=blue,pdfstartview=FitH]{hyperref}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+\usepackage[margin=1in]{geometry}
+
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{makecell}
+\def\algorithmautorefname{Algorithm}
+
+
+\renewcommand*{\figureautorefname}{Figure}%
+\renewcommand*{\tableautorefname}{Table}%
+\renewcommand*{\partautorefname}{Part}%
+\renewcommand*{\chapterautorefname}{Chapter}%
+\renewcommand*{\sectionautorefname}{Section}%
+\renewcommand*{\subsectionautorefname}{Section}%
+\renewcommand*{\subsubsectionautorefname}{Section}%
+
+
+
+
+%% load any required packages here
+$preamble$
+
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+\begin{document}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{$title$}
+\author{  
+  $for(authors)$
+  $authors.name$$if(authors.thanks)$\thanks{$authors.thanks$} $endif$ \\
+  $if(authors.address)$$authors.address$ $endif$ 
+  $sep$ \and $endfor$
+}
+\date{$date$}
+
+\maketitle
+
+$if(admonition)$
+\begin{quotation}
+$admonition$
+\end{quotation}
+$endif$
+
+\begin{abstract}
+  $abstract$ 
+  
+  \vspace{11pt}
+  \noindent\textbf{Keywords:} $keywords$
+\end{abstract}
+
+
+$body$
+
+
+
+\bibliographystyle{$bibliographystyle$}
+\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+
+
+\end{document}
