@@ -97,22 +97,23 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Empirical Macroeconomics and DSGE Modeling in Statistical Perspective}
+\title{Empirical Macroeconomics and DSGE Modeling in Statistical
+Perspective}
 \author{  
-    Daniel J. McDonald\thanks{Both authors were supported by a grant (INO1400020) from the Institute
-for New Economic Thinking. DJM was partially supported by the National
-Science Foundation Grants DMS-1407439 and DMS-1753171. CRS wishes to
-acknowledge support from the National Science Foundation (grants
-DMS1207759 and DMS1418124), and valuable conversations over many years
-with Zmarak M. Shalizi.}  \\
+    Daniel J. McDonald\thanks{Both authors were supported by a grant
+(INO1400020) from the Institute for New Economic Thinking. DJM was
+partially supported by the National Science Foundation Grants
+DMS-1407439 and DMS-1753171. CRS wishes to acknowledge support from the
+National Science Foundation (grants DMS1207759 and DMS1418124), and
+valuable conversations over many years with Zmarak M. Shalizi.}  \\
   Department of Statistics\\
-Indiana University\\
-Bloomington, IN 47408\\
-\email{dajmcdon@indiana.edu}  
+University of British Columbia\\
+Vancouver, BC Canada\\
+\email{daniel@stat.ubc.ca}  
    \and   Cosma Rohilla Shalizi \\
   Department of Statistics\\
 Carnegie Mellon University\\
-Pittsburgh, PA 15213\\
+Pittsburgh, PA USA\\
 \email{cshalizi@cmu.edu}  
   }
 \date{}
@@ -185,7 +186,7 @@ later does not exist.
 We also undermine the notion that DSGE specifications capture the
 structure of the economy by the simple expedient of swapping the
 different time series on which they are fit --- giving the model as
-``investment'' the series that is really ``hours worked'', and so forth.
+``investment'' the series that is really ``hours worked,'' and so forth.
 Not only does such series swapping do little to degrade the DSGE's
 performance, in sample or out of sample, in a large fraction of
 permutations it actually \emph{enhances} predictability. It is, of
@@ -350,7 +351,7 @@ last column), while others differ dramatically. However, comparing the
 likelihood of of our estimated parameters to those in
 \citep{SmetsWouters2007}, our fit is significantly better. For our
 dataset, the penalized negative log likelihood of the parameters is 1145
-compared to 1232, an improvement of more than 0.0706169. The result is
+compared to 1232, an improvement of more than 7.1\%. The result is
 similar for the unpenalized negative log likelihood. To check for
 robustness, we also ran the optimization procedure for 1 million
 parameter draws and the likelihood only decreased by about 1\%. We are
@@ -439,7 +440,7 @@ predictive performance is tested on the remaining 51.
 
 }
 
-\caption{Average percentage improvement in out-of-sample forecast MSE. The horizontal red line represents baseline performance.}\label{fig:mean-percent-improvement}
+\caption{Average percentage improvement in out-of-sample forecast MSE. The horizontal red line represents baseline performance. Lower values are better.}\label{fig:mean-percent-improvement}
 \end{figure}
 
 The next few figures summarize the results. We report three criteria for
@@ -467,7 +468,7 @@ than the baseline model.
 
 }
 
-\caption{Percentage improvement in out-of-sample forecast MSE for each data series individually. The horizontal red line represents baseline performance.}\label{fig:series-percent-improvement}
+\caption{Percentage improvement in out-of-sample forecast MSE for each data series individually. The horizontal red line represents baseline performance. Values to the left are better.}\label{fig:series-percent-improvement}
 \end{figure}
 
 \begin{figure}[t]
@@ -710,10 +711,9 @@ parameter estimates as percent deviations from the SW model estimates.
 
 We now examine how well the SW model predicts future data relative to
 the best models we could have used, had we seen the data.
-\attn{We're cheating here. We could use training MSE to pick models, or I could try to use a bit of a held out set. We have 51 test points, maybe use 20 for validation? Or we could compare to the best in-sample likelihood permutations.}
 \autoref{fig:pc-preds-p1} and \autoref{fig:pc-preds-p2} show the
 out-of-sample predictions for top 20 flips based on ``average percent
-improvement''. This analysis is a post-hoc measure as the best models
+improvement.'' This analysis is a post-hoc measure as the best models
 were selected to make these predictions well, though the parameters were
 estimated without access to this data. We also show the observed data
 and the predictions from the SW model. The SW model is quite bad at
@@ -823,7 +823,7 @@ parameters, though we can predict adequately relatively quickly.
 
 }
 
-\caption{The penalized negative log-likelihood (in-sample) per observation.}\label{fig:pen-negll}
+\caption{The negative log-likelihood (in-sample) per observation.}\label{fig:pen-negll}
 \end{figure}
 
 \begin{figure}[t]
@@ -832,7 +832,7 @@ parameters, though we can predict adequately relatively quickly.
 
 }
 
-\caption{The penalized negative predictive log-likelihood (out-of-sample) per observation.}\label{fig:predict-negll}
+\caption{The negative predictive log-likelihood (out-of-sample) per observation.}\label{fig:predict-negll}
 \end{figure}
 
 \begin{figure}[t]
@@ -934,7 +934,7 @@ yet}\label{things-waldman-asked-which-havent-appeared-yet}}
 worked?}\label{does-the-best-permuted-model-swap-hours-worked}}
 
 Examining Tables \ref{tab:top-20-perc}--\ref{tab:top-20-llike}, the
-answer is ``not really''. Hours worked seems to be in the correct slot
+answer is ``not really.'' Hours worked seems to be in the correct slot
 frequently. When swapped, it tends to be confused with the interest rate
 (a flow variable).
 
@@ -1412,7 +1412,7 @@ to \inflation{} and the \youtput{} gap, defined as the difference
 between actual and potential \youtput{} (John B. Taylor 1993).
 Consistently with the DSGE model, potential \youtput{} is defined as the
 level of \youtput{} that would prevail under flexible \prices{} and
-\wages{} in the absence of the two ``mark-up''
+\wages{} in the absence of the two ``mark-up'\,'
 shocks.\footnote{In practical
   terms, we expand the model consisting of equations \eqref{eq:1} to
   \eqref{eq:14} with a flexible-\price-and-\wage{} version in order to

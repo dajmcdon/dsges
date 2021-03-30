@@ -312,7 +312,7 @@ dramatically.  However,
 comparing the likelihood of of our estimated parameters to those in
 \citep{SmetsWouters2007}, our fit is significantly better.  For our dataset,
 the penalized negative log likelihood of the parameters is `r round(llike[truePerm],0)` compared to
-`r round(getlogLike(repar(prior$sw,prior,TRUE)$outparv,y[,trainset],prior),0)`, an improvement of more than `r 1- round(llike[truePerm],0)/round(getlogLike(repar(prior$sw,prior,TRUE)$outparv,y[,trainset],prior),0)`.  The result is similar for the
+`r round(getlogLike(repar(prior$sw,prior,TRUE)$outparv,y[,trainset],prior),0)`, an improvement of more than `r round(1- llike[truePerm]/getlogLike(repar(prior$sw,prior,TRUE)$outparv,y[,trainset],prior),3)*100`%.  The result is similar for the
 unpenalized negative log likelihood.  To check for robustness, we also ran the
 optimization procedure for 1 million parameter draws and the likelihood only
 decreased by about 1\%.  We are therefore confident that we have a parameter
@@ -369,7 +369,7 @@ negative log likelihood. The model is trained using the first `r length(trainset
 points and its
 predictive performance is tested on the remaining `r length(testset)`.
 
-```{r mean-percent-improvement, fig.cap="Average percentage improvement in out-of-sample forecast MSE. The horizontal red line represents baseline performance."}
+```{r mean-percent-improvement, fig.cap="Average percentage improvement in out-of-sample forecast MSE. The horizontal red line represents baseline performance. Lower values are better."}
 df = tibble(y = logperc %>% rowMeans() %>% sort(), x = 1:nperms)
 imp = round(mean(df$y<0)*100,2)
 ggplot(df, aes(x,y)) + geom_point() + geom_hline(yintercept=0,color=red) + 
@@ -395,7 +395,7 @@ relative to the baseline model. The horizontal line at zero represents performan
 equivalent to baseline. About `r round(mean(df$y<0)*100,0)`\% of permutations had better predictive
 performance than the baseline model.
 
-```{r series-percent-improvement, fig.cap="Percentage improvement in out-of-sample forecast MSE for each data series individually. The horizontal red line represents baseline performance."}
+```{r series-percent-improvement, fig.cap="Percentage improvement in out-of-sample forecast MSE for each data series individually. The horizontal red line represents baseline performance. Values to the left are better."}
 logperc %>% gather() %>%
   ggplot(aes(key,value)) + geom_violin() + coord_flip() + 
   geom_hline(yintercept = 0, color=red) + ylab(bquote(log("permuted MSE")-log("baseline MSE"))) +
@@ -483,9 +483,9 @@ ggplot(dftest, aes(x,y)) + geom_point() +
 <!--Finally, \autoref{fig:loglike-train} shows the negative log posterior for each
 permutation. The red horizontal line indicates the negative log posterior for
 the baseline model. -->
-About `r round(implltrain,0)`\% of permutations resulted in a lower negative
+About `r implltrain`\% of permutations resulted in a lower negative
 penalized log likelihood. A Bayesian interpretation of these results would be
-that `r round(implltrain,0)`\% of the permuted "models" are preferable to the true, unpermuted,
+that `r implltrain`\% of the permuted "models" are preferable to the true, unpermuted,
 economic model.  It should be noted that this is an in-sample measure of
 performance and that the Bayesian interpretation is conditional on the
 model being true and the priors accurately reflecting expert information.
@@ -644,7 +644,7 @@ ggplot(flips, aes(x=date,y=value,grp=key)) +
 
 
 
-We now examine how well the SW model predicts future data relative to the best models we could have used, had we seen the data. \attn{We're cheating here. We could use training MSE to pick models, or I could try to use a bit of a held out set. We have 51 test points, maybe use 20 for validation? Or we could compare to the best in-sample likelihood permutations.}
+We now examine how well the SW model predicts future data relative to the best models we could have used, had we seen the data. 
 \autoref{fig:pc-preds-p1} and \autoref{fig:pc-preds-p2} show the out-of-sample predictions for top `r topn` flips based on "average percent improvement". This analysis is a post-hoc measure as the best models were selected to make these predictions well, though the parameters were estimated without access to this data. We also show the observed data and the predictions from the SW model. The SW model is quite bad at predicting consumption, investment, 
 output, and wages. It predicts a consistent 0.5% increase in the real wage level that never appears. In fact, wages are far more volatile than any of the permutations can account for. For the case of investment, output, and consumption, the SW model drastically lags the 2009 recession and underestimates its severity. Furthermore, it continues to predict a much stronger recovery, even 10 years later, than has ever materialized. The SW model is quite accurate for the interest rate, though this should perhaps be expected given that the Taylor rule may well drive Federal Reserve decisions rather than describe them.
 
@@ -755,7 +755,7 @@ df %>% ggplot(aes(x=nestim)) +
   ylab('parameter MSE')
 ```
 
-```{r pen-negll, fig.cap="The penalized negative log-likelihood (in-sample) per observation."}
+```{r pen-negll, fig.cap="The negative log-likelihood (in-sample) per observation."}
 df = SummaryStats %>% group_by(nestim) %>% do(quant(.$llike/.$nestim))
 df %>% ggplot(aes(x=nestim)) +
   geom_ribbon(aes(ymin=`5%`,ymax=`95%`), fill='grey90') + 
@@ -767,7 +767,7 @@ df %>% ggplot(aes(x=nestim)) +
   ylab('(penalized) negative log-likelihood (training data)')
 ```
 
-```{r predict-negll, fig.cap="The penalized negative predictive log-likelihood (out-of-sample) per observation."}
+```{r predict-negll, fig.cap="The negative predictive log-likelihood (out-of-sample) per observation."}
 df = SummaryStats %>% group_by(nestim) %>% do(quant(-.$logPred/1000))
 df %>% ggplot(aes(x=nestim)) +
   geom_ribbon(aes(ymin=`5%`,ymax=`95%`), fill='grey90') + 
