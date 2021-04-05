@@ -9,10 +9,10 @@ authors:
       University of British Columbia  
       Vancouver, BC Canada  
       \email{daniel@stat.ubc.ca}
-    thanks: Both authors were supported by a grant (INO1400020) from the Institute for New Economic Thinking. DJM was partially supported by the National Science Foundation Grants DMS-1407439 and DMS-1753171. CRS wishes to acknowledge support from the National Science Foundation (grants DMS1207759 and DMS1418124), and valuable conversations over many years with Zmarak M. Shalizi.
+    thanks: Both authors were supported by a grant (INO1400020) from the Institute for New Economic Thinking. DJM was partially supported by the National Science Foundation Grants DMS-1407439 and DMS-1753171. We are grateful for advice and comments to David N. DeJong, J. Bradford DeLong and Robert Waldmann (none of whom should be held responsible for our choices).  CRS wishes to acknowledge support from the National Science Foundation (grants DMS1207759 and DMS1418124), and valuable conversations over many years with Zmarak M. Shalizi.
   - name: Cosma Rohilla Shalizi
     address: |
-      Department of Statistics  
+      Departments of Statistics and Data Science and of Machine Learning  
       Carnegie Mellon University  
       Pittsburgh, PA USA  
       \email{cshalizi@cmu.edu}
@@ -39,59 +39,63 @@ output:
 
 # Introduction
 
-Since around 1980, academic macroeconomics has come to be dominated by dynamic
+Since around 1980, academic macroeconomics has been dominated by dynamic
 stochastic general equilibrium (DSGE) models, and economists have devoted a
 great deal of attention to their specification, elaboration, mathematical
 manipulation, estimation, and theoretical refinement.  This rise to prominence
-has certainly not been unopposed, and there has never been a shortage of
-critics of the whole approach on theoretical grounds, charging that, in one way
-or another, DSGE models are (or embody, or presume) bad economic
-theories. \attn{TODO: Obviously need citations here, or really
-    a whole lit-review section} Rather than pursue the question of whether
-DSGEs are good _economics_, we look at whether they are good _models_,
-i.e., whether they meet common-place standards of statistical modeling.
+has been opposed, and there have always been critics of the whole approach on
+theoretical grounds, charging that, in one way or another, DSGE models are (or
+embody, or presume) bad economic theories. \attn{TODO: Obviously need citations
+here, or really a whole lit-review section} Instead of questioning whether
+DSGEs are good _economics_, we look at whether they are good _models_, i.e.,
+whether they meet common, intuitive standards of statistical modeling.
 
 In this paper, we are not primarily concerned with whether DSGE models can
 predict macroeconomic variables outside of the time period used to estimate
 their parameters.  We avoid this issue not because out-of-sample forecasting
 isn't a quite elementary test of any statistical model's actual fit to the data
-(it is), nor because DSGEs do well at it (they are miserable), nor because it's
-unfair to expect any model to do well (even vector autoregressions do much
-better).  Rather \attn{Too many "rathers"}, we take
-it for granted that DSGEs are _currently_ not useful predictive devices and
-ask whether they will _ever_ be capable of accurate forecasts.  By the
-simple, standard device of simulating a DSGE and then fitting the same model to
-the simulation output, we show that even when correctly specified in their
-entirety and provided with centuries of simulated data, these models remain
-incapable of forecasting.  Worse, their parameters remain very badly estimated.
-To reliably estimate models of such coelenterate flexibility would require
-thousands of years (at least) of data from a stationary economy.
+(it is \citep{tEoSL-2nd}, and this has been appreciated for a very long time
+\citep{Stone1974,Geisser-predictive-sample-reuse,Geisser-Eddy-predictive-approach}),
+nor because DSGEs do well at it (they are miserable:
+\citealt{Edge-Gurkaynak-on-dsges}), nor because it's unfair to expect any model
+to do well (even vector autoregressions do much better).  Rather, we take it
+for granted that DSGEs are _currently_ not useful predictive devices and ask
+whether they will _ever_ be capable of accurate forecasts.  By the simple,
+standard device of simulating a DSGE and then fitting the same model to the
+simulation output, we show (sec.\ \ref{sec:simulate-estimate} below) that even
+when correctly specified in their entirety and provided with centuries of
+simulated data, these models remain incapable of forecasting.  Worse, their
+parameters remain very badly estimated.  To reliably estimate models of such
+coelenterate flexibility would require thousands of years (at least) of data
+from a stationary economy.
 
 We are aware that many economists downplay using DSGEs for prediction on the
 grounds that the models are instead supposed to inform us about the structure
 of the economy and about the consequences of prospective policy interventions.
-Even if this is true, however, one would need some reason to think that 
-_this_ DSGE, rather than another, was getting things right.  While we agree
-that models which are capable of accurate statistical prediction may be
-horrible at causal, counter-factual prediction, the reverse is not
-true. \attn{Cites to counter-factual $\Rightarrow$ unconditional
-  prediction} A model which gets the causal structure right, and can make
-accurate counter-factual predictions, should _a fortiori_ be capable of
-accurate statistical prediction as well.  Hence economists' confidence in their
-favorite DSGEs suitability for policy evaluation cannot be rooted in their
-statistical predictive ability, since the later does not exist.
+Even if this is true, however, one would need some reason to think that _this_
+DSGE, rather than another, was getting things right.  While we agree that
+models which are capable of accurate statistical prediction may be horrible at
+causal, counter-factual prediction, it has long been understood that the
+reverse is not true \citep{Spirtes-Glymour-Scheines-1st, Pearl-causality}, and
+this is now literally a textbook point in causal inference
+\citep{Morgan-Winship-counterfactuals-2nd}. A model which gets the causal
+structure right, and can make accurate counter-factual predictions, should _a
+fortiori_ be capable of accurate statistical prediction as well.  Hence
+economists' confidence in their favorite DSGEs suitability for policy
+evaluation cannot be rooted in their statistical predictive ability, since the
+later does not exist.
 
 We also undermine the notion that DSGE specifications capture the structure of
 the economy by the simple expedient of swapping the different time series on
 which they are fit --- giving the model as "investment" the series that is
-really "hours worked", and so forth.  Not only does such series swapping do
-little to degrade the DSGE's performance, in sample or out of sample, in a
-large fraction of permutations it actually _enhances_ predictability.  It
-is, of course, open to an economist to maintain their faith in a favorite
-DSGE's capturing the structure of the macroeconomy even if it cannot predict
-and cannot tell the difference between the real data and one with all the
-series swapped, but then faith truly is maintained on the evidence of things
-not seen.
+really "hours worked", and so forth (sec.\ \ref{sec:permutation-summary}
+below).  Not only does such series swapping do little to degrade the DSGE's
+performance, in sample or out of sample, in a large fraction of permutations it
+actually _enhances_ predictability.  It is, of course, open to an economist to
+maintain their belief in a favorite DSGE's capturing the structure of the
+macroeconomy even if it cannot predict, and cannot tell the difference between
+the real data and one with all the series swapped, but such faith truly is
+maintained on the evidence of things not seen.
 
 The principles to which we appeal --- using simulation to assess estimation
 methods; using randomization to gauge how well a model can appear to fit
@@ -100,6 +104,27 @@ controversial questions in the foundations of statistics.  Rather, they are
 readily explained notions, accepted on pretty much all sides within modern
 statistics, whose force is easily grasped once they are presented.  We return
 to their implications for macroeconomic modeling in the conclusion.
+
+## Brief Remarks on the Literature
+
+There is a familiar story to the rise of DSGEs from the 1970s to the 1990s,
+which roots them in, on the one hand, the desire to give "microfoundations" to
+macroeconomic models, and, on the other hand, the \citet{Lucas1976} critique of
+"old Keynesian" models, and the latter's apparent empirical failure in the
+1970s.  The breakthrough paper, on this account, was the "real business cycle"
+model of \citet{KydlandPrescott1982}.  Versions of this story are familiar from
+textbooks (e.g., \citealt{DeJongDave2007}), and it's not our place here to
+dispute it.  It is undeniably true that, following \citet{KydlandPrescott1982},
+macroeconomists rapidly developed a large range of DSGE models, embodying a
+range of substantive economic assumptions, but also maintaining certain crucial
+features, such as the use of one or at most a few representative agents in
+equilibria with each other.  The model we focus on, that of
+\citet{SmetsWouters2007}, while now some years old, is still widely regarded as
+an acceptable baseline model.  A great deal of macroeconomic theorizing thus
+consists of taking this model, or other very similar ones, and elaborating on
+them by adding new frictions or shocks.
+
+	
 
 
 # Specification and Baseline Estimation of the DSGE
@@ -354,7 +379,7 @@ kable(tab, booktabs=TRUE, digits = 2, escape = FALSE,
 ```
 
 
-\section{Permuting the data}
+\section{Permuting the data} {#sec:permutation-summary}
 \label{sec:permutation-summary}
 
 One way to assess the predictive ability (and economic content) of the
@@ -649,6 +674,8 @@ We now examine how well the SW model predicts future data relative to the best m
 output, and wages. It predicts a consistent 0.5% increase in the real wage level that never appears. In fact, wages are far more volatile than any of the permutations can account for. For the case of investment, output, and consumption, the SW model drastically lags the 2009 recession and underestimates its severity. Furthermore, it continues to predict a much stronger recovery, even 10 years later, than has ever materialized. The SW model is quite accurate for the interest rate, though this should perhaps be expected given that the Taylor rule may well drive Federal Reserve decisions rather than describe them.
 
 # Simulate and estimate {#sec:simulate-estimate}
+
+\label{sec:simulate-estimate}
 
 
 Another simple method for evaluating the forecasting ability of a stochastic
