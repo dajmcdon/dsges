@@ -477,8 +477,7 @@ permutation.  The result is shown in \autoref{fig:mean-percent-improvement}. \au
 shows boxplots for the percentage improvement separately for each time
 series. The best model had an average percentage improvement of `r -round(df$y[1],2)*100`\% 
 relative to the baseline model. The horizontal line at zero represents performance
-equivalent to baseline. About `r round(mean(df$y<0)*100,0)`\% of permutations had better predictive
-performance than the baseline model.
+equivalent to baseline. About `r round(mean(df$y<0)*100,0)`\% of permutations had better predictive performance than the baseline model.
 
 ```{r series-percent-improvement, fig.cap="Percentage improvement in out-of-sample forecast MSE for each data series individually. The horizontal red line represents baseline performance. Values to the left are better."}
 logperc %>% gather() %>%
@@ -515,7 +514,7 @@ observed variance and then averaged across the 7 series:
     {\mbox{Var}(x_i)}.
 \end{equation}
 \autoref{fig:mean-scaled-mse} displays the average of this measure across all `r ncol(y)`
-series. Again, about `r round(imp,0)*100`\% of permutations achieved better average scaled MSE
+series. Again, about `r round(imp,0)`\% of permutations achieved better average scaled MSE
 than the baseline model. The best permutation achieved an average scaled MSE of
 `r round(df$y[1],2)` relative to `r round(scMSEtrue,2)` for the baseline model.
 \autoref{fig:series-scaled-mse} shows
@@ -568,13 +567,13 @@ ggplot(dftest, aes(x,y)) + geom_point() +
 <!--Finally, \autoref{fig:loglike-train} shows the negative log posterior for each
 permutation. The red horizontal line indicates the negative log posterior for
 the baseline model. -->
-About `r implltrain`\% of permutations resulted in a lower negative
+A total of `r sum(llike < llike[truePerm])` of permutations resulted in a lower negative
 penalized log likelihood. A Bayesian interpretation of these results would be
-that `r implltrain`\% of the permuted "models" are preferable to the true, unpermuted,
+that `r sum(llike < llike[truePerm])` of the permuted "models" are preferable to the true, unpermuted,
 economic model.  It should be noted that this is an in-sample measure of
 performance and that the Bayesian interpretation is conditional on the
 model being true and the priors accurately reflecting expert information.
-An out-of-sample evaluation (without penalty) shows that `r round(implltest,0)*100`\% of the premuted models actually have better prediction performance when evaluated through the likelihood.
+An out-of-sample evaluation (without penalty) shows that `r round(implltest,0)`\% of the premuted models actually have better prediction performance when evaluated through the likelihood.
 \autoref{fig:loglike-pred-ml} gives a visual depiction.
 
 ```{r top-20-table-processing}
@@ -854,7 +853,8 @@ df %>% ggplot(aes(x=nestim)) +
 ```
 
 ```{r predict-negll, fig.cap="The negative predictive log-likelihood (out-of-sample) per observation."}
-df = SummaryStats %>% group_by(nestim) %>% do(quant(-.$logPred/1000))
+df = SummaryStats %>% group_by(nestim) %>% 
+  do(quant(-.$logPred / (2100 - .$nestim)))
 df %>% ggplot(aes(x=nestim)) +
   geom_ribbon(aes(ymin=`5%`,ymax=`95%`), fill='grey90') + 
   geom_ribbon(aes(ymin=`10%`,ymax=`90%`), fill='grey80') + 
@@ -1086,18 +1086,20 @@ for(j in 1:dim(newPaths)[1]){
 }
 ```
 
-## Best model by penalized log-likelihood
+## Best model by predictive log-likelihood
 
 The true model is 
 \begin{quotation}
 `r names(testerr)`
 \end{quotation}
-\noindent while the best one is 
+\noindent while the best one by out-of-sample log-likelihood is 
 \begin{quotation}
 `r names(testerr)[perms[top20llike[1],]]`.
 \end{quotation}
 \noindent This model is pretty clearly scary to a macroeconomist. 
-I think it's also important to note here, that the penalized negative log-likelihood is very flat relative to permutations. In terms of that metric, `r signif(mean(llike/llike[truePerm]<1.10),2)*100`% of permutations are within 10% of the true permutation. In the Appendix, we rewrite the beginning of \citet{SmetsWouters2007} permuting all the series to reflect the best one by negative log likelihood.
+
+
+I think it's also important to note here, that the penalized negative log-likelihood is very flat relative to permutations. In terms of that metric, `r signif(mean(llikeTest/llikeTest[truePerm] < 1.10),2)*100`% of permutations are within 10% of the true permutation. In the Appendix, we rewrite the beginning of \citet{SmetsWouters2007} permuting all the series to reflect the best one by negative predictive log likelihood.
 
 
 # Conclusions
@@ -1236,23 +1238,23 @@ The aggregate resource constraint is given by
 \investment{} ($\iobs{t}$), capital-utilization costs that are
 a function of the capital utilization rate ($z_t$), and
 exogenous spending ($\epsilon^g_t$ ); $c_y$ is the steady-state
-share of consumption in output and equals $1- g_y -i_y$, where $g_y$
+share of \consumption{} in \youtput{} and equals $1- g_y -i_y$, where $g_y$
 and $i_y$ are respectively the 
-steady-state exogenous spending-output ratio
-and investment-output ratio. The steady-state
-investment-output ratio in turn equals $(\gamma-1 +\delta)k_y$, where
+steady-state exogenous \spending{}-\youtput{} ratio
+and \investment{}-\youtput{} ratio. The steady-state
+\investment{}-\youtput{} ratio in turn equals $(\gamma-1 +\delta)k_y$, where
 $\gamma$  is the steady-state growth rate,  $\delta$
 stands for the depreciation rate of capital, and $k_y$
-is the steady-state capital-output ratio. Finally,
+is the steady-state capital-\youtput{} ratio. Finally,
 $z_y=  R_*^k ky$, where $R_*^k$ is the steady-state rental
 rate of capital. We assume that exogenous
-spending follows a first-order autoregressive
+\spending{} follows a first-order autoregressive
 process with an IID-Normal error term and is
 also affected by the productivity shock as fol-
 lows: $\epsilon^g_t = \rho_g\epsilon^g_{t-1} + \eta_t^g
 +\rho_{ga}\eta_t^a$. The latter is 
 empirically motivated by the fact that, in estimation, exogenous
-spending also includes net exports, which may be affected by domestic
+\spending also includes net exports, which may be affected by domestic
 productivity developments. 
 
 The dynamics of \consumption{} follows from the \consumption{} Euler
@@ -1286,14 +1288,7 @@ central bank and the return on assets held by the households. A
 positive shock to this wedge increases the required return on assets
 and reduces current \consumption. At the same time, it also increases
 the cost of capital and reduces the value of capital and \investment,
-as shown below.\footnote{Include?} This shock has similar effects as
-so-called net-worth 
-shocks in Ben S. Bernanke, Gertler, and Simon Gilchrist (1999) and
-Christiano, Roberto Motto, and Massimo Rostagno (2003), which
-explicitly model the external finance premium. The disturbance is
-assumed to follow a first-order autoregressive process with an
-IID-Normal error term: $\epsilon_t^b = \rho_b\epsilon_{t-1}^b +
-\eta_t^b$. 
+as shown below.
 
 The dynamics of \investment{} comes from the \investment{} Euler
 equation and is given by
