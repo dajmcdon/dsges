@@ -854,7 +854,7 @@ df %>% ggplot(aes(x=nestim)) +
 ```
 
 ```{r predict-negll, fig.cap="The negative predictive log-likelihood (out-of-sample) per observation."}
-df = SummaryStats %>% group_by(nestim) %>% do(quant(-.$logPred/1000))
+df = SummaryStats %>% group_by(nestim) %>% do(quant(-.$logPred/(2100-.$nestim)))
 df %>% ggplot(aes(x=nestim)) +
   geom_ribbon(aes(ymin=`5%`,ymax=`95%`), fill='grey90') + 
   geom_ribbon(aes(ymin=`10%`,ymax=`90%`), fill='grey80') + 
