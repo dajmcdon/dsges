@@ -146,11 +146,9 @@ mathematical manipulation, estimation, and theoretical refinement. This
 rise to prominence has been opposed, and there have always been critics
 of the whole approach on theoretical grounds, charging that, in one way
 or another, DSGE models are (or embody, or presume) bad economic
-theories. \attn{TODO: Obviously need citations
-here, or really a whole lit-review section} Instead of questioning
-whether DSGEs are good \emph{economics}, we look at whether they are
-good \emph{models}, i.e., whether they meet common, intuitive standards
-of statistical modeling.
+theories. Instead of questioning whether DSGEs are good
+\emph{economics}, we look at whether they are good \emph{models}, i.e.,
+whether they meet common, intuitive standards of statistical modeling.
 
 In this paper, we are not primarily concerned with whether DSGE models
 can predict macroeconomic variables outside of the time period used to
@@ -1012,14 +1010,15 @@ some of the economically-relevant ``deep'' parameters. For instance,
 wage , is consistently underestimated by about -93\%. The data provides
 essentially no information about \(\iota_w\), which measures the
 dependence of real wages on lagged inflation. Other parameters which are
-poorly estimated include \(\varphi\), the steady-state
-\attn{missing word here}. In all these cases, estimation is biased, so
-using the estimated values from the real data to draw conclusions about
-the real economy is unwise. It is possible that this bias is due to the
-linearization procedure, in which case, not only should linearized
-models be avoided for prediction, but also for drawing any economic
-inferences. Overall, most parameters are poorly identified as evidenced
-by their stable (rather than decreasing) variability with more data.
+poorly estimated include \(\varphi\), the steady-state steady-state
+elasticity of the capital adjustment cost function. In all these cases,
+estimation is biased, so using the estimated values from the real data
+to draw conclusions about the real economy is unwise. It is possible
+that this bias is due to the linearization procedure, in which case, not
+only should linearized models be avoided for prediction, but also for
+drawing any economic inferences. Overall, most parameters are poorly
+identified as evidenced by their stable (rather than decreasing)
+variability with more data.
 
 \hypertarget{things-waldman-asked-which-havent-appeared-yet}{%
 \section{Things Waldman asked which haven't appeared
@@ -1134,9 +1133,9 @@ forecasting record of DSGEs. Rather, their virtues are supposed to lie
 in their capturing the structure of the economy, and so providing
 theoretical insight, with meaningful parameters, and an ability to
 evaluate policy and counterfactuals. We have examined these claims on
-behalf of DSGEs through series permutation, and through the simple check
-of seeing how well a DSGE can be estimated from its own simulation
-output. In both cases, the results are rather negative.
+behalf of DSGEs through series permutation, and through simply checking
+how well a DSGE can be estimated from its own simulation output. In both
+cases, the results are rather negative.
 
 If we randomly re-label the macroeconomic time series and feed them into
 the DSGE, most of the time we get a model which predicts the (permuted)
@@ -1156,17 +1155,18 @@ essential about the structure of the economy\footnote{It's conceivable
   economist who feels really happy about identifying current series of
   `national income,' `consumption,' etc., with the variables by these
   names in his theories.'') Thus, perhaps, the model is right, but
-  GDPDEF is really a better proxy for \emph{labor} than PRS85006023 is.
-  This would, needless to say, raise its own set of huge problems for
-  the interpretation and use of these models. One possible route around
-  this would be to use \emph{many} observables which are imperfectly
-  aligned with the theoretical variables, which would require imposing a
-  factor-model structure on the relations between observables and state
-  variables. \citet{Boivin-Giannoni-DSGEs-in-data-rich-environment} is a
-  step in this direction.}. Perhaps even more disturbing, many of the
-parameters of the model are essentially unchanged under permutation,
-including ``deep'' parameters supposedly representing tastes,
-technologies and institutions.
+  GDPDEF is really a better proxy for \emph{labor}, \(l_t\), than
+  PRS85006023 is. This would, needless to say, raise its own set of
+  difficulties for the interpretation and use of these models. One
+  possible route forward would be to use \emph{many} observables which
+  are all imperfectly aligned with the theoretical variables, which
+  would, perhaps, require imposing a factor-model structure on the
+  relations between observables and state variables.
+  \citet{Boivin-Giannoni-DSGEs-in-data-rich-environment} is a step in
+  this direction.}. Perhaps even more disturbing, many of the parameters
+of the model are essentially unchanged under permutation, including
+``deep'' parameters supposedly representing tastes, technologies and
+institutions.
 
 If we take our estimated model and simulate several centuries of data
 from it, all in the stationary regime, and then re-estimate the model
@@ -1184,22 +1184,22 @@ of centuries of stationary data, far more than is available about the
 actual macroeconomy.
 
 The results of the two tests are grim. Series swapping gives us strong
-reasons to doubt that the elaborate DSGE machinery manages to capture
-anything important about the structure of the economy. Even if one
-dismisses that, and believes (perhaps because ``theory is evidence
-too'') that the DSGE must be right, the simulation exercise shows that,
-even under the most favorable possible circumstances, it is simply
-infeasible to hope to that the DSGE will give reasonably accurate
-predictions, or even that it can be reliably estimated.
+reasons to doubt that the DSGE machinery manages to capture anything
+important about the structure of the economy. Even if one dismisses
+that, and believes (perhaps because ``theory is evidence too'') that the
+DSGE must be right, the simulation exercise shows that, even under the
+most favorable possible circumstances, it is simply wrong to think that
+the DSGE will give reasonably accurate predictions, or even that it can
+be reliably estimated.
 
 We have not, of course, proved that flaws like this are inherent in the
 DSGE form. But we have \emph{not} cherry-picked an obsolete or marginal
-model\footnote{We also obtained very similar results for the
-real-business-cycle model of~\citet{KydlandPrescott1982}, but omit them here,
-because that model is obsolete.}. The SW model is widely regarded as the
-baseline DSGE for the economy of the United States, which is by far the
-most important national economy in the world. The SW paper has been
-cited over 5500 times\footnote{Google Scholar
+model\textbackslash footnote\{We obtained very similar results for the
+real-business-cycle model of \citet{KydlandPrescott1982}, but omit them
+here, because that model \emph{is} obsolete.\}. The SW model is widely
+regarded as the baseline DSGE for the economy of the United States,
+which is by far the most important national economy in the world. The SW
+paper has been cited over 5500 times\footnote{Google Scholar
 (\url{https://scholar.google.com/scholar?cites=8854430771281116653}), accessed
 11 April 2021.}. What concerns us is that in all that literature, we
 appear to be the first to have subjected it to such direct, even
@@ -1264,8 +1264,6 @@ to create \(x_t\) as follows: \begin{align*}
 \hypertarget{rewriting}{%
 \section{\texorpdfstring{Rewriting
 \citet{SmetsWouters2007}}{Rewriting }}\label{rewriting}}
-
-\attn{To be updated again.}
 
 In the rest of this section, we describe the log-linearized version of
 the DSGE model that we subsequently estimate using US data. All
@@ -1332,16 +1330,17 @@ equation and is given by \begin{equation}
 \end{equation} where \(i_1 = 1/(1+\beta\gamma^{1-\sigma_c}),\)
 \(i_2 = 1/[(1+\beta\gamma^{1-\sigma_c})\gamma^2\varphi]\), \(\varphi\)
 is the steady-state elasticity of the capital adjustment cost function,
-and is the discount factor applied by households. As in CEE (2005), a
-higher elasticity of the cost of adjusting capital reduces the
-sensitivity of \investment{} (\(\iobs{t}\)) to the real value of the
-existing capital stock (\(q_t\)). Modeling capital adjustment costs as a
-function of the change in \investment{} rather than its level introduces
-additional dynamics in the \investment{} equation, which is useful in
-capturing the hump-shaped response of \investment{} to various shocks.
-Finally, \(\epsilon^i_t\) represents a disturbance to the
-\investment-specific technology process and is assumed to follow a
-first-order autoregressive process with an IID-Normal error term:
+and is the discount factor applied by households. As in CEE (2005)
+\attn{GET REFERENCE}, a higher elasticity of the cost of adjusting
+capital reduces the sensitivity of \investment{} (\(\iobs{t}\)) to the
+real value of the existing capital stock (\(q_t\)). Modeling capital
+adjustment costs as a function of the change in \investment{} rather
+than its level introduces additional dynamics in the \investment{}
+equation, which is useful in capturing the hump-shaped response of
+\investment{} to various shocks. Finally, \(\epsilon^i_t\) represents a
+disturbance to the \investment-specific technology process and is
+assumed to follow a first-order autoregressive process with an
+IID-Normal error term:
 \(\epsilon_t^i = \rho_i\epsilon_{t-1}^i + \eta_t^i\).
 
 The corresponding arbitrage equation for the value of capital is given
