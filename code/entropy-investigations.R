@@ -1,13 +1,11 @@
 library(QZ)
 library(FKF)
-load('data/SWdataUpdated.Rdata')
 source('code/functions/modelsol.R')
 source('code/functions/reparlogp.R')
 source('code/functions/SimsCodesFort.R')
 source('code/priorsetup.R')
-load("cluster_output/SWlong.Rdata")
+load("cluster_output/StdPvec.Rdata")
 
-pvec <- res$par_ests
 n <- 30000
 long <- generate(n, pvec)
 filt <- getFilterOutput(long, pvec)

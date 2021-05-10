@@ -863,7 +863,7 @@ df %>% ggplot(aes(x=nestim)) +
   geom_ribbon(aes(ymin=`20%`,ymax=`80%`), fill='grey70') + 
   geom_ribbon(aes(ymin=`35%`,ymax=`65%`), fill='grey60') + 
   geom_line(aes(y=m), color=red) + coord_cartesian(ylim=c(-6,10)) +
-  geom_hline(yintercept = -2.135, color = "blue") +
+  geom_hline(yintercept = -2.9, color = "blue") +
   xlab('number of training points') + 
   ylab('predictive log-likelihood (testing data)')
 ```
