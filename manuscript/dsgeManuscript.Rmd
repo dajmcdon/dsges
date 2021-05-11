@@ -146,7 +146,7 @@ macroeconomic models should be assumed to have rational (rather than adaptive)
 expectations, should have perfect (rather than bounded) rationality, should (or
 should not) obey the Euler equations.  We do not even take a side on whether
 aggregating large number of heterogeneous economic actors into a few
-representative agents is in fact "microfounded"[^microfound].  Those who are
+representative agents is in fact "microfounded"[^microfound]. Those who are
 _a priori_ inclined to dismiss DSGEs as inappropriate models will, we
 suspect, find our results on their statistical difficulties
 congenial[^austrians].  But no result we are aware of implies that
@@ -172,7 +172,7 @@ tangentially-relevant body of work has examined identification issues in DSGEs.
 The most important paper here is probably still
 \citet{Komunjer-Ng-identification-of-DSGEs}, which gave fairly practical
 algebraic conditions for checking the identifiability of DSGEs.  (This built
-off earlier work by \citealt{Iskrev2009} among others.)  
+off earlier work by \citealt{Iskrev2009} among others.) 
 Identification means that all model parameters can (in principle) be estimated
 in the limit; estimates using the available, non-asymptotic amount of data
 might be unacceptably imprecise, and might converge unacceptably slowly.  We
@@ -852,13 +852,18 @@ df %>% ggplot(aes(x=nestim)) +
 ```
 
 ```{r predict-negll, fig.cap="The negative predictive log-likelihood (out-of-sample) per observation."}
-df = SummaryStats %>% group_by(nestim) %>% do(quant(-.$logPred/(2100-.$nestim)))
+df = SummaryStats %>% group_by(nestim) %>% 
+  # would be better to have llike from only the 1000 obs after the training
+  # period, but this would require rerunning the whole thing since I screwed
+  # this up the first time
+  do(quant(-.$logPred / (2100 - .$nestim))) 
 df %>% ggplot(aes(x=nestim)) +
   geom_ribbon(aes(ymin=`5%`,ymax=`95%`), fill='grey90') + 
   geom_ribbon(aes(ymin=`10%`,ymax=`90%`), fill='grey80') + 
   geom_ribbon(aes(ymin=`20%`,ymax=`80%`), fill='grey70') + 
   geom_ribbon(aes(ymin=`35%`,ymax=`65%`), fill='grey60') + 
   geom_line(aes(y=m), color=red) + coord_cartesian(ylim=c(-6,10)) +
+  geom_hline(yintercept = -2.9, color = "blue") +
   xlab('number of training points') + 
   ylab('predictive log-likelihood (testing data)')
 ```
