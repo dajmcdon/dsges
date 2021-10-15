@@ -1,0 +1,15 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Brief Remarks on the Literature}{section.1}% 2
+\BOOKMARK [1][-]{section.2}{Specification and Baseline Estimation of the DSGE}{}% 3
+\BOOKMARK [2][-]{subsection.2.1}{Solving DSGEs}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.2}{Estimating the SmetsWouters2007 model}{section.2}% 5
+\BOOKMARK [1][-]{section.3}{Simulate and estimate}{}% 6
+\BOOKMARK [1][-]{section.4}{Permuting the data}{}% 7
+\BOOKMARK [2][-]{subsection.4.1}{Out-of-sample forecasts}{section.4}% 8
+\BOOKMARK [1][-]{section.5}{Things Waldman asked which haven't appeared yet}{}% 9
+\BOOKMARK [2][-]{subsection.5.1}{Do the deep parameters covary with policy parameters?}{section.5}% 10
+\BOOKMARK [2][-]{subsection.5.2}{Changing the truth}{section.5}% 11
+\BOOKMARK [2][-]{subsection.5.3}{Best model by predictive log-likelihood}{section.5}% 12
+\BOOKMARK [1][-]{section.6}{Conclusions}{}% 13
+\BOOKMARK [1][-]{appendix.A}{Data preprocessing}{}% 14
+\BOOKMARK [1][-]{appendix.B}{Rewriting }{}% 15
