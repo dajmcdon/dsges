@@ -98,16 +98,18 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Empirical Macroeconomics and DSGE Modeling in Statistical Perspective}
+\title{Empirical Macroeconomics and DSGE Modeling in Statistical
+Perspective}
 \author{  
-    Daniel J. McDonald\thanks{Both authors were supported by a grant (INO1400020) from the Institute
-for New Economic Thinking. DJM was partially supported by the National
-Science Foundation Grants DMS-1407439 and DMS-1753171. We are grateful
-for advice and comments to David N. DeJong, J. Bradford DeLong and
-Robert Waldmann (none of whom should be held responsible for our
-choices). CRS wishes to acknowledge support from the National Science
-Foundation (grants DMS1207759 and DMS1418124), and valuable
-conversations over many years with Zmarak M. Shalizi.}  \\
+    Daniel J. McDonald\thanks{Both authors were supported by a grant
+(INO1400020) from the Institute for New Economic Thinking. DJM was
+partially supported by the National Science Foundation Grants
+DMS-1407439 and DMS-1753171. We are grateful for advice and comments to
+David N. DeJong, J. Bradford DeLong and Robert Waldmann (none of whom
+should be held responsible for our choices). CRS wishes to acknowledge
+support from the National Science Foundation (grants DMS1207759 and
+DMS1418124), and valuable conversations over many years with Zmarak M.
+Shalizi.}  \\
   Department of Statistics\\
 University of British Columbia\\
 Vancouver, BC Canada\\
@@ -189,7 +191,7 @@ predictive ability, since the later does not exist.
 We also undermine the notion that DSGE specifications capture the
 structure of the economy by the simple expedient of swapping the
 different time series on which they are fit --- giving the model as
-``investment'' the series that is really ``hours worked'', and so forth
+``investment'' the series that is really ``hours worked,'' and so forth
 (sec.~\ref{sec:permutation-summary} below). Not only does such series
 swapping do little to degrade the DSGE's performance, in sample or out
 of sample, in a large fraction of permutations it actually
@@ -465,7 +467,7 @@ achieves the global optimum.\footnote{We have been unable to explain why
  & \makecell[c]{prior\\distribution} & \makecell[c]{prior\\mean} & \makecell[c]{prior\\stdev} & \makecell[c]{lower\\bound} & \makecell[c]{upper\\bound} & \makecell[c]{posterior\\mode} & \makecell[c]{SW posterior\\mode}\\
 \midrule
 $\sigma_a$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.44 & 0.45\\
-$\sigma_b$ & igamma & 0.10 & 2.00 & 0.02 & 5.00 & 0.30 & 0.24\\
+$\sigma_b$ & igamma & 0.10 & 2.00 & 0.03 & 5.00 & 0.30 & 0.24\\
 $\sigma_g$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.57 & 0.52\\
 $\sigma_I$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.48 & 0.45\\
 $\sigma_r$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.22 & 0.24\\
@@ -559,18 +561,14 @@ All figures in this section show the mean in red along with 30\%, 60\%,
 
 \begin{figure}[t]
 
-{\centering \includegraphics{gfx/train-error-1} 
-
-}
+{\centering \includegraphics{gfx/train-error-1} }
 
 \caption{Training (in sample) error averaged across series as the number of training points increases. We would expect the variability to decline while the average remains constant. The mean is shown in red along with 30\%, 60\%, 80\%, and 90\% confidence bands calculated from the replications.}\label{fig:train-error}
 \end{figure}
 
 \begin{figure}[t]
 
-{\centering \includegraphics{gfx/test-error-1} 
-
-}
+{\centering \includegraphics{gfx/test-error-1} }
 
 \caption{Out-of-sample error averaged across series as the number of training points increases. We would expect both the variability and the average to decline. The blue line is the test error for the true model.}\label{fig:test-error}
 \end{figure}
@@ -595,44 +593,28 @@ parameter estimates. The red lines in \autoref{fig:test-error} are the
 out-of-sample mean (solid) and median (dashed) prediction error for the
 true parameters. The test error is not getting any closer to this ideal
 scenario, plateauing slightly above the baseline by about 400 training
-points. This seems to suggest that explanation (2) is the correct one:
-even with more data, we will never be able to recover the true
-parameters, though we get some improvement in predictions relatively
-quickly.
+points. This seems to suggest that explanation (2) is accurate: even
+with more data, we will never be able to recover the true parameters,
+though we get some improvement in predictions relatively quickly.
+
 
 \begin{figure}[t]
-
-{\centering \includegraphics{gfx/parm-error-1} 
-
-}
-
+{\centering \includegraphics{gfx/parm-error-1} }
 \caption{The parameter MSE shows similar behavior to the predictive MSE: steep initial decline toward an asymptote greater than that of the true model.}\label{fig:parm-error}
 \end{figure}
 
 \begin{figure}[t]
-
-{\centering \includegraphics{gfx/pen-negll-1} 
-
-}
-
+{\centering \includegraphics{gfx/pen-negll-1} }
 \caption{The negative log-likelihood (in-sample) per observation.}\label{fig:pen-negll}
 \end{figure}
 
 \begin{figure}[t]
-
-{\centering \includegraphics{gfx/predict-negll-1} 
-
-}
-
+{\centering \includegraphics{gfx/predict-negll-1} }
 \caption{The negative predictive log-likelihood (out-of-sample) per observation.}\label{fig:predict-negll}
 \end{figure}
 
 \begin{figure}[t]
-
-{\centering \includegraphics{gfx/individual-series-1} 
-
-}
-
+{\centering \includegraphics{gfx/individual-series-1} }
 \caption{Mean-squared prediction error for each series.}\label{fig:individual-series}
 \end{figure}
 
@@ -654,46 +636,28 @@ poorly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{gfx/shock-sds-1} 
-
-}
-
+{\centering \includegraphics{gfx/shock-sds-1} }
 \caption{Estimates for the standard deviations of stochastic shocks.}\label{fig:shock-sds}
 \end{figure}
 
 \begin{figure}[t]
-
-{\centering \includegraphics{gfx/autocorrelations-shocks-1} 
-
-}
+{\centering \includegraphics{gfx/autocorrelations-shocks-1} }
 
 \caption{Estimates for the autocorrelation parameters in the shock processes.}\label{fig:autocorrelations-shocks}
 \end{figure}
 
 \begin{figure}[t]
-
-{\centering \includegraphics{gfx/deep1-1} 
-
-}
-
+{\centering \includegraphics{gfx/deep1-1}  }
 \caption{Estimates of "deep" parameters}\label{fig:deep1}
 \end{figure}
 
 \begin{figure}[t]
-
-{\centering \includegraphics{gfx/deep2-1} 
-
-}
-
+{\centering \includegraphics{gfx/deep2-1} }
 \caption{Estimates of "deep" parameters}\label{fig:deep2}
 \end{figure}
 
 \begin{figure}[t]
-
-{\centering \includegraphics{gfx/deep3-1} 
-
-}
-
+{\centering \includegraphics{gfx/deep3-1} }
 \caption{Estimates of "deep" parameters}\label{fig:deep3}
 \end{figure}
 
@@ -718,6 +682,47 @@ drawing any economic inferences. Overall, most parameters are poorly
 identified as evidenced by their stable (rather than decreasing)
 variability with more data.
 
+To examine case (3)---that the data is so correlated that even 250 years
+is too little to produce accurate estimates of the true parameters---we
+may ask how closely the information per observation displayed in
+\autoref{fig:pen-negll} approaches the theoretical asymptotic limit. For
+essentially any stationary ergodic stochastic process, limit of the
+negative loglikelihood per observation as the number of observations
+approaches infinity exists and is unique. This limit is the
+\emph{entropy rate} of the process. Mathematically, \[
+\lim_{n\rightarrow\infty} -\frac{1}{n}\ell(X_{1:n}; \theta_0) = h(\theta_0),
+\] where \(h(\theta_0)\) is the entropy rate. Furthermore, by the
+generalized asymptotic equipartition property, one can show that for any
+other parameter vector \(\theta \neq \theta_0\), \[
+\lim_{n\rightarrow\infty} -\frac{1}{n}\ell(X_{1:n}; \theta) = h(\theta_0) + \mathrm{KL}(\theta_0\ ||\ \theta),
+\] where the second term is the Küllback-Leibler divergence. Because
+\(\mathrm{KL}(\theta_0\ ||\ \theta) \geq 0\) asymptotically,
+\(h(\theta_0)\) is a lower bound for the average negative loglikelihood
+of any parameter vector. Because the data is generated from a linear
+Gaussian state space model, it is not hard to calculate that
+\(h(\theta_0) \approx 2.25\), significantly \emph{larger} than any of
+the values in \autoref{fig:pen-negll}. Somehow, the estimated parameters
+generally have \emph{lower} negative loglikelihoods than the true
+parameter. The fact that the standard deviations of the shocks
+(\autoref{fig:shock-sds}) are consistently underestimated suggests that,
+even over this period, the in-sample fit to the data gives an overly
+optimistic picture of the long run behavior: we have not allowed \(n\)
+to get large enough. \autoref{fig:entropy-investigation} shows the
+negative loglikelihood per observation over a much longer horizon---up
+to 75,000 years of quarterly data. For thousands of years, the parameter
+vector estimated over the first 250 years is less than the theoretical
+lower bound, but eventually, it starts to curve upward. This suggests
+that, both explanations (2) and (3) are accurate: in order to estimate a
+DSGE accurately, we need massive amounts of data.
+
+\begin{figure}[t]
+
+{\centering \includegraphics{gfx/entropy-investigation-1} }
+
+\caption{Comparing the in-sample negative loglikelihood per observation of a parameter estimated with 1000 observations relative to the true parameter. In the long-run, the entropy rate is a lower bound, but only after about 12,000 years of quarterly data.}\label{fig:entropy-investigation}
+\end{figure}
+
+
 \hypertarget{sec:permutation-summary}{%
 \section{Permuting the data}\label{sec:permutation-summary}}
 
@@ -736,11 +741,7 @@ likelihood. The model is trained using the first 200 time points and its
 predictive performance is tested on the remaining 51.
 
 \begin{figure}[t]
-
-{\centering \includegraphics{gfx/mean-percent-improvement-1} 
-
-}
-
+{\centering \includegraphics{gfx/mean-percent-improvement-1} }
 \caption{Average percentage improvement in out-of-sample forecast MSE. The horizontal red line represents baseline performance. Lower values are better.}\label{fig:mean-percent-improvement}
 \end{figure}
 
@@ -764,28 +765,17 @@ baseline. About 38\% of permutations had better predictive performance
 than the baseline model.
 
 \begin{figure}[t]
-
-{\centering \includegraphics{gfx/series-percent-improvement-1} 
-
-}
-
+{\centering \includegraphics{gfx/series-percent-improvement-1}  }
 \caption{Percentage improvement in out-of-sample forecast MSE for each data series individually. The horizontal red line represents baseline performance. Values to the left are better.}\label{fig:series-percent-improvement}
 \end{figure}
 
 \begin{figure}[t]
-
-{\centering \includegraphics{gfx/mean-scaled-mse-1} 
-
-}
-
+{\centering \includegraphics{gfx/mean-scaled-mse-1} }
 \caption{Average improvement in out-of-sample forecast MSE scaled by the variance of the data. The horizontal red line represents baseline performance.}\label{fig:mean-scaled-mse}
 \end{figure}
 
 \begin{figure}[t]
-
-{\centering \includegraphics{gfx/series-scaled-mse-1} 
-
-}
+{\centering \includegraphics{gfx/series-scaled-mse-1} }
 
 \caption{Improvement in out-of-sample forecast MSE scaled by the variance of the data for each data series individually. The red dots represents baseline performance.}\label{fig:series-scaled-mse}
 \end{figure}
@@ -806,9 +796,7 @@ performance of the baseline model.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{gfx/loglike-pred-ml-1} 
-
-}
+{\centering \includegraphics{gfx/loglike-pred-ml-1} }
 
 \caption{Negative log predictive likelihood for each model. The horizontal red line represents baseline performance. Note that this is an out-of-sample performance measure.}\label{fig:loglike-pred-ml}
 \end{figure}
@@ -1014,7 +1002,7 @@ We now examine how well the SW model predicts future data relative to
 the best models we could have used, had we seen the data.
 \autoref{fig:pc-preds-p1} and \autoref{fig:pc-preds-p2} show the
 out-of-sample predictions for top 20 flips based on ``average percent
-improvement''. This analysis is a post-hoc measure as the best models
+improvement.'' This analysis is a post-hoc measure as the best models
 were selected to make these predictions well, though the parameters were
 estimated without access to this data. We also show the observed data
 and the predictions from the SW model. The SW model is quite bad at
@@ -1095,8 +1083,8 @@ The Truth? How badly would the SW model fit and forecast? Here I
 actually guess it would do OK. Procedure: (1) generate data out of the
 best permutation, (2) get forecasts using it and the SW model (say 100
 each). Which is better? The average negative log-likelihood of the true
-model is 875 compared to 948 for the SW model. The MSEs are 0.26
-compared to 0.524 respectively.
+model is 876 compared to 947 for the SW model. The MSEs are 0.259
+compared to 0.525 respectively.
 
 \attn{We actually have that the SW model (unpermuted) has the lowest in-sample negitive log posterior. These were generated using the best unpenalized predicting permutation by log likelihood.}
 
@@ -1168,8 +1156,8 @@ the economy\footnote{It's conceivable that the issue is one of
   analogous names are good measurements of the theoretical variables.
   (Cf. \citet[p. 6]{Haavelmo-probability-approach}: ``there is hardly an
   economist who feels really happy about identifying current series of
-  `national income,' `consumption,', etc., with the variables by these
-  names in his theories''.) Thus, perhaps, the model is right, but
+  `national income,' `consumption,' etc., with the variables by these
+  names in his theories.'') Thus, perhaps, the model is right, but
   GDPDEF is really a better proxy for \emph{labor}, \(l_t\), than
   PRS85006023 is. This would, needless to say, raise its own set of
   difficulties for the interpretation and use of these models. One
@@ -1194,7 +1182,7 @@ be reliably estimated.
 
 We have not, of course, proved that flaws like this are inherent in the
 DSGE form. But we have \emph{not} cherry-picked an obsolete or marginal
-model\textbackslash{}footnote\{We obtained very similar results for the
+model\textbackslash footnote\{We obtained very similar results for the
 real-business-cycle model of \citet{KydlandPrescott1982}, but omit them
 here, because that model \emph{is} obsolete.\}. The SW model is widely
 regarded as the baseline DSGE for the economy of the United States,
@@ -1510,7 +1498,7 @@ to \inflation{} and the \youtput{} gap, defined as the difference
 between actual and potential \youtput{} (John B. Taylor 1993).
 Consistently with the DSGE model, potential \youtput{} is defined as the
 level of \youtput{} that would prevail under flexible \prices{} and
-\wages{} in the absence of the two ``mark-up''
+\wages{} in the absence of the two ``mark-up'\,'
 shocks.\footnote{In practical
   terms, we expand the model consisting of equations \eqref{eq:1} to
   \eqref{eq:14} with a flexible-\price-and-\wage{} version in order to

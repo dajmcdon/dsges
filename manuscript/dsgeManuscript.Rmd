@@ -294,9 +294,10 @@ opts_chunk$set(message=FALSE, warning=FALSE, cache=TRUE,
                autodep = TRUE, echo=FALSE,
                include=TRUE, size="small",
                fig.align='center', fig.width=6, fig.height=4,
-               fig.path = "gfx/",fig.pos="t"
+               fig.path = here::here("manuscript","gfx/"), 
+               fig.pos="t"
                )
-theme_set(theme_minimal(base_family="Times",base_size = 12))
+theme_set(theme_bw(base_family="Times",base_size = 12))
 green = '#00AF64'
 blue = '#0B61A4'
 red = '#FF4900'
@@ -307,15 +308,15 @@ trainset = 1:200
 
 
 ```{r load-dsge-data}
-load("../cluster_output/perm_results.Rdata")
-load('../data/SWdataUpdated.Rdata')
+load(here::here("cluster_output","perm_results.Rdata"))
+load(here::here("data", "SWdataUpdated.Rdata"))
 testset = (1:ncol(y))[-trainset]
-source('../code/functions/modelsol.R')
-source('../code/functions/reparlogp.R')
-source('../code/functions/SimsCodesFort.R')
-source('../code/priorsetup.R')
-load("../cluster_output/llike-calculations.Rdata")
-load("../cluster_output/SWlong.Rdata")
+source(here::here('code', 'functions', 'modelsol.R'))
+source(here::here('code', 'functions', 'reparlogp.R'))
+source(here::here('code', 'functions', 'SimsCodesFort.R'))
+source(here::here('code', 'priorsetup.R'))
+load(here::here("cluster_output", "llike-calculations.Rdata"))
+load(here::here("cluster_output", "SWlong.Rdata"))
 #source('../cluster_output/SWlong.Rdata')
 perms = perm(7,7)
 SWPerm = perms[1,]
@@ -486,7 +487,7 @@ quant = function(x){
 ```
 
 ```{r train-error, fig.cap="Training (in sample) error averaged across series as the number of training points increases. We would expect the variability to decline while the average remains constant. The mean is shown in red along with 30\\%, 60\\%, 80\\%, and 90\\% confidence bands calculated from the replications."}
-load('../cluster_output/SimEst/summaryStats.Rdata')
+load(here::here("cluster_output", "SimEst", "summaryStats.Rdata"))
 df = SummaryStats %>% group_by(nestim) %>% do(quant(.$sc.mste))
 df %>% ggplot(aes(x=nestim,y=m)) +
   geom_ribbon(aes(ymin=`5%`,ymax=`95%`), fill='grey90') + 
@@ -532,7 +533,7 @@ in \autoref{fig:test-error} are the out-of-sample mean (solid) and median
 (dashed) prediction error for the true parameters. The test error is not
 getting any closer to this ideal scenario, plateauing slightly above the
 baseline by about 400 training points.  This seems to suggest that explanation
-(2) is the correct one: even with more data, we will never be able to recover
+(2) is accurate: even with more data, we will never be able to recover
 the true parameters, though we get some improvement in predictions relatively
 quickly.
 
@@ -578,8 +579,8 @@ df %>% ggplot(aes(x=nestim)) +
 ```
 
 ```{r individual-series, fig.cap="Mean-squared prediction error for each series."}
-load('../cluster_output/SimEst/predErrs.Rdata')
-load('../cluster_output/SimEst/baselineErrs.Rdata')
+load(here::here("cluster_output", "SimEst", "predErrs.Rdata"))
+load(here::here("cluster_output", "SimEst", "baselineErrs.Rdata"))
 prederrs = pred.errs.sc %>% select(-prob,-algo,-repl) %>%
   gather(key='series',value='mspe',-id,-nestim) %>%
   mutate(series = recode(
@@ -605,7 +606,7 @@ df %>% ggplot(aes(x=nestim)) + facet_wrap(~series) + #scale_y_log10() +
   geom_line(aes(y=m), color=red) + coord_cartesian(ylim=c(0,25)) +
   geom_hline(aes(yintercept=0), color=blue) +
   xlab('number of training points') + 
-  ylab('log(MSE/oracle)*100')
+  ylab('100 x log(MSE / oracle)')
 ```
 
 Examining the parameter error serves to confirm this conjecture.
@@ -622,9 +623,11 @@ error for each series individually. From this decomposition, prediction of all
 time series improves, but only labor ever reaches the minimum (relative to the
 truth).  The other series are all predicted poorly.
 
+
+
 ```{r parameter-convergence}
-load('../cluster_output/SimEst/parmEst.Rdata')
-load('../cluster_output/StdPvec.Rdata')
+load(here::here("cluster_output", "SimEst", "parmEst.Rdata"))
+load(here::here("cluster_output", "StdPvec.Rdata"))
 names(parmEst)[-c(1:5)] = parmGreek
 allpar = parmEst %>% select(-id,-prob,-algo,-repl) %>% 
   gather('key','value',-nestim) %>% group_by(key,nestim) %>%
@@ -718,6 +721,30 @@ linearization procedure, in which case, not only should linearized models be
 avoided for prediction, but also for drawing any economic inferences.  Overall,
 most parameters are poorly identified as evidenced by their stable (rather than
 decreasing) variability with more data.
+
+To examine case (3)---that the data is so correlated that even 250 years is too little to produce accurate estimates of the true parameters---we may ask how closely the information per observation displayed in \autoref{fig:pen-negll} approaches the theoretical asymptotic limit. For essentially any stationary ergodic stochastic process, limit of the negative loglikelihood per observation as the number of observations approaches infinity exists and is unique. This limit is the \emph{entropy rate} of the process. Mathematically, 
+\[
+\lim_{n\rightarrow\infty} -\frac{1}{n}\ell(X_{1:n}; \theta_0) = h(\theta_0),
+\]
+where $h(\theta_0)$ is the entropy rate. Furthermore, by the generalized asymptotic equipartition property, one can show that for any other parameter vector $\theta \neq \theta_0$,
+\[
+\lim_{n\rightarrow\infty} -\frac{1}{n}\ell(X_{1:n}; \theta) = h(\theta_0) + \mathrm{KL}(\theta_0\ ||\ \theta),
+\]
+where the second term is the Küllback-Leibler divergence. Because $\mathrm{KL}(\theta_0\ ||\ \theta) \geq 0$ asymptotically, $h(\theta_0)$ is a lower bound for the average negative loglikelihood of any parameter vector. Because the data is generated from a linear Gaussian state space model, it is not hard to calculate that $h(\theta_0) \approx 2.25$, significantly \emph{larger} than any of the values in \autoref{fig:pen-negll}. Somehow, the estimated parameters generally have \emph{lower} negative loglikelihoods than the true parameter. The fact that the standard deviations of the shocks (\autoref{fig:shock-sds}) are consistently underestimated suggests that, even over this period, the in-sample fit to the data gives an overly optimistic picture of the long run behavior: we have not allowed $n$ to get large enough. \autoref{fig:entropy-investigation} shows the negative loglikelihood per observation over a much longer horizon---up to 75,000 years of quarterly data. For thousands of years, the parameter vector estimated over the first 250 years is less than the theoretical lower bound, but eventually, it starts to curve upward. This suggests that, both explanations (2) and (3) are accurate: in order to estimate a DSGE accurately, we need massive amounts of data.
+
+```{r entropy-investigation, fig.cap = "Comparing the in-sample negative loglikelihood per observation of a parameter estimated with 1000 observations relative to the true parameter. In the long-run, the entropy rate is a lower bound, but only after about 12,000 years of quarterly data."}
+tib <- readRDS(here::here("data","entropy-investigation.RDS")) 
+ggplot(tib, aes(n, neg_loglikelihood, color = name)) +
+  geom_line() + 
+  ylab("negative loglikelihood per observation") +
+  xlab("number of observations (log scale)") +
+  scale_x_log10(labels = scales::label_number_si()) + 
+  geom_point() + 
+  scale_color_viridis_d(begin=.25, end=.75, 
+                        labels = expression(estimated~hat(theta),
+                                            true~theta[0])) +
+  theme(legend.title = element_blank(), legend.position = "bottom")
+```
 
 
 # Permuting the data {#sec:permutation-summary}
@@ -817,7 +844,7 @@ for(ii in 1:nrow(perms)){
   llikeAll[ii] = getlogLike(ppp, y[perms[ii,],], prior)
   llikeAllML[ii] = getlogLike(ppp, y[perms[ii,],], prior, ML=TRUE)
 }
-save(llike,llikeAll,llikeML,llikeAllML,file="../cluster_output/llike-calculations.Rdata")
+save(llike,llikeAll,llikeML,llikeAllML, file=here::here("cluster_output", "llike-calculations.Rdata"))
 ```
 
 ```{r likelihood-calculations}
@@ -970,10 +997,12 @@ for(i in 1:length(predPerms)){
 ydf = as_tibble(t(y))
 names(ydf) = names(testerr)
 ydf$date = dt
-ydf = ydf %>% gather(key='series',value='value',-date)
+ydf = ydf %>% pivot_longer(-date, names_to = "series")
 allpreds = bind_cols(ydf, preds)
 names(allpreds)[3:4] = c('observed','SW_model')
-truth = allpreds %>% select(-starts_with('value')) %>% filter(date > yq('2006-1')) %>%
+truth = allpreds %>% 
+  select(-starts_with('value')) %>% 
+  filter(date > yq('2006-1')) %>%
   gather(key='key',value='value',-date,-series) 
 flips = allpreds %>% select(date, series, starts_with('value')) %>%
   filter(date > yq('2006-1')) %>%
@@ -983,26 +1012,28 @@ flips = allpreds %>% select(date, series, starts_with('value')) %>%
 ```{r pc-preds-p1, fig.height=8, fig.cap="Out-of-sample predictions for the best predicting permutations (black), the SW model (red), and the observed data (blue)."}
 ggplot(flips, aes(x=date,y=value,grp=key)) +
   geom_line(color='black',size=.1) + 
-  facet_wrap_paginate(~series, scales='free_y',ncol=1,nrow=4,page=1,
+  facet_wrap_paginate(~series, scales='free_y', ncol=1, nrow=4, page=1,
                       strip.position = 'left') +
   geom_line(data=truth, aes(color=key)) + 
   geom_point(data=truth, aes(color=key), size=1.5) +
   scale_color_manual(values=c(blue,red)) + 
   theme(legend.position = 'bottom', legend.title = element_blank(), 
-        strip.placement = 'outside') +
+        strip.placement = 'outside',
+        strip.background = element_blank()) +
   xlab('') + ylab('')
 ```
 
 ```{r pc-preds-p2, fig.height=6, fig.cap="Out-of-sample predictions for the best predicting permutations (black), the SW model (red), and the observed data (blue)."}
 ggplot(flips, aes(x=date,y=value,grp=key)) +
   geom_line(color='black',size=.1) + 
-  facet_wrap_paginate(~series, scales='free_y',ncol=1,nrow=4,page=2,
+  facet_wrap_paginate(~series, scales='free_y', ncol=1, nrow=4, page=2,
                       strip.position = 'left') +
   geom_line(data=truth, aes(color=key)) + 
-  geom_point(data=truth, aes(color=key), size=1.5) +
+  geom_point(data=truth, aes(color=key), size=1.5)+
   scale_color_manual(values=c(blue,red)) + 
   theme(legend.position = 'bottom', legend.title = element_blank(), 
-        strip.placement = 'outside') +
+        strip.placement = 'outside',
+        strip.background = element_blank()) +
   xlab('') + ylab('')
 ```
 
