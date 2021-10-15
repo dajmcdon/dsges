@@ -382,8 +382,8 @@ both the simulated annealing method, which stochastically explores the
 likelihood surface in a principled manner, and the conjugate gradient
 technique.  Each procedure was started at 5 random initializations (drawn from
 the prior distribution) and run for 50,000 iterations (likelihood evaluations)
-for each starting point.  We train the model using only the first `r
-length(trainset)` time points, saving the remainder to evaluate the model's
+for each starting point.  We train the model using only the first
+`r length(trainset)` time points, saving the remainder to evaluate the model's
 (pseudo-out-of-sample) predictive performance.
 
 \autoref{tab:parameter-estimate-table} presents the posterior mode based on our
