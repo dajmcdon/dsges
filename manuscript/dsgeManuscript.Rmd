@@ -9,7 +9,7 @@ authors:
       University of British Columbia  
       Vancouver, BC Canada  
       \email{daniel@stat.ubc.ca}
-    thanks: Both authors were supported by a grant (INO1400020) from the Institute for New Economic Thinking. DJM was partially supported by the National Science Foundation Grants DMS-1407439 and DMS-1753171. We are grateful for advice and comments to David N. DeJong, J. Bradford DeLong and Robert Waldmann (none of whom should be held responsible for our choices).  CRS wishes to acknowledge support from the National Science Foundation (grants DMS1207759 and DMS1418124), and valuable conversations over many years with Zmarak M. Shalizi.
+    thanks: Both authors were supported by a grant (INO1400020) from the Institute for New Economic Thinking.  We are grateful for advice and comments to David N. DeJong, J. Bradford DeLong and Robert Waldmann (none of whom should be held responsible for our choices).   DJM was partially supported by the National Science Foundation Grants DMS-1407439 and DMS-1753171.CRS wishes to acknowledge support from the National Science Foundation (grants DMS1207759 and DMS1418124), and valuable conversations over many years with Zmarak M. Shalizi.
   - name: Cosma Rohilla Shalizi
     address: |
       Departments of Statistics and Data Science and of Machine Learning  
@@ -20,7 +20,7 @@ authors:
       \email{cshalizi@cmu.edu}
     
 abstract: |
-  Dynamic stochastic general equilibrium (DSGE) models have been an ubiquitous, and controversial, part of in macroeconomics for decades.  In this paper, we approach DSGEs purely as statstical models.  We do this by applying two common techniques from statistical modelling to the canonical \citet{{SmetsWouters2007} DSGE: (1) we simulate the model and see how well it can be estimated from its own simulation output, and (2) we see how well it can seem to fit nonsense data.  We find that (1) even with centuries' worth of data, the model remains poorly estimated, and (2) when we swap series at random, so that (e.g.) what the model  gets as the inflation rate is really hours worked, what it gets as hours worked is really investment, etc., the fit is often only slightly impaired, and in a large percentage of cases actually _improves_ (even out of sample)n.  Taken together, these findings cast serious doubt on the meaningfulness of parameter estimates for this DSGE, and on whether this specification represents anything structural about the economy.  Constructively, our approaches can be used for model validation by anyone working with macroeconomic time series.
+  Dynamic stochastic general equilibrium (DSGE) models have been an ubiquitous, and controversial, part of in macroeconomics for decades.  In this paper, we approach DSGEs purely as statstical models.  We do this by applying two common model validation checks to the canonical \citet{SmetsWouters2007} DSGE: (1) we simulate the model and see how well it can be estimated from its own simulation output, and (2) we see how well it can seem to fit nonsense data.  We find that (1) even with centuries' worth of data, the model remains poorly estimated, and (2) when we swap series at random, so that (e.g.) what the model  gets as the inflation rate is really hours worked, what it gets as hours worked is really investment, etc., the fit is often only slightly impaired, and in a large percentage of cases actually _improves_ (even out of sample).  Taken together, these findings cast serious doubt on the meaningfulness of parameter estimates for this DSGE, and on whether this specification represents anything structural about the economy.  Constructively, our approaches can be used for model validation by anyone working with macroeconomic time series.
   
   
 admonition: "DRAFT: comments welcome; please do not quote or cite"
@@ -192,7 +192,7 @@ issues that arise in estimating the parameters of this model.
 ## Solving DSGEs {#sec:solveDSGEs}
 
 
-A general DSGE model is given by a solution to a constrained stochastic
+A DSGE model is the solution to a constrained stochastic
 inter-temporal optimization problem
 \begin{align}
   z_t^* &=\argmax \sum_{t=0}^\infty \E g(z_t) &&\mbox{s.t.}&z_t&=h(z_{t-1}),
