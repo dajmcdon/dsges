@@ -98,16 +98,18 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Empirical Macroeconomics and DSGE Modeling in Statistical Perspective}
+\title{Empirical Macroeconomics and DSGE Modeling in Statistical
+Perspective}
 \author{  
-    Daniel J. McDonald\thanks{Both authors were supported by a grant (INO1400020) from the Institute
-for New Economic Thinking. We are grateful for advice and comments to
+    Daniel J. McDonald\thanks{Both authors were supported by a grant
+(INO1400020) from the Institute for New Economic Thinking. DJM was
+partially supported by the National Science Foundation Grants
+DMS-1407439 and DMS-1753171. We are grateful for advice and comments to
 David N. DeJong, J. Bradford DeLong and Robert Waldmann (none of whom
-should be held responsible for our choices). DJM was partially supported
-by the National Science Foundation Grants DMS-1407439 and
-DMS-1753171.CRS wishes to acknowledge support from the National Science
-Foundation (grants DMS1207759 and DMS1418124), and valuable
-conversations over many years with Zmarak M. Shalizi.}  \\
+should be held responsible for our choices). CRS wishes to acknowledge
+support from the National Science Foundation (grants DMS1207759 and
+DMS1418124), and valuable conversations over many years with Zmarak M.
+Shalizi.}  \\
   Department of Statistics\\
 University of British Columbia\\
 Vancouver, BC Canada\\
@@ -116,8 +118,6 @@ Vancouver, BC Canada\\
   Departments of Statistics and Data Science and of Machine Learning\\
 Carnegie Mellon University\\
 Pittsburgh, PA USA\\
-\emph{and} Santa Fe Institute\\
-Santa Fe, NM USA\\
 \email{cshalizi@cmu.edu}  
   }
 \date{}
@@ -129,23 +129,7 @@ DRAFT: comments welcome; please do not quote or cite
 \end{quotation}
 
 \begin{abstract}
-  Dynamic stochastic general equilibrium (DSGE) models have been an
-  ubiquitous, and controversial, part of in macroeconomics for decades. In
-  this paper, we approach DSGEs purely as statstical models. We do this by
-  applying two common model validation checks to the canonical
-  \citet{SmetsWouters2007} DSGE: (1) we simulate the model and see how
-  well it can be estimated from its own simulation output, and (2) we see
-  how well it can seem to fit nonsense data. We find that (1) even with
-  centuries' worth of data, the model remains poorly estimated, and (2)
-  when we swap series at random, so that (e.g.) what the model gets as the
-  inflation rate is really hours worked, what it gets as hours worked is
-  really investment, etc., the fit is often only slightly impaired, and in
-  a large percentage of cases actually \emph{improves} (even out of
-  sample). Taken together, these findings cast serious doubt on the
-  meaningfulness of parameter estimates for this DSGE, and on whether this
-  specification represents anything structural about the economy.
-  Constructively, our approaches can be used for model validation by
-  anyone working with macroeconomic time series. 
+  Write abstract here. 
   
   \vspace{11pt}
   \noindent\textbf{Keywords:} 
@@ -155,9 +139,9 @@ DRAFT: comments welcome; please do not quote or cite
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
-Since the 1980s, academic macroeconomics has been dominated by dynamic
+Since around 1980, academic macroeconomics has been dominated by dynamic
 stochastic general equilibrium (DSGE) models, and economists have
-devoted a much attention to their specification, elaboration,
+devoted a great deal of attention to their specification, elaboration,
 mathematical manipulation, estimation, and theoretical refinement. This
 rise to prominence has been opposed, and there have always been critics
 of the whole approach on theoretical grounds, charging that, in one way
@@ -168,22 +152,24 @@ whether they meet common, intuitive standards of statistical modeling.
 
 In this paper, we are not primarily concerned with whether DSGE models
 can predict macroeconomic variables outside of the time period used to
-estimate their parameters. Out-of-sample forecasting is a quite
-elementary test of any statistical model's actual fit to the data
-\citep{tEoSL-2nd}, and this has been appreciated for a very long time
-\citep{Stone1974,Geisser-predictive-sample-reuse,Geisser-Eddy-predictive-approach}.
-Moreover, it's well-established that DSGEs are bad at it
-\citep{Edge-Gurkaynak-on-dsges}, and even vector autoregressions do much
-better. We thus take it for granted that DSGEs are \emph{currently} no
-good for prediction, and ask whether they will \emph{ever} be capable of
-accurate forecasts. By the simple, standard device of simulating a DSGE
-and then fitting the same model to the simulation output, we show
-(sec.~\ref{sec:simulate-estimate} below) that even when correctly
-specified in their entirety and provided with centuries of simulated
-data, these models remain incapable of forecasting. Worse, their
-parameters remain very badly estimated. To reliably estimate models of
-such coelenterate flexibility would require thousands of years (at
-least) of data from a stationary economy.
+estimate their parameters. We avoid this issue not because out-of-sample
+forecasting isn't a quite elementary test of any statistical model's
+actual fit to the data (it is \citep{tEoSL-2nd}, and this has been
+appreciated for a very long time
+\citep{Stone1974,Geisser-predictive-sample-reuse,Geisser-Eddy-predictive-approach}),
+nor because DSGEs do well at it (they are miserable:
+\citealt{Edge-Gurkaynak-on-dsges}), nor because it's unfair to expect
+any model to do well (even vector autoregressions do much better).
+Rather, we take it for granted that DSGEs are \emph{currently} not
+useful predictive devices and ask whether they will \emph{ever} be
+capable of accurate forecasts. By the simple, standard device of
+simulating a DSGE and then fitting the same model to the simulation
+output, we show (sec.~\ref{sec:simulate-estimate} below) that even when
+correctly specified in their entirety and provided with centuries of
+simulated data, these models remain incapable of forecasting. Worse,
+their parameters remain very badly estimated. To reliably estimate
+models of such coelenterate flexibility would require thousands of years
+(at least) of data from a stationary economy.
 
 We are aware that many economists downplay using DSGEs for prediction on
 the grounds that the models are instead supposed to inform us about the
@@ -205,7 +191,7 @@ predictive ability, since the later does not exist.
 We also undermine the notion that DSGE specifications capture the
 structure of the economy by the simple expedient of swapping the
 different time series on which they are fit --- giving the model as
-``investment'' the series that is really ``hours worked'', and so forth
+``investment'' the series that is really ``hours worked,'' and so forth
 (sec.~\ref{sec:permutation-summary} below). Not only does such series
 swapping do little to degrade the DSGE's performance, in sample or out
 of sample, in a large fraction of permutations it actually
@@ -217,8 +203,8 @@ but such faith truly is maintained on the evidence of things not seen.
 
 The principles to which we appeal --- using simulation to assess
 estimation methods; using randomization to gauge how well a model can
-appear to fit nonsense data --- are not recondite points of mathematical
-theory, and involve no controversial questions in the foundations of
+appear to fit nonsense data --- are neither recondite points of
+mathematical theory nor controversial questions in the foundations of
 statistics. Rather, they are readily explained notions, accepted on
 pretty much all sides within modern statistics, whose force is easily
 grasped once they are presented. We return to their implications for
@@ -237,56 +223,55 @@ paper, on this account, was the ``real business cycle'' model of
 \citet{KydlandPrescott1982}. Versions of this story are familiar from
 textbooks (e.g., \citealt{DeJongDave2007}), and it's not our place here
 to dispute it. It is undeniably true that, following
-\citet{KydlandPrescott1982}, macroeconomists rapidly cultivated many
-breeds of DSGE model, embodying a range of substantive economic
-assumptions, but also conserving certain crucial features that define
-the lineage, such as the use of representative agents (often just one
-representative agent) in equilibrium. The motivation was also conserved:
-DSGEs (it is held) clearly separate enduring, ``structural'' aspects of
-the economy, ultimately relating to tastes, technologies and
-institutions, from policy and from fluctuations. The structural,
-tastes-and-technologies aspects are held to be invariant, at least to
-policy and at least over the relevant time scales. Embedding these into
-a dynamic equilibrium model is supposed to get around the Lucas
-critique, by ensuring that even if the predictions of the model are
-known and are used as the basis of policy, the model will remain valid,
-\emph{because} it describes an equilibrium over time.
+\citet{KydlandPrescott1982}, macroeconomists rapidly developed a large
+range of DSGE models, embodying a range of substantive economic
+assumptions, but also maintaining certain crucial features, such as the
+use of one or at most a few representative agents in equilibria with
+each other. The motivation also remains the same: DSGEs (it is held)
+clearly separate enduring, ``structural'' aspects of the economy,
+ultimately relating to tastes, technologies and institutions, from
+policy and from fluctuations. The structural, tastes-and-technologies
+aspects are held to be invariant, at least to policy and at least over
+the relevant time scales. Embedding these into a dynamic equilibrium
+model is supposed to get around the Lucas critique, by ensuring that
+even if the predictions of the model are known and are used as the basis
+of policy, the model will remain valid, \emph{because} it describes an
+equilibrium over time.
 
 The model we focus on, that of \citet{SmetsWouters2007}, while now some
 years old, is still widely regarded as an acceptable baseline model. A
 great deal of macroeconomic theorizing thus consists of taking this
 model, or other very similar ones, and elaborating on them by adding new
 frictions or shocks. These additions are generally intended to
-accommodate observed phenomena, to incorporate conjectured mechanisms,
-or both. It is not our purpose here to comment on specific descendants
-of the Smet-Wouters or other baseline DSGE models. We merely note that
-the strategy of responding to issues or defects with the model by always
-making it \emph{more} complex (more frictions, more shocks, etc.) is at
-least questionable from a statistical perspective.
+accommodate observed phenomena, to incorporate conjecture mechanisms, or
+both. It is not our purpose here to comment on specific elaborations of
+the Smet-Wouters or other baseline DSGE models. We merely note that the
+strategy of responding to issues or defects with the model by always
+making it more complex (more frictions, more shocks, etc.) is at least
+questionable from a statistical perspective.
 
 As we wrote in the introduction, our objective here is not to add to the
 literature for or against DSGE models from the viewpoint of economic
-theory. It is not even pertinent to survey that voluminous, often
-acrimonious, literature. We take no sides, here, on whether agents in
-macroeconomic models should be assumed to have rational (rather than
-adaptive) expectations, should have perfect (rather than bounded)
-rationality, should (or should not) obey the Euler equations, etc. We do
-not even take a side on whether aggregating large number of
+theory. It is not even to the point to survey that voluminous, often
+acrimonious, literature. It is not our place to take sides on whether
+agents in macroeconomic models should be assumed to have rational
+(rather than adaptive) expectations, should have perfect (rather than
+bounded) rationality, should (or should not) obey the Euler equations.
+We do not even take a side on whether aggregating large number of
 heterogeneous economic actors into a few representative agents is in
 fact ``microfounded''\footnote{But on this point, we cannot resist
   noting that it is hard to see how to get around the difficulties
-  raised by \citet{Kirman-contra-representative-agent} and, more
-  especially,
+  raised by \citet{Kirman-contra-representative-agent} and especially
   \citet{Jackson-Yariv-non-existence-of-representative-agents}.}. Those
 who are \emph{a priori} inclined to dismiss DSGEs as inappropriate
 models will, we suspect, find our results on their statistical
 difficulties congenial\footnote{Except, perhaps, for those who also
-  object to quantitative empirical economics in the first place.}. But
-no result we are aware of implies that theoretically sound economic
-models must also have good statistical properties. Moreover, for all we
-know at this stage, all the proposed alternatives to DSGEs \emph{also}
-suffer from the same statistical flaws! (We invite their partisans, or
-perhaps their enemies, to check.)
+  object to empirical economics in the first place.}. But no result we
+are aware of implies that theoretically sound economic models must also
+have good statistical properties. Moreover, for all we know at this
+stage, all the proposed alternatives to DSGEs \emph{also} suffer from
+the same statistical flaws! (We invite their partisans, or perhaps their
+enemies, to check.)
 
 Turning to the literature on statistical properties of DSGEs, this has
 mostly focused on issues of estimation and testing; we cite specific
@@ -321,8 +306,8 @@ of the issues that arise in estimating the parameters of this model.
 \hypertarget{sec:solveDSGEs}{%
 \subsection{Solving DSGEs}\label{sec:solveDSGEs}}
 
-A DSGE model is the solution to a constrained stochastic inter-temporal
-optimization problem \begin{align}
+A general DSGE model is given by a solution to a constrained stochastic
+inter-temporal optimization problem \begin{align}
   z_t^* &=\argmax \sum_{t=0}^\infty \E g(z_t) &&\mbox{s.t.}&z_t&=h(z_{t-1}),
 \end{align} for some nonlinear functions \(g\) and \(h\) parametrized by
 a \(k\)-dimensional vector of ``deep'' parameters \(\theta\). The
@@ -463,20 +448,20 @@ similar for the unpenalized negative log likelihood. To check for
 robustness, we also ran the optimization procedure for 1 million
 parameter draws and the likelihood only decreased by about 1\%. We are
 therefore confident that we have a parameter combination which nearly
-achieves the global optimum.\footnote{We have been unable to explain why
-  \citet{SmetsWouters2007} gives such a different estimate of the
-  posterior mode. It is worth pointing out however, that their MCMC is
-  not necessarily attempting to maximize the posterior, although it may
+achieves the global optimum.\footnote{We have been
+  unable to explain why \citet{SmetsWouters2007} gives such a different
+  estimate of the posterior mode. It is worth pointing out however, that their
+  MCMC is not necessarily attempting to maximize the posterior, although it may
   locate one.}
 
-\begin{table}
+\begin{table}[t]
 
 \caption{\label{tab:parameter-estimate-table}Prior distributions, posterior modes, and posterior mode as
       estimated by \citep{SmetsWouters2007} for the 36 estimated
       parameters. All values are rounded to two decimal places.}
 \centering
 \fontsize{9}{11}\selectfont
-\begin{tabular}[t]{cccccccc}
+\begin{tabular}{cccccccc}
 \toprule
  & \makecell[c]{prior\\distribution} & \makecell[c]{prior\\mean} & \makecell[c]{prior\\stdev} & \makecell[c]{lower\\bound} & \makecell[c]{upper\\bound} & \makecell[c]{posterior\\mode} & \makecell[c]{SW posterior\\mode}\\
 \midrule
@@ -527,270 +512,13 @@ $\alpha$ & gaussian & 0.30 & 0.05 & 0.01 & 1.00 & 0.28 & 0.19\\
 \end{tabular}
 \end{table}
 
-\hypertarget{sec:simulate-estimate}{%
-\section{Simulate and estimate}\label{sec:simulate-estimate}}
-
-\label{sec:simulate-estimate}
-
-A simple way to evaluate a stochastic model is to simulate a long time
-series from the model and see how well we can estimate the generating
-process given more and more data. In a sense, this is a minimal
-requirement for any model: does it produce consistent estimates of the
-true parameters? And furthermore, how much data will we need?
-Statistical theory for independent and identically distributed data says
-that maximum likelihood estimators for a fixed number of parameters are
-\(n\)-consistent in MSE. This is essentially as fast as we could hope.
-In this exercise, we abstract from the non-linear DSGE: supposing that
-the data were actually generated by the linearized DSGE represented by
-equations \eqref{eq:ss-system} and \eqref{eq:obs-equation}, can we
-recover the ``deep'' parameters which generated the data?
-
-To answer this (relatively simple) question, we generate data using
-using the parameters estimated above and presented in
-\autoref{tab:parameter-estimate-table}. To reduce dependence on initial
-conditions, we simulate 3100 data points and discard the first 1000. We
-then train the model using the first 100 data points (25 years worth of
-quarterly data), and try to predict the next 1000 to measure
-out-of-sample performance. We then increment forward 20 time-steps (5
-years), train again and predict the next 1000 observations. We continue
-this process until we are using 1100 data points (275 years of data) to
-estimate the model. To average over simulation error, we repeat the
-entire exercise 100 times. For each estimation, we initialize the
-optimization procedure at the true parameter value and run it for 30000
-iterations. This ensures that the true parameters are considered,
-maximizing the chance that the estimation will return the data
-generating values. Our goal here is to learn whether we could hope to
-learn the right parameters in 275 years' time if the linearized DSGE is
-actually true, and furthermore, how well can we predict future economic
-movements under this idealized scenario.\footnote{It is, of course,
-  wildly implausible to imagine a 275 year interval which does
-  \emph{not} see massive changes to tastes, technologies and
-  institutions. The differences between 1746 and 2021 are obvious, but
-  your favorite economic historian will explain at length that these
-  were all transformed between 1471 and 1746, too. But recognizing this
-  will hardly make DSGEs \emph{more} plausible.}
-
-All figures in this section show the mean in red along with 30\%, 60\%,
-80\%, and 90\% confidence bands calculated from the replications.
-
-\begin{figure}[t]
-
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/train-error-1} 
-
-}
-
-\caption{Training (in sample) error averaged across series as the number of training points increases. We would expect the variability to decline while the average remains constant. The mean is shown in red along with 30\%, 60\%, 80\%, and 90\% confidence bands calculated from the replications.}\label{fig:train-error}
-\end{figure}
-
-\begin{figure}[t]
-
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/test-error-1} 
-
-}
-
-\caption{Out-of-sample error averaged across series as the number of training points increases. We would expect both the variability and the average to decline. The blue line is the test error for the true model.}\label{fig:test-error}
-\end{figure}
-
-\autoref{fig:train-error} shows the average training error (averaged
-across the 7 series). As we would expect, the variability declines as
-the size of the training set increases, though not the average.
-\autoref{fig:test-error} shows the average prediction error over the 7
-series. It improves markedly as the training set increases to about 400
-observations (=100 years) but then plateaus. This is troubling: as we
-get more and more data, we can not predict new data any better. This
-indicates one of three possibilities: (1) that with about 400
-observations, we can estimate the parameters nearly perfectly, (2) that
-the model is poorly identified---some parameters will simply never be
-well estimated, but we can predict well anyway, or (3) the data are so
-highly correlated that the range of training observations we consider is
-far too small---we actually need millions of observations in order to
-see a meaningful decline in out-of-sample predictive performance. We can
-better determine which of these three is occurring by comparing with the
-predictive performance of the true parameters and examining the error in
-parameter estimates. The red lines in \autoref{fig:test-error} are the
-out-of-sample mean (solid) and median (dashed) prediction error for the
-true parameters. The test error is not getting any closer to this ideal
-scenario, plateauing slightly above the baseline by about 400 training
-points. This seems to suggest that explanation (2) is accurate: even
-with more data, we will never be able to recover the true parameters,
-though we get some improvement in predictions relatively quickly.
-
-\begin{figure}[t]
-
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/parm-error-1} 
-
-}
-
-\caption{The parameter MSE shows similar behavior to the predictive MSE: steep initial decline toward an asymptote greater than that of the true model.}\label{fig:parm-error}
-\end{figure}
-
-\begin{figure}[t]
-
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/pen-negll-1} 
-
-}
-
-\caption{The negative log-likelihood (in-sample) per observation.}\label{fig:pen-negll}
-\end{figure}
-
-\begin{figure}[t]
-
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/predict-negll-1} 
-
-}
-
-\caption{The negative predictive log-likelihood (out-of-sample) per observation.}\label{fig:predict-negll}
-\end{figure}
-
-\begin{figure}[t]
-
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/individual-series-1} 
-
-}
-
-\caption{Mean-squared prediction error for each series.}\label{fig:individual-series}
-\end{figure}
-
-Examining the parameter error serves to confirm this conjecture.
-\autoref{fig:parm-error} shows the average squared error of the
-parameter estimates. Improvement in this metric also stagnates despite
-the growing training sets. \autoref{fig:pen-negll} and
-\autoref{fig:predict-negll} show the change in information per
-observation (in sample) and per prediction (out of sample). For maximum
-likelihood inference, we would expect both of these to decline as the
-amount of training data increases. These figures therefore confirm that
-the estimation procedure is responding to the increased sample size even
-though prediction and estimation errors both fail to improve
-meaningfully. \autoref{fig:individual-series} shows the average
-prediction error for each series individually. From this decomposition,
-prediction of all time series improves, but only labor ever reaches the
-minimum (relative to the truth). The other series are all predicted
-poorly.
-
-\begin{figure}[t]
-
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/shock-sds-1} 
-
-}
-
-\caption{Estimates for the standard deviations of stochastic shocks.}\label{fig:shock-sds}
-\end{figure}
-
-\begin{figure}[t]
-
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/autocorrelations-shocks-1} 
-
-}
-
-\caption{Estimates for the autocorrelation parameters in the shock processes.}\label{fig:autocorrelations-shocks}
-\end{figure}
-
-\begin{figure}[t]
-
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/deep1-1} 
-
-}
-
-\caption{Estimates of "deep" parameters}\label{fig:deep1}
-\end{figure}
-
-\begin{figure}[t]
-
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/deep2-1} 
-
-}
-
-\caption{Estimates of "deep" parameters}\label{fig:deep2}
-\end{figure}
-
-\begin{figure}[t]
-
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/deep3-1} 
-
-}
-
-\caption{Estimates of "deep" parameters}\label{fig:deep3}
-\end{figure}
-
-Figures \ref{fig:shock-sds}--\ref{fig:deep3} show the estimates of each
-parameter individually. The horizontal red lines indicate the truth.
-Here we can see that while many parameters are well-estimated with
-decreasing variability as the training sets grow, others converge to the
-wrong values, or fail to converge at all. This phenomenon holds
-especially for both the parameters of the shock processes, but also for
-some of the economically-relevant ``deep'' parameters. For instance,
-\(\sigma_l\), the elasticity of labor supply with respect to the real
-wage , is consistently underestimated by about -93\%. The data provides
-essentially no information about \(\iota_w\), which measures the
-dependence of real wages on lagged inflation. Other parameters which are
-poorly estimated include \(\varphi\), the steady-state steady-state
-elasticity of the capital adjustment cost function. In all these cases,
-estimation is biased, so using the estimated values from the real data
-to draw conclusions about the real economy is unwise. It is possible
-that this bias is due to the linearization procedure, in which case, not
-only should linearized models be avoided for prediction, but also for
-drawing any economic inferences. Overall, most parameters are poorly
-identified as evidenced by their stable (rather than decreasing)
-variability with more data.
-
-To examine case (3)---that the data is so correlated that even 250 years
-is too little to produce accurate estimates of the true parameters---we
-may ask how closely the information per observation displayed in
-\autoref{fig:pen-negll} approaches the theoretical asymptotic
-limit\footnote{We are adapting a procedure recommended by \citet{Andy-Fraser-on-HMMs} for evaluating general hidden Markov models.}
-For essentially any stationary ergodic stochastic process, limit of the
-negative loglikelihood per observation as the number of observations
-approaches infinity exists and is unique \citep{Gray-entropy-2nd}. This
-limit is the \textbf{entropy rate} of the process. Mathematically, with
-probability 1, \[
-\lim_{n\rightarrow\infty} -\frac{1}{n}\ell(X_{1:n}; \theta_0) = h(\theta_0),
-\] where \(h(\theta_0)\) is the entropy rate. Furthermore, by the
-generalized asymptotic equipartition property
-\citep{Algoet-and-Cover-on-AEP}, one can show that for any other
-parameter vector \(\theta \neq \theta_0\), with probability 1, \[
-\lim_{n\rightarrow\infty} -\frac{1}{n}\ell(X_{1:n}; \theta) = h(\theta_0) + \mathrm{KL}(\theta_0\ ||\ \theta),
-\] where the second term is the Kullback-Leibler divergence rate
-\citep{Gray-entropy-2nd}. Because
-\(\mathrm{KL}(\theta_0\ ||\ \theta) \geq 0\) asymptotically,
-\(h(\theta_0)\) is a lower bound for the average negative loglikelihood
-of any parameter vector.
-
-Because the data is generated from a linear Gaussian state space model,
-it is not hard to calculate that \(h(\theta_0) \approx 2.25\),
-significantly \emph{larger} than any of the values in
-\autoref{fig:pen-negll}. Somehow, the estimated parameters generally
-have \emph{lower} negative loglikelihoods than the true parameter. The
-fact that the standard deviations of the shocks
-(\autoref{fig:shock-sds}) are consistently underestimated suggests that,
-even over this period, the in-sample fit to the data gives an overly
-optimistic picture of the long run behavior: we have not allowed \(n\)
-to get large enough. \autoref{fig:entropy-investigation} shows the
-negative loglikelihood per observation over a much longer horizon---up
-to 75,000 years of quarterly data. For thousands of years, the parameter
-vector estimated over the first 250 years is less than the theoretical
-lower bound, but eventually, it starts to curve upward. This suggests
-that, both explanations (2) and (3) are accurate: in order to estimate a
-DSGE accurately, we need massive amounts of data.
-
-\begin{figure}[t]
-
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/entropy-investigation-1} 
-
-}
-
-\caption{Comparing the in-sample negative loglikelihood per observation of a parameter estimated with 1000 observations relative to the true parameter. In the long-run, the entropy rate is a lower bound, but only after about 12,000 years of quarterly data.}\label{fig:entropy-investigation}
-\end{figure}
-
-\hypertarget{sec:permutation-summary}{%
-\section{Permuting the data}\label{sec:permutation-summary}}
-
+\section{Permuting the data}
 \label{sec:permutation-summary}
 
 One way to assess the predictive ability (and economic content) of the
 \citet{SmetsWouters2007} DSGE model is to perform a simple permutation
-test, permuting \emph{across} the series rather than within them. That
-is, rather than giving the model data in the order it expects, we swap
-the data series with each other and see if the model predicts future
+test. That is, rather than giving the model data in the order it
+expects, we permute the data series and see if the model predicts future
 data any better. We estimated the model on the properly ordered data
 (presented in the previous section) as well as all 5039 other
 permutations of the 7 data series. For each estimation, we used the same
@@ -800,7 +528,7 @@ predictive performance is tested on the remaining 51.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/mean-percent-improvement-1} 
+{\centering \includegraphics{gfx/mean-percent-improvement-1} 
 
 }
 
@@ -828,7 +556,7 @@ than the baseline model.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/series-percent-improvement-1} 
+{\centering \includegraphics{gfx/series-percent-improvement-1} 
 
 }
 
@@ -837,7 +565,7 @@ than the baseline model.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/mean-scaled-mse-1} 
+{\centering \includegraphics{gfx/mean-scaled-mse-1} 
 
 }
 
@@ -846,7 +574,7 @@ than the baseline model.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/series-scaled-mse-1} 
+{\centering \includegraphics{gfx/series-scaled-mse-1} 
 
 }
 
@@ -869,7 +597,7 @@ performance of the baseline model.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/loglike-pred-ml-1} 
+{\centering \includegraphics{gfx/loglike-pred-ml-1} 
 
 }
 
@@ -887,12 +615,12 @@ information. An out-of-sample evaluation (without penalty) shows that
 when evaluated through the likelihood. \autoref{fig:loglike-pred-ml}
 gives a visual depiction.
 
-\begin{table}
+\begin{table}[t]
 
 \caption{\label{tab:best-results}Series MSEs for SW and top models.}
 \centering
 \resizebox{\linewidth}{!}{
-\begin{tabular}[t]{lrrrrrrr}
+\begin{tabular}{lrrrrrrr}
 \toprule
   & hours worked & interest rate & inflation & output & consumption & investment & wages\\
 \midrule
@@ -904,12 +632,12 @@ Model w/ lowest out-of-sample likelihood & 0.32 & 0.01 & 0.09 & 0.42 & 0.35 & 2.
 \end{tabular}}
 \end{table}
 
-\begin{table}
+\begin{table}[t]
 
 \caption{\label{tab:top-20-perc}Permutations with highest \% improvement}
 \centering
 \resizebox{\linewidth}{!}{
-\begin{tabular}[t]{llllllll}
+\begin{tabular}{llllllll}
 \toprule
 hours worked & interest rate & inflation & output & consumption & investment & wages & \# different\\
 \midrule
@@ -940,12 +668,12 @@ inflation & hours worked & interest rate & investment & output & wages & consump
 \end{tabular}}
 \end{table}
 
-\begin{table}
+\begin{table}[t]
 
 \caption{\label{tab:top-20-scmse}Permutations with lowest average scaled MSE}
 \centering
 \resizebox{\linewidth}{!}{
-\begin{tabular}[t]{llllllll}
+\begin{tabular}{llllllll}
 \toprule
 hours worked & interest rate & inflation & output & consumption & investment & wages & \# different\\
 \midrule
@@ -976,12 +704,12 @@ hours worked & investment & output & wages & inflation & interest rate & consump
 \end{tabular}}
 \end{table}
 
-\begin{table}
+\begin{table}[t]
 
 \caption{\label{tab:top-20-llike}Permutations with lowest negative log likelihood}
 \centering
 \resizebox{\linewidth}{!}{
-\begin{tabular}[t]{llllllll}
+\begin{tabular}{llllllll}
 \toprule
 hours worked & interest rate & inflation & output & consumption & investment & wages & \# different\\
 \midrule
@@ -1021,15 +749,15 @@ permutations for each evaluation method. There are few commonalities
 across the best models. One aspect to note is that output shows up in
 many places \emph{except} where it is supposed to go. Many models
 perform better with wages in that position. It is unclear whether this
-is because the model is exceptionally bad at predicting output, because
-that slot likes to predict series with small variance, or because that
-slot is simply over-regularized. Note that hours worked, and to lesser
+is because the model is exceptionally bad at predicting output, whether
+that slot likes to predict series with small variance, or whether that
+slot is simply over regularized. Note that hours worked, and to some
 extent, the interest rate, are the only series that appear consistently
 in the correct places.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/scaled-parameter-boxplots-1} 
+{\centering \includegraphics{gfx/scaled-parameter-boxplots-1} 
 
 }
 
@@ -1038,7 +766,7 @@ in the correct places.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/perc-parameter-deviation-1} 
+{\centering \includegraphics{gfx/perc-parameter-deviation-1} 
 
 }
 
@@ -1057,7 +785,7 @@ parameter estimates as percent deviations from the SW model estimates.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/pc-preds-p1-1} 
+{\centering \includegraphics{gfx/pc-preds-p1-1} 
 
 }
 
@@ -1066,7 +794,7 @@ parameter estimates as percent deviations from the SW model estimates.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/pc-preds-p2-1} 
+{\centering \includegraphics{gfx/pc-preds-p2-1} 
 
 }
 
@@ -1077,7 +805,7 @@ We now examine how well the SW model predicts future data relative to
 the best models we could have used, had we seen the data.
 \autoref{fig:pc-preds-p1} and \autoref{fig:pc-preds-p2} show the
 out-of-sample predictions for top 20 flips based on ``average percent
-improvement''. This analysis is a post-hoc measure as the best models
+improvement.'' This analysis is a post-hoc measure as the best models
 were selected to make these predictions well, though the parameters were
 estimated without access to this data. We also show the observed data
 and the predictions from the SW model. The SW model is quite bad at
@@ -1092,9 +820,218 @@ accurate for the interest rate, though this should perhaps be expected
 given that the Taylor rule may well drive Federal Reserve decisions
 rather than describe them.
 
+\hypertarget{sec:simulate-estimate}{%
+\section{Simulate and estimate}\label{sec:simulate-estimate}}
+
+\label{sec:simulate-estimate}
+
+Another simple method for evaluating the forecasting ability of a
+stochastic model is to simulate a long time series from the model and
+assess how well we can estimate the generating process given more and
+more data. In a sense, this is a minimal requirement for any model: does
+it produce consistent estimates of the true parameters? And furthermore,
+how long will we need? Statistical theory for independent and
+identically distributed data says that maximum likelihood estimators for
+a fixed number of parameters are \(n\)-consistent in MSE. This is
+essentially as fast as we could hope. In this exercise, we abstract from
+the non-linear DSGE: suppose that the data were actually generated by
+the linearized DSGE represented by equations \eqref{eq:ss-system} and
+\eqref{eq:obs-equation}, can we recover the ``deep'' parameters which
+generated the data?
+
+To evaluate this (relatively simple) question, we generate data using
+using the parameters estimated in the previous section and presented in
+\autoref{tab:parameter-estimate-table}. To avoid any dependence on
+initial conditions, we simulate 3100 data points and discard the first
+1000. We then train the model using the first 100 data points (25 years
+worth of quarterly data), and try to predict the next 1000 to measure
+out-of-sample performance. We then increment forward 20 time-steps (5
+years), train again and predict the next 1000 observations. We continue
+this process until we are using 1100 data points (275 years of data) to
+estimate the model. To average over simulation error, we repeat the
+entire exercise 100 times. For each estimation, we initialize the
+optimization procedure at the true parameter value and run it for 30000
+iterations. This ensures that the true parameters are considered,
+maximizing the chance that the estimation will return the data
+generating values. Our goal here is to learn whether we could hope to
+learn the right parameters in 275 years' time if the linearized DSGE is
+actually true, and furthermore, how well can we predict future economic
+movements under this idealized scenario. All figures in this section
+show the mean in red along with 30\%, 60\%, 80\%, and 90\% confidence
+bands calculated from the replications.
+
+\begin{figure}[t]
+
+{\centering \includegraphics{gfx/train-error-1} 
+
+}
+
+\caption{Training (in sample) error averaged across series as the number of training points increases. We would expect the variability to decline while the average remains constant. The mean is shown in red along with 30\%, 60\%, 80\%, and 90\% confidence bands calculated from the replications.}\label{fig:train-error}
+\end{figure}
+
+\begin{figure}[t]
+
+{\centering \includegraphics{gfx/test-error-1} 
+
+}
+
+\caption{Out-of-sample error averaged across series as the number of training points increases. We would expect both the variability and the average to decline. The blue line is the test error for the true model.}\label{fig:test-error}
+\end{figure}
+
+\autoref{fig:train-error} shows the average training error (averaged
+across the 7 series). As we would expect, the variability declines as
+the size of the training set increases, though not the average.
+\autoref{fig:test-error} shows the average prediction error over the 7
+series. It improves markedly as the training set increases to about 400
+observations but then plateaus. This is troubling: as we get more and
+more data, we can not predict new data any better. This indicates one of
+three possibilities: (1) that with about 400 observations, we can
+estimate the parameters nearly perfectly, (2) that the model is poorly
+identified---some parameters will simply never be well estimated, but we
+can predict well anyway, or (3) the data are so highly correlated that
+the range of training observations we consider is far too small---we
+actually need millions of observations in order to see a meaningful
+decline in out-of-sample predictive performance. We can better determine
+which of these three is occurring by comparing with the predictive
+performance of the true parameters and examining the error in parameter
+estimates. The red lines in \autoref{fig:test-error} are the
+out-of-sample mean (solid) and median (dashed) prediction error for the
+true parameters. The test error is not getting any closer to this ideal
+scenario, plateauing slightly above the baseline by about 400 training
+points. This seems to suggest that explanation (2) is the correct one:
+even with more data, we will never be able to recover the true
+parameters, though we can predict adequately relatively quickly.
+
+\begin{figure}[t]
+
+{\centering \includegraphics{gfx/parm-error-1} 
+
+}
+
+\caption{The parameter MSE shows similar behavior to the predictive MSE: steep initial decline toward an asymptote greater than that of the true model.}\label{fig:parm-error}
+\end{figure}
+
+\begin{figure}[t]
+
+{\centering \includegraphics{gfx/pen-negll-1} 
+
+}
+
+\caption{The negative log-likelihood (in-sample) per observation.}\label{fig:pen-negll}
+\end{figure}
+
+\begin{figure}[t]
+
+{\centering \includegraphics{gfx/predict-negll-1} 
+
+}
+
+\caption{The negative predictive log-likelihood (out-of-sample) per observation.}\label{fig:predict-negll}
+\end{figure}
+
+\begin{figure}[t]
+
+{\centering \includegraphics{gfx/individual-series-1} 
+
+}
+
+\caption{Mean-squared prediction error for each series.}\label{fig:individual-series}
+\end{figure}
+
+Examining the parameter error serves to confirm this conjecture.
+\autoref{fig:parm-error} shows the average squared error of the
+parameter estimates. Improvement in this metric also stagnates despite
+the growing training sets. \autoref{fig:pen-negll} and
+\autoref{fig:predict-negll} show the change in information per
+observation (in sample) and per prediction (out of sample). For maximum
+likelihood inference, we would expect both of these to decline as the
+amount of training data increases. These figures therefore confirm that
+the estimation procedure is responding to the increased sample size even
+though prediction and estimation errors both fail to improve
+meaningfully. \autoref{fig:individual-series} shows the average
+prediction error for each series individually. From this decomposition,
+prediction of all time series improves, but only labor ever reaches the
+minimum (relative to the truth). The other series are all predicted
+poorly.
+
+\begin{figure}[t]
+
+{\centering \includegraphics{gfx/shock-sds-1} 
+
+}
+
+\caption{Estimates for the standard deviations of stochastic shocks.}\label{fig:shock-sds}
+\end{figure}
+
+\begin{figure}[t]
+
+{\centering \includegraphics{gfx/autocorrelations-shocks-1} 
+
+}
+
+\caption{Estimates for the autocorrelation parameters in the shock processes.}\label{fig:autocorrelations-shocks}
+\end{figure}
+
+\begin{figure}[t]
+
+{\centering \includegraphics{gfx/deep1-1} 
+
+}
+
+\caption{Estimates of "deep" parameters}\label{fig:deep1}
+\end{figure}
+
+\begin{figure}[t]
+
+{\centering \includegraphics{gfx/deep2-1} 
+
+}
+
+\caption{Estimates of "deep" parameters}\label{fig:deep2}
+\end{figure}
+
+\begin{figure}[t]
+
+{\centering \includegraphics{gfx/deep3-1} 
+
+}
+
+\caption{Estimates of "deep" parameters}\label{fig:deep3}
+\end{figure}
+
+Figures \ref{fig:shock-sds}--\ref{fig:deep3} show the estimates of each
+parameter individually. The horizontal red lines indicate the truth.
+Here we can see that while many parameters are well-estimated with
+decreasing variability as the training sets grow, others converge to the
+wrong values, or fail to converge at all. This phenomenon holds
+especially for both the parameters of the shock processes, but also for
+some of the economically-relevant ``deep'' parameters. For instance,
+\(\sigma_l\), the elasticity of labor supply with respect to the real
+wage , is consistently underestimated by about -93\%. The data provides
+essentially no information about \(\iota_w\), which measures the
+dependence of real wages on lagged inflation. Other parameters which are
+poorly estimated include \(\varphi\), the steady-state steady-state
+elasticity of the capital adjustment cost function. In all these cases,
+estimation is biased, so using the estimated values from the real data
+to draw conclusions about the real economy is unwise. It is possible
+that this bias is due to the linearization procedure, in which case, not
+only should linearized models be avoided for prediction, but also for
+drawing any economic inferences. Overall, most parameters are poorly
+identified as evidenced by their stable (rather than decreasing)
+variability with more data.
+
 \hypertarget{things-waldman-asked-which-havent-appeared-yet}{%
 \section{Things Waldman asked which haven't appeared
 yet}\label{things-waldman-asked-which-havent-appeared-yet}}
+
+\hypertarget{does-the-best-permuted-model-swap-hours-worked}{%
+\subsection{Does the best (permuted) model swap hours
+worked?}\label{does-the-best-permuted-model-swap-hours-worked}}
+
+Examining Tables \ref{tab:top-20-perc}--\ref{tab:top-20-llike}, the
+answer is ``not really.'' Hours worked seems to be in the correct slot
+frequently. When swapped, it tends to be confused with the interest rate
+(a flow variable).
 
 \hypertarget{do-the-deep-parameters-covary-with-policy-parameters}{%
 \subsection{Do the deep parameters covary with policy
@@ -1114,12 +1051,12 @@ from potential, and \(r_{\Delta y}\) the response to changes in the
 deviation. A handful of deep parameters have correlations larger in
 magnitude than 0.3 (shown in bold).
 
-\begin{table}
+\begin{table}[t]
 
 \caption{\label{tab:covary-with-Taylor}Correlations between 'deep' parameters and Taylor rule parameters. From the 
              'Simulate and estimate' exercise.}
 \centering
-\begin{tabular}[t]{rrrrr}
+\begin{tabular}{rrrrr}
 \toprule
  & $r_\pi$ & $\rho$ & $r_y$ & $r_{\Delta y}$\\
 \midrule
@@ -1158,8 +1095,8 @@ The Truth? How badly would the SW model fit and forecast? Here I
 actually guess it would do OK. Procedure: (1) generate data out of the
 best permutation, (2) get forecasts using it and the SW model (say 100
 each). Which is better? The average negative log-likelihood of the true
-model is 877 compared to 947 for the SW model. The MSEs are 0.262
-compared to 0.525 respectively.
+model is 875 compared to 953 for the SW model. The MSEs are 0.257
+compared to 0.579 respectively.
 
 \attn{We actually have that the SW model (unpermuted) has the lowest in-sample negitive log posterior. These were generated using the best unpenalized predicting permutation by log likelihood.}
 
@@ -1196,43 +1133,28 @@ forecasting record of DSGEs. Rather, their virtues are supposed to lie
 in their capturing the structure of the economy, and so providing
 theoretical insight, with meaningful parameters, and an ability to
 evaluate policy and counterfactuals. We have examined these claims on
-behalf of DSGEs through checking how well a DSGE can be estimated from
-its own simulation output and by series permutation. In both cases, the
-results are rather negative.
-
-If we take our estimated model and simulate several centuries of data
-from it, all in the stationary regime, and then re-estimate the model
-from the simulation, the results are disturbing. Forecasting error
-remains dismal and shrinks very slowly with the size of the data. Much
-the same is true of parameter estimates, with the important exception
-that many of the parameter estimates seem to be stuck around values
-which differ from the ones used to generate the data. These ill-behaved
-parameters include not just shock variances and autocorrelations, but
-also the ``deep'' ones whose presence is supposed to distinguish a
-micro-founded DSGE from mere time-series analysis or reduced-form
-regressions. All this happens in simulations where the model
-specification is correct, where the parameters are constant, and where
-the estimation can make use of centuries of stationary data, far more
-than is available about the actual macroeconomy.
+behalf of DSGEs through series permutation, and through simply checking
+how well a DSGE can be estimated from its own simulation output. In both
+cases, the results are rather negative.
 
 If we randomly re-label the macroeconomic time series and feed them into
-the DSGE, the results are no more comforting. Much of the time we get a
-model which predicts the (permuted) data \emph{better} than the model
-predicts the unpermuted data. Even if one disdains forecasting as end in
-itself, it is hard to see how this is at all compatible with a model
-capturing something --- anything --- essential about the structure of
-the economy\footnote{It's conceivable that the issue is one of
-  measurement. The variables in the DSGE model are defined by their
-  roles in the inter-temporal optimization problem. (Thus labor makes a
-  negative contribution to present utility but a positive contribution
-  to present output, cannot be stored from period to period, etc.) The
-  series gathered by the official statistical agencies use quite
-  distinct definitions, and nothing guarantees that the series with
-  analogous names are good measurements of the theoretical variables.
-  (Cf. \citet[p. 6]{Haavelmo-probability-approach}: ``there is hardly an
+the DSGE, most of the time we get a model which predicts the (permuted)
+data \emph{better} than the model predicts the unpermuted data. Even if
+one disdains forecasting as end in itself, it is hard to see how this is
+at all compatible with a model capturing something --- anything ---
+essential about the structure of the economy\footnote{It's conceivable
+  that the issue is one of measurement. The variables in the DSGE model
+  are defined by their roles in the inter-temporal optimization problem.
+  (Thus labor makes a negative contribution to present utility but a
+  positive contribution to present output, cannot be stored from period
+  to period, etc.) The series gathered by the official statistical
+  agencies use quite distinct definitions, and nothing guarantees that
+  the series with analogous names are good measurements of the
+  theoretical variables. (Cf.
+  \citet[p. 6]{Haavelmo-probability-approach}: ``there is hardly an
   economist who feels really happy about identifying current series of
-  `national income,' `consumption,', etc., with the variables by these
-  names in his theories''.) Thus, perhaps, the model is right, but
+  `national income,' `consumption,' etc., with the variables by these
+  names in his theories.'') Thus, perhaps, the model is right, but
   GDPDEF is really a better proxy for \emph{labor}, \(l_t\), than
   PRS85006023 is. This would, needless to say, raise its own set of
   difficulties for the interpretation and use of these models. One
@@ -1246,6 +1168,21 @@ of the model are essentially unchanged under permutation, including
 ``deep'' parameters supposedly representing tastes, technologies and
 institutions.
 
+If we take our estimated model and simulate several centuries of data
+from it, all in the stationary regime, and then re-estimate the model
+from the simulation, the results are no more comforting. Forecasting
+error remains dismal and shrinks very slowly with the size of the data.
+Much the same is true of parameter estimates, with the important
+exception that many of the parameter estimates seem to be stuck around
+values which differ from the ones used to generate the data. These
+ill-behaved parameters include not just shock variances and
+autocorrelations, but also the ``deep'' ones whose presence is supposed
+to distinguish a micro-founded DSGE from mere time-series analysis. All
+this happens in simulations where the model specification is correct,
+where the parameters are constant, and where the estimation can make use
+of centuries of stationary data, far more than is available about the
+actual macroeconomy.
+
 The results of the two tests are grim. Series swapping gives us strong
 reasons to doubt that the DSGE machinery manages to capture anything
 important about the structure of the economy. Even if one dismisses
@@ -1257,7 +1194,7 @@ be reliably estimated.
 
 We have not, of course, proved that flaws like this are inherent in the
 DSGE form. But we have \emph{not} cherry-picked an obsolete or marginal
-model\textbackslash{}footnote\{We obtained very similar results for the
+model\textbackslash footnote\{We obtained very similar results for the
 real-business-cycle model of \citet{KydlandPrescott1982}, but omit them
 here, because that model \emph{is} obsolete.\}. The SW model is widely
 regarded as the baseline DSGE for the economy of the United States,
@@ -1573,7 +1510,7 @@ to \inflation{} and the \youtput{} gap, defined as the difference
 between actual and potential \youtput{} (John B. Taylor 1993).
 Consistently with the DSGE model, potential \youtput{} is defined as the
 level of \youtput{} that would prevail under flexible \prices{} and
-\wages{} in the absence of the two ``mark-up''
+\wages{} in the absence of the two ``mark-up'\,'
 shocks.\footnote{In practical
   terms, we expand the model consisting of equations \eqref{eq:1} to
   \eqref{eq:14} with a flexible-\price-and-\wage{} version in order to
