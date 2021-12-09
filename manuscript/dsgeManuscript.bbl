@@ -30,12 +30,12 @@ David~N. DeJong and C.~Dave.
 \newblock Princeton University Press, Princeton, New Jersey, second edition,
   2011.
 
-\bibitem[Edge and Gurkaynak(2011)]{Edge-Gurkaynak-on-dsges}
+\bibitem[Edge and Gurkaynak(2010)]{Edge-Gurkaynak-on-dsges}
 Rochelle~M. Edge and Refet~S. Gurkaynak.
-\newblock How useful are estimated {DSGE} model forecasts?
-\newblock Technical Report 2011-11, Federal Reserve Board Discussion Papers,
-  2011.
-\newblock URL \url{http://ssrn.com/abstract=1810075}.
+\newblock How useful are estimated {DSGE} model forecasts for central bankers?
+\newblock \emph{Brookings Papers on Economic Activity}, Fall 2010:\penalty0
+  210--244, 2010.
+\newblock URL \url{https://www.jstor.org/stable/41012847}.
 
 \bibitem[Fraser(2008)]{Andy-Fraser-on-HMMs}
 Andrew~M. Fraser.
@@ -76,10 +76,11 @@ Trevor Hastie, Robert Tibshirani, and Jerome Friedman.
 \newblock Springer, Berlin, second edition, 2009.
 \newblock URL \url{http://www-stat.stanford.edu/~tibs/ElemStatLearn/}.
 
-\bibitem[Iskrev(2009)]{Iskrev2009}
+\bibitem[Iskrev(2010)]{Iskrev2009}
 Nikolay Iskrev.
 \newblock Local identification in {DSGE} models.
-\newblock Technical report, Banco de Portugal, August 2009.
+\newblock \emph{Journal of Monetary Economics}, 57:\penalty0 189--202, 2010.
+\newblock \doi{10.1016/j.jmoneco.2009.12.007}.
 
 \bibitem[Jackson and
   Yariv(2017)]{Jackson-Yariv-non-existence-of-representative-agents}
@@ -140,15 +141,15 @@ Judea Pearl.
 \bibitem[Sims(2002)]{Sims2002}
 Christopher~A. Sims.
 \newblock Solving linear rational expectations models.
-\newblock \emph{Computational Economics}, 20\penalty0 (1-2):\penalty0 1--20,
-  October 2002.
+\newblock \emph{Computational Economics}, 20:\penalty0 1--20, 2002.
+\newblock \doi{10.1023/A:1020517101123}.
 
 \bibitem[Smets and Wouters(2007)]{SmetsWouters2007}
 Frank Smets and Rafael Wouters.
-\newblock Shocks and frictions in {US} business cycles: {A} {Bayesian} {DSGE}
+\newblock Shocks and frictions in {US} business cycles: A {Bayesian} {DSGE}
   approach.
-\newblock \emph{American Economic Review}, 97\penalty0 (3):\penalty0 586--606,
-  June 2007.
+\newblock \emph{American Economic Review}, 97:\penalty0 586--606, 2007.
+\newblock \doi{10.1257/aer.97.3.586}.
 
 \bibitem[Spirtes et~al.(1993)Spirtes, Glymour, and
   Scheines]{Spirtes-Glymour-Scheines-1st}

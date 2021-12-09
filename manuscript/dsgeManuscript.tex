@@ -98,16 +98,17 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Empirical Macroeconomics and DSGE Modeling in Statistical Perspective}
+\title{Empirical Macroeconomics and DSGE Modeling in Statistical
+Perspective}
 \author{  
-    Daniel J. McDonald\thanks{Both authors were supported by a grant (INO1400020) from the Institute
-for New Economic Thinking. We are grateful for advice and comments to
-David N. DeJong, J. Bradford DeLong and Robert Waldmann (none of whom
-should be held responsible for our choices). DJM was partially supported
-by the National Science Foundation Grants DMS-1407439 and
-DMS-1753171.CRS wishes to acknowledge support from the National Science
-Foundation (grants DMS1207759 and DMS1418124), and valuable
-conversations over many years with Zmarak M. Shalizi.}  \\
+    Daniel J. McDonald\thanks{Both authors were supported by a grant
+(INO1400020) from the Institute for New Economic Thinking. We are
+grateful for advice and comments to David N. DeJong, J. Bradford DeLong
+and Robert Waldmann (none of whom should be held responsible for our
+choices). DJM was partially supported by the National Science Foundation
+Grants DMS-1407439 and DMS-1753171.CRS wishes to acknowledge support
+from the National Science Foundation (grants DMS1207759 and DMS1418124),
+and valuable conversations over many years with Zmarak M. Shalizi.}  \\
   Department of Statistics\\
 University of British Columbia\\
 Vancouver, BC Canada\\
@@ -130,22 +131,22 @@ DRAFT: comments welcome; please do not quote or cite
 
 \begin{abstract}
   Dynamic stochastic general equilibrium (DSGE) models have been an
-  ubiquitous, and controversial, part of in macroeconomics for decades. In
-  this paper, we approach DSGEs purely as statstical models. We do this by
-  applying two common model validation checks to the canonical
-  \citet{SmetsWouters2007} DSGE: (1) we simulate the model and see how
-  well it can be estimated from its own simulation output, and (2) we see
-  how well it can seem to fit nonsense data. We find that (1) even with
-  centuries' worth of data, the model remains poorly estimated, and (2)
-  when we swap series at random, so that (e.g.) what the model gets as the
-  inflation rate is really hours worked, what it gets as hours worked is
-  really investment, etc., the fit is often only slightly impaired, and in
-  a large percentage of cases actually \emph{improves} (even out of
-  sample). Taken together, these findings cast serious doubt on the
-  meaningfulness of parameter estimates for this DSGE, and on whether this
-  specification represents anything structural about the economy.
-  Constructively, our approaches can be used for model validation by
-  anyone working with macroeconomic time series. 
+ubiquitous, and controversial, part of in macroeconomics for decades. In
+this paper, we approach DSGEs purely as statstical models. We do this by
+applying two common model validation checks to the canonical
+\citet{SmetsWouters2007} DSGE: (1) we simulate the model and see how
+well it can be estimated from its own simulation output, and (2) we see
+how well it can seem to fit nonsense data. We find that (1) even with
+centuries' worth of data, the model remains poorly estimated, and (2)
+when we swap series at random, so that (e.g.) what the model gets as the
+inflation rate is really hours worked, what it gets as hours worked is
+really investment, etc., the fit is often only slightly impaired, and in
+a large percentage of cases actually \emph{improves} (even out of
+sample). Taken together, these findings cast serious doubt on the
+meaningfulness of parameter estimates for this DSGE, and on whether this
+specification represents anything structural about the economy.
+Constructively, our approaches can be used for model validation by
+anyone working with macroeconomic time series. 
   
   \vspace{11pt}
   \noindent\textbf{Keywords:} 
@@ -205,7 +206,7 @@ predictive ability, since the later does not exist.
 We also undermine the notion that DSGE specifications capture the
 structure of the economy by the simple expedient of swapping the
 different time series on which they are fit --- giving the model as
-``investment'' the series that is really ``hours worked'', and so forth
+``investment'' the series that is really ``hours worked,'' and so forth
 (sec.~\ref{sec:permutation-summary} below). Not only does such series
 swapping do little to degrade the DSGE's performance, in sample or out
 of sample, in a large fraction of permutations it actually
@@ -481,7 +482,7 @@ achieves the global optimum.\footnote{We have been unable to explain why
  & \makecell[c]{prior\\distribution} & \makecell[c]{prior\\mean} & \makecell[c]{prior\\stdev} & \makecell[c]{lower\\bound} & \makecell[c]{upper\\bound} & \makecell[c]{posterior\\mode} & \makecell[c]{SW posterior\\mode}\\
 \midrule
 $\sigma_a$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.44 & 0.45\\
-$\sigma_b$ & igamma & 0.10 & 2.00 & 0.02 & 5.00 & 0.30 & 0.24\\
+$\sigma_b$ & igamma & 0.10 & 2.00 & 0.03 & 5.00 & 0.30 & 0.24\\
 $\sigma_g$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.57 & 0.52\\
 $\sigma_I$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.48 & 0.45\\
 $\sigma_r$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.22 & 0.24\\
@@ -575,7 +576,7 @@ All figures in this section show the mean in red along with 30\%, 60\%,
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/train-error-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/train-error-1} 
 
 }
 
@@ -584,7 +585,7 @@ All figures in this section show the mean in red along with 30\%, 60\%,
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/test-error-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/test-error-1} 
 
 }
 
@@ -617,7 +618,7 @@ though we get some improvement in predictions relatively quickly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/parm-error-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/parm-error-1} 
 
 }
 
@@ -626,7 +627,7 @@ though we get some improvement in predictions relatively quickly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/pen-negll-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/pen-negll-1} 
 
 }
 
@@ -635,7 +636,7 @@ though we get some improvement in predictions relatively quickly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/predict-negll-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/predict-negll-1} 
 
 }
 
@@ -644,7 +645,7 @@ though we get some improvement in predictions relatively quickly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/individual-series-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/individual-series-1} 
 
 }
 
@@ -669,7 +670,7 @@ poorly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/shock-sds-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/shock-sds-1} 
 
 }
 
@@ -678,7 +679,7 @@ poorly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/autocorrelations-shocks-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/autocorrelations-shocks-1} 
 
 }
 
@@ -687,7 +688,7 @@ poorly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/deep1-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/deep1-1} 
 
 }
 
@@ -696,7 +697,7 @@ poorly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/deep2-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/deep2-1} 
 
 }
 
@@ -705,7 +706,7 @@ poorly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/deep3-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/deep3-1} 
 
 }
 
@@ -774,7 +775,7 @@ DSGE accurately, we need massive amounts of data.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/entropy-investigation-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/entropy-investigation-1} 
 
 }
 
@@ -800,7 +801,7 @@ predictive performance is tested on the remaining 51.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/mean-percent-improvement-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/mean-percent-improvement-1} 
 
 }
 
@@ -828,7 +829,7 @@ than the baseline model.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/series-percent-improvement-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/series-percent-improvement-1} 
 
 }
 
@@ -837,7 +838,7 @@ than the baseline model.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/mean-scaled-mse-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/mean-scaled-mse-1} 
 
 }
 
@@ -846,7 +847,7 @@ than the baseline model.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/series-scaled-mse-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/series-scaled-mse-1} 
 
 }
 
@@ -869,7 +870,7 @@ performance of the baseline model.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/loglike-pred-ml-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/loglike-pred-ml-1} 
 
 }
 
@@ -1029,7 +1030,7 @@ in the correct places.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/scaled-parameter-boxplots-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/scaled-parameter-boxplots-1} 
 
 }
 
@@ -1038,7 +1039,7 @@ in the correct places.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/perc-parameter-deviation-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/perc-parameter-deviation-1} 
 
 }
 
@@ -1057,7 +1058,7 @@ parameter estimates as percent deviations from the SW model estimates.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/pc-preds-p1-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/pc-preds-p1-1} 
 
 }
 
@@ -1066,7 +1067,7 @@ parameter estimates as percent deviations from the SW model estimates.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/crs/Dropbox/acedia-files/things-to-work-on/dsges/manuscript/gfx/pc-preds-p2-1} 
+{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/pc-preds-p2-1} 
 
 }
 
@@ -1077,7 +1078,7 @@ We now examine how well the SW model predicts future data relative to
 the best models we could have used, had we seen the data.
 \autoref{fig:pc-preds-p1} and \autoref{fig:pc-preds-p2} show the
 out-of-sample predictions for top 20 flips based on ``average percent
-improvement''. This analysis is a post-hoc measure as the best models
+improvement.'' This analysis is a post-hoc measure as the best models
 were selected to make these predictions well, though the parameters were
 estimated without access to this data. We also show the observed data
 and the predictions from the SW model. The SW model is quite bad at
@@ -1158,7 +1159,7 @@ The Truth? How badly would the SW model fit and forecast? Here I
 actually guess it would do OK. Procedure: (1) generate data out of the
 best permutation, (2) get forecasts using it and the SW model (say 100
 each). Which is better? The average negative log-likelihood of the true
-model is 877 compared to 947 for the SW model. The MSEs are 0.262
+model is 876 compared to 948 for the SW model. The MSEs are 0.256
 compared to 0.525 respectively.
 
 \attn{We actually have that the SW model (unpermuted) has the lowest in-sample negitive log posterior. These were generated using the best unpenalized predicting permutation by log likelihood.}
@@ -1231,8 +1232,8 @@ the economy\footnote{It's conceivable that the issue is one of
   analogous names are good measurements of the theoretical variables.
   (Cf. \citet[p. 6]{Haavelmo-probability-approach}: ``there is hardly an
   economist who feels really happy about identifying current series of
-  `national income,' `consumption,', etc., with the variables by these
-  names in his theories''.) Thus, perhaps, the model is right, but
+  `national income,' `consumption,' etc., with the variables by these
+  names in his theories.'') Thus, perhaps, the model is right, but
   GDPDEF is really a better proxy for \emph{labor}, \(l_t\), than
   PRS85006023 is. This would, needless to say, raise its own set of
   difficulties for the interpretation and use of these models. One
@@ -1257,7 +1258,7 @@ be reliably estimated.
 
 We have not, of course, proved that flaws like this are inherent in the
 DSGE form. But we have \emph{not} cherry-picked an obsolete or marginal
-model\textbackslash{}footnote\{We obtained very similar results for the
+model\textbackslash footnote\{We obtained very similar results for the
 real-business-cycle model of \citet{KydlandPrescott1982}, but omit them
 here, because that model \emph{is} obsolete.\}. The SW model is widely
 regarded as the baseline DSGE for the economy of the United States,
@@ -1573,7 +1574,7 @@ to \inflation{} and the \youtput{} gap, defined as the difference
 between actual and potential \youtput{} (John B. Taylor 1993).
 Consistently with the DSGE model, potential \youtput{} is defined as the
 level of \youtput{} that would prevail under flexible \prices{} and
-\wages{} in the absence of the two ``mark-up''
+\wages{} in the absence of the two ``mark-up'\,'
 shocks.\footnote{In practical
   terms, we expand the model consisting of equations \eqref{eq:1} to
   \eqref{eq:14} with a flexible-\price-and-\wage{} version in order to

@@ -1,46 +1,46 @@
-This is BibTeX, Version 0.99d (TeX Live 2017)
-Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+This is BibTeX, Version 0.99d (TeX Live 2020)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: dsgeManuscript.aux
 The style file: plainnat.bst
-Database file #1: dsges.bib.bib
+Database file #1: dsges.bib
 You've used 25 entries,
             2773 wiz_defined-function locations,
-            788 strings with 9308 characters,
-and the built_in function-call counts, 9900 in all, are:
-= -- 932
+            794 strings with 9434 characters,
+and the built_in function-call counts, 10140 in all, are:
+= -- 963
 > -- 419
-< -- 26
+< -- 25
 + -- 147
 - -- 122
-* -- 734
-:= -- 1564
-add.period$ -- 90
+* -- 750
+:= -- 1591
+add.period$ -- 93
 call.type$ -- 25
-change.case$ -- 115
+change.case$ -- 114
 chr.to.int$ -- 25
 cite$ -- 50
-duplicate$ -- 488
-empty$ -- 883
+duplicate$ -- 497
+empty$ -- 913
 format.name$ -- 169
-if$ -- 2068
+if$ -- 2126
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 28
-newline$ -- 147
+missing$ -- 30
+newline$ -- 150
 num.names$ -- 102
-pop$ -- 206
+pop$ -- 205
 preamble$ -- 1
 purify$ -- 90
 quote$ -- 0
-skip$ -- 346
+skip$ -- 353
 stack$ -- 0
-substring$ -- 380
-swap$ -- 30
-text.length$ -- 3
+substring$ -- 430
+swap$ -- 28
+text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 240
 warning$ -- 0
-while$ -- 101
+while$ -- 105
 width$ -- 0
-write$ -- 367
+write$ -- 373

@@ -9,7 +9,7 @@ authors:
       University of British Columbia  
       Vancouver, BC Canada  
       \email{daniel@stat.ubc.ca}
-    thanks: Both authors were supported by a grant (INO1400020) from the Institute for New Economic Thinking.  We are grateful for advice and comments to David N. DeJong, J. Bradford DeLong and Robert Waldmann (none of whom should be held responsible for our choices).   DJM was partially supported by the National Science Foundation Grants DMS-1407439 and DMS-1753171.CRS wishes to acknowledge support from the National Science Foundation (grants DMS1207759 and DMS1418124), and valuable conversations over many years with Zmarak M. Shalizi.
+    thanks: Both authors were supported by a grant (INO1400020) from the Institute for New Economic Thinking.  We are grateful for advice and comments to David N. DeJong, J. Bradford DeLong and Robert Waldmann (none of whom should be held responsible for our choices).   DJM was partially supported by the National Science Foundation Grants DMS-1407439 and DMS-1753171. CRS wishes to acknowledge support from the National Science Foundation (grants DMS1207759 and DMS1418124), and valuable conversations over many years with Zmarak M. Shalizi.
   - name: Cosma Rohilla Shalizi
     address: |
       Departments of Statistics and Data Science and of Machine Learning  
@@ -1029,9 +1029,9 @@ ggplot(flips, aes(x=date,y=value,grp=key)) +
 ```{r pc-preds-p2, fig.height=6, fig.cap="Out-of-sample predictions for the best predicting permutations (black), the SW model (red), and the observed data (blue)."}
 ggplot(flips, aes(x=date,y=value,grp=key)) +
   geom_line(color='black',size=.1) + 
-  facet_wrap_paginate(~series, scales='free_y', ncol=1, nrow=4, page=2,
-                      strip.position = 'left') +
-  geom_line(data=truth, aes(color=key)) + 
+  facet_wrap_paginate(~series, scales = 'free_y',nrow=3, ncol = 1, page = 2, 
+                      strip.position = 'left') + 
+  geom_line(data=truth, aes(color=key)) +
   geom_point(data=truth, aes(color=key), size=1.5)+
   scale_color_manual(values=c(blue,red)) + 
   theme(legend.position = 'bottom', legend.title = element_blank(), 
