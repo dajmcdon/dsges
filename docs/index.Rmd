@@ -6,9 +6,9 @@ author:
 date: "13 December 2021"
 output:
   xaringan::moon_reader:
-    css: [xaringan-themer.css, slides-style.css]
+    css: [src/xaringan-themer.css, src/slides-style.css]
     nature:
-      beforeInit: ["macros.js"]
+      beforeInit: ["src/macros.js"]
       slideNumberFormat: "%current%"
       highlightStyle: github
       highlightLines: true
@@ -26,6 +26,7 @@ con = fontawesome::fa("bomb", fill="orange")
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(
   dev = "svg",
+  fig.path = "gfx/",
   fig.width=9, fig.height=3.5, fig.retina=3,
   fig.showtext = TRUE,
   out.width = "100%",

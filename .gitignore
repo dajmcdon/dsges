@@ -9,3 +9,5 @@ waldman-triage_cache/
 waldman-triage_files/
 *.log
 dsgeManuscript.pdf
+docs/index_cache/
+docs/index_files/
