@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Your model is beautiful, but does it predict?</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Daniel J. McDonald" />
+    <meta name="date" content="2021-12-13" />
+    <script src="index_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="slides-style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Your model is beautiful, but does it predict?
+### Daniel J. McDonald
+### 13 December 2021
+
+---
+
+
+
+
+
+
+
+# Themes
+
+&lt;/br&gt;
+
+### "Beauty" or perhaps "intellectual satisfaction" as a research goal
+
+&lt;/br&gt;
+
+### A long-gestating paper without a home
+
+&lt;/br&gt;
+
+### Why are these models still so bad?
+
+&lt;/br&gt;
+
+--
+
+### `\(\Longrightarrow\)` A parable from Macroeconomics
+
+---
+
+.pull-left[
+![](https://static1.squarespace.com/static/5ff2adbe3fe4fe33db902812/t/600a67d7222f7e1fc65f70c5/1611294689562/Screen+Shot+2021-01-21+at+11.02.06+AM.png)
+]
+
+.pull-right[
+![](https://hastie.su.domains/ElemStatLearn/CoverII_small.jpg)
+
+]
+
+---
+class: middle
+
+&lt;blockquote cite="Carl Richards, NYT 26 March 2012"&gt;Over an 13-year period, [David Leinweber] found, [that annual butter production in Bangladesh] “explained” 75% of the variation in the annual returns of the Standard &amp; Poor’s 500-stock index.&lt;/br&gt;&lt;/br&gt;By tossing in U.S. cheese production and the total population of sheep in both Bangladesh and the U.S., Mr. Leinweber was able to “predict” past U.S. stock returns with 99% accuracy.&lt;/blockquote&gt;
+
+---
+class: middle
+
+### 1. Good prediction is possible despite no structural relationship
+
+&lt;/br&gt;
+
+### 2. Erroneously conflating .secondary[In-sample] accuracy with .secondary[Out-of-sample] accuracy
+
+
+&lt;/br&gt;
+
+---
+
+## Prior to mid-1970s, 
+### Macroeconomics focused on empirical relationships
+
+.center[![:scale 50%](phillips.png)]
+
+Source: AW Phillips "The Relation Between Unemployment and the Rate of Change of Money Wage Rates in the United Kingdom, 1861–1957"
+
+
+---
+class: middle
+
+.pull-left-narrow[
+&lt;/br&gt;&lt;/br&gt;
+![](https://www.nobelprize.org/images/lucas-13470-content-portrait-mobile-tiny.jpg)
+]
+
+.pull-right-wide[
+&lt;blockquote cite="Robert Lucas, Econometric Policy Evaluation: A critique"&gt;Given that the structure of an econometric model consists of optimal decision rules of economic agents, and that optimal decision rules vary systematically with changes in the structure of series relevant to the decision maker, it follows that any change in policy will systematically alter the structure of econometric models.&lt;/blockquote&gt;
+]
+
+--
+
+### The sentiment is really causal inference, but without the language of Pearl
+
+---
+
+## Response: Dynamic Stochastic General Equilibrium Models
+
+* Observe the highly aggregated actions of individual agents, and try to learn their reward function.
+
+* Inverse Reinforcement Learning but with tiny amounts data
+
+.pull-left[
+`\begin{aligned}
+\max_{c_t,l_t}U &amp;=E\sum_{t=0}^\infty \beta^tu(c_t,l_t).\\
+&amp;\textrm{subject to}\\
+ y_t &amp;= z_t g(k_t,n_t),\\
+ 1 &amp;= n_t + l_t \\
+ y_t &amp;= c_t + i_t \\
+ k_{t+1} &amp;= i_t + (1-\delta)k_t \\
+ \ln z_t &amp;= (1-\rho)\ln\overline{z} + \rho\ln z_{t-1} + \epsilon_t \\
+ \epsilon_t &amp;\stackrel{iid}{\sim} \mbox{N}(0,\ \sigma_\epsilon^2).
+\end{aligned}`
+]
+
+.pull-right[
+![:scale 80%](dsge.png)
+
+Source: [Brad Delong](https://www.bradford-delong.com) 
+]
+
+---
+
+&lt;blockquote cite='"On DSGE Models" by Christino, Eichenbaum, and Trabandt (2017 Working paper version)'&gt;
+People who don’t like dynamic stochastic general equilibrium (DSGE) models are dilettantes. By this we mean they aren’t serious about policy analysis. 
+&lt;!--Why do we say this? ... As Lucas (1980) pointed out roughly forty years ago, the only place that we can do experiments is in our models. Dilettantes who only point to the existence of competing forces at work – and informally judge their relative importance via implicit thought experiments – can never give serious policy advice.--&gt;
+&lt;/blockquote&gt;
+
+--
+
+&lt;blockquote cite='"Where Modern Macroeconomics Went Wrong" by Joseph Stiglitz'&gt;I believe that most of the core constituents of the DSGE model are flawed—sufficiently badly flawed that they do not provide even a good starting point for constructing a good macroeconomic model.&lt;/blockquote&gt;
+
+--
+
+### I guess I'm a dilettante, but at least I'm in good company.
+
+---
+
+## Long in development with no where to go
+
+I started (and mostly finished) this work in 2009 with Cosma Shalizi and Mark Schervish, at the beginning of my PhD.
+
+Gets revisited every 3 years. Mostly "on the backburner"
+
+### The question: "Why didn't these models predict the Financial Crisis?"
+
+* Macroeconomics answer: because they were missing important structural mechanisms `\(\longrightarrow\)` lets add them
+
+* Our answer: because they don't predict .fourth-color[anything], you just got lucky up to now.
+
+--
+
+3 things your beautiful model should do:
+
+1. Be internally consistent: if you simulate it, and train on the simulation, you should eventually recover the truth.
+2. It should work better on real data than it does on nonsense.
+3. It should predict as well as simple baselines (if not better).
+
+
+---
+
+## 1. A DSGE is a model, can it predict it's own data?
+
+&lt;img src="index_files/figure-html/individual-series-1.svg" width="100%" /&gt;
+
+---
+
+## 1. Are it's parameter estimates consistent?
+
+&lt;img src="index_files/figure-html/parm-estimates-1.svg" width="100%" /&gt;
+
+---
+
+## 2. Mess with it's brain: just relabel all the series
+
+This model is not symmetric in the inputs/outputs. They're meaningful (supposedly)
+
+Example: Give it Income where it thinks it's getting the Interest Rate, re-train the model, and produce out-of-sample predictions.
+
+
+
+&lt;img src="index_files/figure-html/flipping-plot-1.svg" width="100%" /&gt;
+
+* Of 5040 permutations, about 51% of the "wrong" ones are better.
+
+---
+
+## 3. Compare to simple baselines
+
+&lt;blockquote cite='"How Useful Are Estimated DSGE Model Forecasts for Central Bankers?" -- Edge and G&amp;#252rkaynak'&gt;In line with the results in the DSGE model forecasting literature, we found that the root mean squared errors (RMSEs) of the DSGE model forecasts were similar to, and often better than, those of the BVAR and Greenbook forecasts. [However...] these models [all] showed [...] almost no forecasting ability. Thus, our comparison is not between one good forecast and another; rather, all three methods of forecasting are poor....&lt;/blockquote&gt;
+
+
+---
+
+## Forecasting COVID-19 in the US
+
+* 20 months later, why are so many models worse than Baseline? 
+
+
+
+&lt;img src="index_files/figure-html/overall-cases-1.svg" width="100%" /&gt;
+
+* Of 38 teams, 10 routinely beat the baseline.
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
