@@ -14,6 +14,7 @@ output:
       highlightLines: true
       ratio: 16:9
       countIncrementalSlides: false
+    seal: false
 ---
 
 
@@ -62,7 +63,8 @@ style_duo_accent(
   title_slide_background_image = "corona.jpeg",
   #title_slide_background_position = "75% 75%",
   #title_slide_background_size = "200px 200px"
-  title_slide_text_color = "#FFFFFF"
+  title_slide_text_color = "#FFFFFF",
+  outfile = "src/xaringan-themer.css"
 )
 # theme_set(theme_xaringan())
 ```
