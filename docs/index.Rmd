@@ -316,6 +316,10 @@ People who don’t like dynamic stochastic general equilibrium (DSGE) models are
 
 <blockquote cite='"Where Modern Macroeconomics Went Wrong" by Joseph Stiglitz'><a href=https://www.ineteconomics.org/uploads/papers/Where-Modern-Macroeconomics-Went-Wrong.pdf>I believe that most of the core constituents of the DSGE model are flawed—sufficiently badly flawed that they do not provide even a good starting point for constructing a good macroeconomic model.</a></blockquote>
 
+???
+
+* Stiglitz is far from the only critical voice (or even critical laureate). See Robert Solow's testimony before the House in 2010, Brad Delong, Robert Waldman, Chris Sims, and others.
+
 --
 
 ### I guess I'm a dilettante, but at least I'm in good company.
