@@ -57,6 +57,14 @@ background-position: top
 &lt;/table&gt;
 ]]]
 
+???
+
+* Thanks to the organizers for the invitation
+* Cosma originally scheduled, but couldn't make it.
+* I'll try to do my best impression. 
+
+
+
 ---
 
 # Themes
@@ -75,9 +83,26 @@ background-position: top
 
 &lt;/br&gt;
 
+???
+
+Beauty:
+
+* Connects to the themes of this workshop well, I think.
+* The idea that a certain mathematical explanation for a real-world phenomenon is somehow "satisfying" when it incorporates as many of the underlying factors as possible.
+
+Long-gestating:
+
+* I'll describe the details more later, but suffice it to say that this work started 10+ years ago, and still isn't even a completed working paper.
+
+Why:
+
+* Not the first, nor will we be the last to point out the flaws, but the models are still terrible.
+
+
 --
 
 ### <svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#ffa319;overflow:visible;position:relative;"><path d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"/></svg> A parable from Macroeconomics
+
 
 ---
 
@@ -90,10 +115,18 @@ background-position: top
 
 ]
 
+???
+
+* I've been teaching undergraduates from these familiar texts.
+* Familiar to most in ML: how to understand evaluate predictive models.
+* Statistical Models often predict well, even if they are not built up from a realistic model of the world.
+* Ridge regression -- no more confidence intervals; p-values
+* Random Forests; Boosting; Deep Learning -- non-parametric and hard to interpret as explanatory. But may predict very well.
+
 ---
 class: middle
 
-&lt;blockquote cite="Jason Zweig, WSJ 8 August 2009"&gt;&lt;a href=https://www.wsj.com/articles/SB124967937642715417&gt;Over an 13-year period, [David Leinweber] found, [that annual butter production in Bangladesh] “explained” 75% of the variation in the annual returns of the Standard &amp; Poor’s 500-stock index.&lt;/br&gt;&lt;/br&gt;By tossing in U.S. cheese production and the total population of sheep in both Bangladesh and the U.S., Mr. Leinweber was able to “predict” past U.S. stock returns with 99% accuracy.&lt;/a&gt;&lt;/blockquote&gt;
+&lt;blockquote cite="Jason Zweig, WSJ 8 August 2009"&gt;&lt;a href=https://www.wsj.com/articles/SB124967937642715417&gt;Over an 13-year period, [David Leinweber] found, [that annual butter production in Bangladesh] "explained" 75% of the variation in the annual returns of the Standard &amp; Poor’s 500-stock index.&lt;/br&gt;&lt;/br&gt;By tossing in U.S. cheese production and the total population of sheep in both Bangladesh and the U.S., Mr. Leinweber was able to "predict" past U.S. stock returns with 99% accuracy.&lt;/a&gt;&lt;/blockquote&gt;
 
 ---
 class: middle
@@ -107,6 +140,39 @@ class: middle
 
 &lt;/br&gt;
 
+???
+
+
+* Quote illustrates the point with it's absurdity.
+* But is a little bit problematic from a technical point of view. 
+
+---
+
+## What about the reverse? .tertiary[No.]
+
+&lt;br/&gt;&lt;br/&gt;
+
+### A correct causal model that gives accurate counterfactual predictions .tertiary[must] make accurate statistical predictions.
+
+&lt;br/&gt;&lt;br/&gt;
+
+
+* Spirtes, Glymour, and Scheines &amp;#8212; Causation, Prediction, and Search (1993)
+
+* Pearl &amp;#8212; Causality: Models, Reasoning, and Inference (2000)
+
+* Morgan and Winship &amp;#8212; Counterfactuals and Causal Inference: Methods and Principles for Social Research (2015, 2ed)
+
+---
+class: middle, inverse, center
+
+# Macroeconomics and causal inference
+
+???
+
+* How has macro evolved with causal inference.
+
+
 ---
 
 ## Prior to mid-1970s, 
@@ -116,6 +182,16 @@ class: middle
 
 .pull-right-wide[.small[Source: [AW Phillips "The Relation Between Unemployment and the Rate of Change of Money Wage Rates in the United Kingdom, 1861–1957"](https://doi.org/10.1111/j.1468-0335.1958.tb00003.x)]]
 
+???
+
+* Illustration of a typical (famous), empirical result in macro.
+* Inverse relationship between wages (y-axis) and unemployment.
+* Says: "when unemployment is low, we have to pay more to entice people to work"
+* Makes perfect sense.
+* Due to a number of factors:
+    1. Getting those who don't want to work to work.
+    2. Leave current job to come work for me. (competition)
+    3. On the high side: everyone is looking, so I don't have to compete.
 
 ---
 
@@ -128,9 +204,22 @@ class: middle
 &lt;blockquote cite="Robert Lucas, Econometric Policy Evaluation: A critique"&gt;&lt;a href=https://doi.org/10.1016/S0167-2231(76)80003-6&gt;Given that the structure of an econometric model consists of optimal decision rules of economic agents, and that optimal decision rules vary systematically with changes in the structure of series relevant to the decision maker, it follows that any change in policy will systematically alter the structure of econometric models.&lt;/a&gt;&lt;/blockquote&gt;
 ]
 
+???
+
+* If I as a central banker or congress "do something", it alters the observed relationship.
+* Can't just intervene.
+* So the Phillips curve doesn't tell me how to think about policy, only what happens in the absence of policy.
+* Sets up a cyclical argument.
+
 --
 
 ### The sentiment is really causal inference, but without the language of Pearl
+
+???
+
+* A graphical model illustrates this immediately, but that language wasn't around at the time
+* Susan Athey, Guido Imbens and others for lots of fascinating work on Econ and Causal Inference.
+
 
 ---
 
@@ -159,6 +248,16 @@ class: middle
 .pull-right-narrow[.small[Source: [Brad Delong](https://www.bradford-delong.com) ]]
 ]
 
+???
+
+* Add "microfoundations" whose "deep" parameters are invariant to policy. (Supposedly.)
+* Then I can "directly" intervene and see what happens.
+* The model is for an individual, and then we assume that all individuals are the same, and then we assume that the aggregate looks like an individual.
+* [Matthew Jackson and Leeat Yariv](https://doi.org/10.2139/ssrn.2684776) argue that this last assumption is false for most DSGE specifications.
+
+* Don't observe the individual driver, but maybe "the number of crashes and the total number of parking tickets in the country in a 3 month period"
+
+
 ---
 
 &lt;blockquote cite='"On DSGE Models" by Christino, Eichenbaum, and Trabandt (2017 Working paper version)'&gt;&lt;a href=https://faculty.wcas.northwestern.edu/~yona/research/DSGE.pdf&gt;
@@ -182,31 +281,67 @@ I started (and mostly finished) this work in 2009 with Cosma Shalizi and Mark Sc
 
 Gets revisited every 3 years. Mostly "on the backburner"
 
-### The original question: "Why didn't these models predict the Financial Crisis?"
+???
 
-* Macroeconomics answer: because they were missing important structural mechanisms `\(\longrightarrow\)` lets add them
+* Largely the "exploration" phase of my thesis work. 
+* I was interested in this because I'd worked at the Fed. But wasn't exactly sure what my contribution would be.
+* Coincided with the Financial Crisis of 2008-09. 
+* Got funded by the first INET Grant cycle (George Soros), so that I could avoid TA duties over the summer.
 
-* Our answer: because they don't predict .tertiary[anything], you just got lucky up to now.
+* Not obvious how spending a lot of time on it would lead to tenure. Not clear it has any Journal home.
+
+
 
 --
 
-3 things your beautiful model should do:
+&lt;br/&gt;&lt;br/&gt;
+
+### The original question: "Why didn't these models predict the Financial Crisis?"
+
+&lt;br/&gt;&lt;br/&gt;
+
+* .secondary[Macroeconomics answer:] because they were missing important structural mechanisms <svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#ffa319;overflow:visible;position:relative;"><path d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"/></svg> lets add them
+
+* .secondary[Our answer:] because they don't predict .tertiary[anything], you just got lucky up to now.
+
+???
+
+* Thesis work ended up focusing on proving that latter for time series (learning theory), rather than the empirical demonstration.
+
+
+---
+
+## Exploratory behaviour you should demand.
+
+&lt;br/&gt;&lt;br/&gt;
+
+### 3 things your beautiful model should do:
+
+&lt;br/&gt;&lt;br/&gt;
 
 &lt;table style="width: 100%; vertical-align:top"&gt;
 &lt;tr&gt;
-&lt;td style="width:33%; vertical-align:top"&gt;.center[.secondary[.large[1.]]] Be internally consistent: if you simulate it, and train on the simulation, you should eventually recover the truth.&lt;/td&gt;
-&lt;td style="width:33%; vertical-align:top"&gt;.center[.secondary[.large[2.]]] It should work better on real data than it does on nonsense.&lt;/td&gt;
-&lt;td style="width:33%; vertical-align:top"&gt;.center[.secondary[.large[3.]]]It should predict as well as simple baselines (if not better).&lt;/td&gt;
+&lt;td style="width:33%; vertical-align:top"&gt;.center[.secondary[.huge[1.]]] &lt;br/&gt;Be internally consistent: if you simulate it, and train on the simulation, you should eventually recover the truth.&lt;/td&gt;
+&lt;td style="width:33%; vertical-align:top"&gt;.center[.secondary[.huge[2.]]] &lt;br/&gt;It should work better on real data than it does on nonsense.&lt;/td&gt;
+&lt;td style="width:33%; vertical-align:top"&gt;.center[.secondary[.huge[3.]]] &lt;br/&gt;It should predict as well as simple baselines (if not better).&lt;/td&gt;
 &lt;tr&gt;
 &lt;table&gt;
 
+???
+
+* First two are about matching reality.
+* The third is more about defining what we mean by "predict well". 
+* We don't have a "bakeoff" like with the digits data or ImageNet. 
+* Fall back on something like "does it do better than random guessing". Standard with AUC analysis, etc.
 
 ---
 class: middle, inverse, center
 
 # So how does the DSGE do?
 
-Repeat many times:
+--
+
+.huge[1.] Repeat many times:
 
 Simulate lots of data. Train on increasingly long periods. Predict.
 
@@ -216,8 +351,22 @@ Simulate lots of data. Train on increasingly long periods. Predict.
 
 &lt;img src="gfx/parm-estimates-1.svg" width="100%" /&gt;
 
-* Might be OK. Perhaps not identifiable.
-* Local minima might still yield good predictors (but this undermines parameter interpretability)
+.secondary[.large[Might be OK.]]
+
+
+???
+
+* Note the light blue window.
+* Emphasize: 
+    1. used the published model parameters. 
+    2. Years of data
+    3. Blue/Orange lines
+    4. CI bands are quantiles over replicates (50/80)
+* Hours worked is really easy (sits at )
+
+* Perhaps not identifiable.
+* Local minima might still yield good predictors 
+* But if so, it undermines model interpretability 
 
 ---
 
@@ -225,6 +374,9 @@ Simulate lots of data. Train on increasingly long periods. Predict.
 
 &lt;img src="gfx/individual-series-1.svg" width="100%" /&gt;
 
+???
+
+* Relative to the model that generated the data (don't learn the parameters).
 
 ---
 
@@ -244,7 +396,13 @@ Example: Give it Income where it thinks it's getting the Interest Rate, re-train
 
 ## 3. Compare to simple baselines
 
-&lt;blockquote cite='"How Useful Are Estimated DSGE Model Forecasts for Central Bankers?" by Edge and G&amp;#252rkaynak'&gt;&lt;a href=https://www.jstor.org/stable/41012847&gt;In line with the results in the DSGE model forecasting literature, we found that the root mean squared errors (RMSEs) of the DSGE model forecasts were similar to, and often better than, those of the BVAR and Greenbook forecasts. [However...] these models [all] showed [...] almost no forecasting ability. Thus, our comparison is not between one good forecast and another; rather, all three methods of forecasting are poor....&lt;/a&gt;&lt;/blockquote&gt;
+&lt;blockquote cite='"How Useful Are Estimated DSGE Model Forecasts for Central Bankers?" by Edge and G&amp;#252rkaynak'&gt;&lt;a href=https://www.jstor.org/stable/41012847&gt;In line with the results in the DSGE model forecasting literature, we found that the root mean squared errors (RMSEs) of the DSGE model forecasts were similar to, and .secondary[often better than], those of the BVAR and Greenbook forecasts. [However...] these models [all] showed [...] almost no forecasting ability. Thus, our comparison is not between one good forecast and another; rather, .secondary[all three methods of forecasting are poor]....&lt;/a&gt;&lt;/blockquote&gt;
+
+
+???
+
+* Define BVAR
+* Define Greenbook
 
 
 ---
@@ -252,10 +410,13 @@ class: middle, center, inverse
 
 # Bad models are used in other fields, too.
 
+???
+
+* About 16 months deploying and especially evaluating COVID forecasts.
 
 ---
 
-## Forecasting COVID-19 in the US
+## Forecasting COVID-19 Incident Cases in the US
 
 * 20 months later, why are so many models worse than [Baseline](https://delphi.cmu.edu/forecast-eval/)? 
 
@@ -265,21 +426,39 @@ class: middle, center, inverse
 
 * Of 38 teams, 10 routinely beat the baseline.
 
+???
+
+* Lines are Official CDC forecast (blue), pilot ensemble that uses recent skill (orange)
+* The score is for quantile forecasts. See more at Covid19Forecast Hub.
+* Very hard problem. Many teams are bad, but bad at different times.
+* Weighting by Recent performance doesn't seem to help the way it should.
+* This is a public evaluation (so you can recreate this and see who's doing well).
+
+
 ---
 
 ## Conclusions
 
-1. Models which predict well can be useless for policy.
+1. Models that predict well can be useless for policy.
 
-2. Models which predict poorly require serious caveats / justification before using for policy.
+2. Models that predict poorly require serious caveats / justification before using for policy.
 
-3. This is hard with social science. In many other fields, we discard models which predict poorly (particle physics, astronomy, medicine, etc.)
+3. This is hard with social science.  
+    In many other fields, we discard models that predict poorly (particle physics, astronomy, medicine, etc.)
 
 4. Suggested minimal criteria for a policy-relevant model:
     - Internally consistent.
     - Robust to nonsense.
     - Better than simple baselines.
+--
     - Others??
+    
+???
+
+* Worth codifying some standard metrics to subject your new model too.
+* Perhaps the same "public" declarations like medical studies.
+* Just because it "controls for" or "includes" some potentially relevant feature doesn't mean it's better.
+
  
 ---
 
