@@ -43,14 +43,14 @@
   --header-h3-font-size: 1.75rem;
 
   /* Colors */
-  --text-color: #000000;
+  --text-color: #002145;
   --header-color: #002145;
   --background-color: #FFFFFF;
   --link-color: #002145;
   --text-bold-color: #002145;
   --code-highlight-color: rgba(255,255,0,0.5);
   --inverse-text-color: #000000;
-  --inverse-background-color: #6ec4e8;
+  --inverse-background-color: #6495ed;
   --inverse-header-color: #000000;
   --inverse-link-color: #002145;
   --title-slide-background-color: #002145;
@@ -58,14 +58,14 @@
   --header-background-color: #002145;
   --header-background-text-color: #FFFFFF;
   --primary: #002145;
-  --secondary: #6ec4e8;
+  --secondary: #6495ed;
   --white: #FFFFFF;
   --black: #000000;
-  --tertiary: #0076A5;
+  --tertiary: #ffa319;
   --fourth_color: #DB0B5B;
   --light_pri: #CCD2D9;
-  --light_sec: #E2F3FA;
-  --light_ter: #CCE3ED;
+  --light_sec: #E0E9FB;
+  --light_ter: #FFECD1;
   --light_fou: #F7CEDE;
 }
 
@@ -147,8 +147,6 @@ a, a > code {
 }
 .title-slide {
   background-color: var(--title-slide-background-color);
-  background-image: url("corona.jpeg");
-  background-size: cover;
 }
 .title-slide .remark-slide-number {
   display: none;
@@ -185,7 +183,7 @@ img, video, iframe {
   max-width: 100%;
 }
 blockquote {
-  border-left: solid 5px #6ec4e880;
+  border-left: solid 5px #6495ed80;
   padding-left: 1em;
 }
 .remark-slide table {

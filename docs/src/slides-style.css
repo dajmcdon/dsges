@@ -209,7 +209,7 @@ blockquote {
   display: block;
   border-width: 4px 0;
   border-style: solid;
-  border-color: #eee;
+  border-color: var(--light_pri);
   font-size: 150%;
   padding: 1.5em 0 0.5em;
   margin: 1.5em 0;
@@ -225,13 +225,36 @@ blockquote:before {
   width: 3rem;
   height: 2rem;
   font: 8em/.9em 'PT Sans', sans-serif;
-  color: var(--primary);
+  color: var(--secondary);
   text-align: center;
 }
 blockquote:after {
   content: "\2013 \2003" attr(cite);
   display: block;
   text-align: right;
-  font-size: 0.875em;
-  color: #00884E;
+  font-size: 0.8em;
+  color: var(--tertiary);
+}
+
+
+div.my-footer {
+    background-color: #002145;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: 20px;
+    width: 100%;
+}
+div.my-footer span {
+    font-size: 10pt;
+    color: #FFFFFF;
+    position: absolute;
+    left: 15px;
+    bottom: 2px;
+}
+.remark-slide-number {
+  display: none;
+}
+.huge {
+  font-size: 300%;
 }

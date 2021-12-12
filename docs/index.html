@@ -3,8 +3,7 @@
   <head>
     <title>Your model is beautiful, but does it predict?</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Daniel J. McDonald" />
-    <meta name="date" content="2021-12-13" />
+    <meta name="author" content="Daniel J. McDonald University of British Columbia" />
     <script src="index_files/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="src/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="src/slides-style.css" type="text/css" />
@@ -18,25 +17,67 @@
 
 
 
+layout: true
+
+&lt;div class="my-footer"&gt;&lt;span&gt;&lt;a href="https://dajmcdon.github.io/dsges" style="color:white"&gt;dajmcdon.github.io/dsges&lt;/a&gt;&lt;/span&gt;&lt;/div&gt; 
+
+---
+
+background-image: url("gfx/cover.svg")
+background-size: contain
+background-position: top
+
+&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;
+
+
+
+.center[# Your model is beautiful, but does it predict?]
+
+
+.pull-left[
+&lt;br/&gt;
+###Daniel J. McDonald
+###University of British Columbia
+#### NeurIPS: I Can't Believe It's Not Better
+]
+
+.pull-right[.center[.middle[
+&lt;br/&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td&gt;![:scale 50%](gfx/qr-slides.png)&lt;/td&gt;
+&lt;td&gt;![:scale 50%](gfx/qr-code.png)&lt;/td&gt;
+&lt;td&gt;![:scale 50%](gfx/qr-mywww.png)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;<svg aria-hidden="true" role="img" viewBox="0 0 640 512" style="height:1em;width:1.25em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M208 352c-2.39 0-4.78.35-7.06 1.09C187.98 357.3 174.35 360 160 360c-14.35 0-27.98-2.7-40.95-6.91-2.28-.74-4.66-1.09-7.05-1.09C49.94 352-.33 402.48 0 464.62.14 490.88 21.73 512 48 512h224c26.27 0 47.86-21.12 48-47.38.33-62.14-49.94-112.62-112-112.62zm-48-32c53.02 0 96-42.98 96-96s-42.98-96-96-96-96 42.98-96 96 42.98 96 96 96zM592 0H208c-26.47 0-48 22.25-48 49.59V96c23.42 0 45.1 6.78 64 17.8V64h352v288h-64v-64H384v64h-76.24c19.1 16.69 33.12 38.73 39.69 64H592c26.47 0 48-22.25 48-49.59V49.59C640 22.25 618.47 0 592 0z"/></svg> Slides&lt;/td&gt;
+&lt;td&gt;<svg aria-hidden="true" role="img" viewBox="0 0 640 512" style="height:1em;width:1.25em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M278.9 511.5l-61-17.7c-6.4-1.8-10-8.5-8.2-14.9L346.2 8.7c1.8-6.4 8.5-10 14.9-8.2l61 17.7c6.4 1.8 10 8.5 8.2 14.9L293.8 503.3c-1.9 6.4-8.5 10.1-14.9 8.2zm-114-112.2l43.5-46.4c4.6-4.9 4.3-12.7-.8-17.2L117 256l90.6-79.7c5.1-4.5 5.5-12.3.8-17.2l-43.5-46.4c-4.5-4.8-12.1-5.1-17-.5L3.8 247.2c-5.1 4.7-5.1 12.8 0 17.5l144.1 135.1c4.9 4.6 12.5 4.4 17-.5zm327.2.6l144.1-135.1c5.1-4.7 5.1-12.8 0-17.5L492.1 112.1c-4.8-4.5-12.4-4.3-17 .5L431.6 159c-4.6 4.9-4.3 12.7.8 17.2L523 256l-90.6 79.7c-5.1 4.5-5.5 12.3-.8 17.2l43.5 46.4c4.5 4.9 12.1 5.1 17 .6z"/></svg> Code&lt;/td&gt;
+&lt;td&gt;<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M256 8C118.941 8 8 118.919 8 256c0 137.059 110.919 248 248 248 48.154 0 95.342-14.14 135.408-40.223 12.005-7.815 14.625-24.288 5.552-35.372l-10.177-12.433c-7.671-9.371-21.179-11.667-31.373-5.129C325.92 429.757 291.314 440 256 440c-101.458 0-184-82.542-184-184S154.542 72 256 72c100.139 0 184 57.619 184 160 0 38.786-21.093 79.742-58.17 83.693-17.349-.454-16.91-12.857-13.476-30.024l23.433-121.11C394.653 149.75 383.308 136 368.225 136h-44.981a13.518 13.518 0 0 0-13.432 11.993l-.01.092c-14.697-17.901-40.448-21.775-59.971-21.775-74.58 0-137.831 62.234-137.831 151.46 0 65.303 36.785 105.87 96 105.87 26.984 0 57.369-15.637 74.991-38.333 9.522 34.104 40.613 34.103 70.71 34.103C462.609 379.41 504 307.798 504 232 504 95.653 394.023 8 256 8zm-21.68 304.43c-22.249 0-36.07-15.623-36.07-40.771 0-44.993 30.779-72.729 58.63-72.729 22.292 0 35.601 15.241 35.601 40.77 0 45.061-33.875 72.73-58.161 72.73z"/></svg> My WWW&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+]]]
+
+---
+
 # Themes
 
 &lt;/br&gt;
 
-### "Beauty" or perhaps "intellectual satisfaction" as a research goal
+### <svg aria-hidden="true" role="img" viewBox="0 0 256 512" style="height:1em;width:0.5em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg> "Beauty" or perhaps "elegance" as a research goal
 
 &lt;/br&gt;
 
-### A long-gestating paper without a home
+### <svg aria-hidden="true" role="img" viewBox="0 0 256 512" style="height:1em;width:0.5em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg> A long-gestating paper without a home
 
 &lt;/br&gt;
 
-### Why are these models still so bad?
+### <svg aria-hidden="true" role="img" viewBox="0 0 256 512" style="height:1em;width:0.5em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg> Why are these models .tertiary[still] so bad?
 
 &lt;/br&gt;
 
 --
 
-### `\(\Longrightarrow\)` A parable from Macroeconomics
+### <svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#ffa319;overflow:visible;position:relative;"><path d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"/></svg> A parable from Macroeconomics
 
 ---
 
@@ -52,7 +93,7 @@
 ---
 class: middle
 
-&lt;blockquote cite="Carl Richards, NYT 26 March 2012"&gt;Over an 13-year period, [David Leinweber] found, [that annual butter production in Bangladesh] “explained” 75% of the variation in the annual returns of the Standard &amp; Poor’s 500-stock index.&lt;/br&gt;&lt;/br&gt;By tossing in U.S. cheese production and the total population of sheep in both Bangladesh and the U.S., Mr. Leinweber was able to “predict” past U.S. stock returns with 99% accuracy.&lt;/blockquote&gt;
+&lt;blockquote cite="Jason Zweig, WSJ 8 August 2009"&gt;&lt;a href=https://www.wsj.com/articles/SB124967937642715417&gt;Over an 13-year period, [David Leinweber] found, [that annual butter production in Bangladesh] “explained” 75% of the variation in the annual returns of the Standard &amp; Poor’s 500-stock index.&lt;/br&gt;&lt;/br&gt;By tossing in U.S. cheese production and the total population of sheep in both Bangladesh and the U.S., Mr. Leinweber was able to “predict” past U.S. stock returns with 99% accuracy.&lt;/a&gt;&lt;/blockquote&gt;
 
 ---
 class: middle
@@ -61,7 +102,7 @@ class: middle
 
 &lt;/br&gt;
 
-### 2. Erroneously conflating .secondary[In-sample] accuracy with .secondary[Out-of-sample] accuracy
+### 2. Erroneously conflating .tertiary[In-sample] accuracy with .tertiary[Out-of-sample] accuracy
 
 
 &lt;/br&gt;
@@ -71,13 +112,12 @@ class: middle
 ## Prior to mid-1970s, 
 ### Macroeconomics focused on empirical relationships
 
-.center[![:scale 50%](phillips.png)]
+.center[![:scale 50%](gfx/phillips.png)]
 
-Source: AW Phillips "The Relation Between Unemployment and the Rate of Change of Money Wage Rates in the United Kingdom, 1861–1957"
+.pull-right-wide[.small[Source: [AW Phillips "The Relation Between Unemployment and the Rate of Change of Money Wage Rates in the United Kingdom, 1861–1957"](https://doi.org/10.1111/j.1468-0335.1958.tb00003.x)]]
 
 
 ---
-class: middle
 
 .pull-left-narrow[
 &lt;/br&gt;&lt;/br&gt;
@@ -85,7 +125,7 @@ class: middle
 ]
 
 .pull-right-wide[
-&lt;blockquote cite="Robert Lucas, Econometric Policy Evaluation: A critique"&gt;Given that the structure of an econometric model consists of optimal decision rules of economic agents, and that optimal decision rules vary systematically with changes in the structure of series relevant to the decision maker, it follows that any change in policy will systematically alter the structure of econometric models.&lt;/blockquote&gt;
+&lt;blockquote cite="Robert Lucas, Econometric Policy Evaluation: A critique"&gt;&lt;a href=https://doi.org/10.1016/S0167-2231(76)80003-6&gt;Given that the structure of an econometric model consists of optimal decision rules of economic agents, and that optimal decision rules vary systematically with changes in the structure of series relevant to the decision maker, it follows that any change in policy will systematically alter the structure of econometric models.&lt;/a&gt;&lt;/blockquote&gt;
 ]
 
 --
@@ -94,7 +134,7 @@ class: middle
 
 ---
 
-## Response: Dynamic Stochastic General Equilibrium Models
+## Dynamic Stochastic General Equilibrium Models
 
 * Observe the highly aggregated actions of individual agents, and try to learn their reward function.
 
@@ -114,21 +154,21 @@ class: middle
 ]
 
 .pull-right[
-![:scale 80%](dsge.png)
+![:scale 80%](gfx/dsge.png)
 
-Source: [Brad Delong](https://www.bradford-delong.com) 
+.pull-right-narrow[.small[Source: [Brad Delong](https://www.bradford-delong.com) ]]
 ]
 
 ---
 
-&lt;blockquote cite='"On DSGE Models" by Christino, Eichenbaum, and Trabandt (2017 Working paper version)'&gt;
-People who don’t like dynamic stochastic general equilibrium (DSGE) models are dilettantes. By this we mean they aren’t serious about policy analysis. 
+&lt;blockquote cite='"On DSGE Models" by Christino, Eichenbaum, and Trabandt (2017 Working paper version)'&gt;&lt;a href=https://faculty.wcas.northwestern.edu/~yona/research/DSGE.pdf&gt;
+People who don’t like dynamic stochastic general equilibrium (DSGE) models are dilettantes. By this we mean they aren’t serious about policy analysis.&lt;/a&gt; 
 &lt;!--Why do we say this? ... As Lucas (1980) pointed out roughly forty years ago, the only place that we can do experiments is in our models. Dilettantes who only point to the existence of competing forces at work – and informally judge their relative importance via implicit thought experiments – can never give serious policy advice.--&gt;
 &lt;/blockquote&gt;
 
 --
 
-&lt;blockquote cite='"Where Modern Macroeconomics Went Wrong" by Joseph Stiglitz'&gt;I believe that most of the core constituents of the DSGE model are flawed—sufficiently badly flawed that they do not provide even a good starting point for constructing a good macroeconomic model.&lt;/blockquote&gt;
+&lt;blockquote cite='"Where Modern Macroeconomics Went Wrong" by Joseph Stiglitz'&gt;&lt;a href=https://www.ineteconomics.org/uploads/papers/Where-Modern-Macroeconomics-Went-Wrong.pdf&gt;I believe that most of the core constituents of the DSGE model are flawed—sufficiently badly flawed that they do not provide even a good starting point for constructing a good macroeconomic model.&lt;/a&gt;&lt;/blockquote&gt;
 
 --
 
@@ -142,32 +182,49 @@ I started (and mostly finished) this work in 2009 with Cosma Shalizi and Mark Sc
 
 Gets revisited every 3 years. Mostly "on the backburner"
 
-### The question: "Why didn't these models predict the Financial Crisis?"
+### The original question: "Why didn't these models predict the Financial Crisis?"
 
 * Macroeconomics answer: because they were missing important structural mechanisms `\(\longrightarrow\)` lets add them
 
-* Our answer: because they don't predict .fourth-color[anything], you just got lucky up to now.
+* Our answer: because they don't predict .tertiary[anything], you just got lucky up to now.
 
 --
 
 3 things your beautiful model should do:
 
-1. Be internally consistent: if you simulate it, and train on the simulation, you should eventually recover the truth.
-2. It should work better on real data than it does on nonsense.
-3. It should predict as well as simple baselines (if not better).
+&lt;table style="width: 100%; vertical-align:top"&gt;
+&lt;tr&gt;
+&lt;td style="width:33%; vertical-align:top"&gt;.center[.secondary[.large[1.]]] Be internally consistent: if you simulate it, and train on the simulation, you should eventually recover the truth.&lt;/td&gt;
+&lt;td style="width:33%; vertical-align:top"&gt;.center[.secondary[.large[2.]]] It should work better on real data than it does on nonsense.&lt;/td&gt;
+&lt;td style="width:33%; vertical-align:top"&gt;.center[.secondary[.large[3.]]]It should predict as well as simple baselines (if not better).&lt;/td&gt;
+&lt;tr&gt;
+&lt;table&gt;
 
 
 ---
+class: middle, inverse, center
 
-## 1. A DSGE is a model, can it predict it's own data?
+# So how does the DSGE do?
+
+Repeat many times:
+
+Simulate lots of data. Train on increasingly long periods. Predict.
+
+---
+
+## 1. Are it's parameter estimates consistent? .tertiary[No.]
+
+&lt;img src="gfx/parm-estimates-1.svg" width="100%" /&gt;
+
+* Might be OK. Perhaps not identifiable.
+* Local minima might still yield good predictors (but this undermines parameter interpretability)
+
+---
+
+## 1. Can it eventually predict it's own data? .tertiary[No.]
 
 &lt;img src="gfx/individual-series-1.svg" width="100%" /&gt;
 
----
-
-## 1. Are it's parameter estimates consistent?
-
-&lt;img src="gfx/parm-estimates-1.svg" width="100%" /&gt;
 
 ---
 
@@ -187,14 +244,20 @@ Example: Give it Income where it thinks it's getting the Interest Rate, re-train
 
 ## 3. Compare to simple baselines
 
-&lt;blockquote cite='"How Useful Are Estimated DSGE Model Forecasts for Central Bankers?" -- Edge and G&amp;#252rkaynak'&gt;In line with the results in the DSGE model forecasting literature, we found that the root mean squared errors (RMSEs) of the DSGE model forecasts were similar to, and often better than, those of the BVAR and Greenbook forecasts. [However...] these models [all] showed [...] almost no forecasting ability. Thus, our comparison is not between one good forecast and another; rather, all three methods of forecasting are poor....&lt;/blockquote&gt;
+&lt;blockquote cite='"How Useful Are Estimated DSGE Model Forecasts for Central Bankers?" by Edge and G&amp;#252rkaynak'&gt;&lt;a href=https://www.jstor.org/stable/41012847&gt;In line with the results in the DSGE model forecasting literature, we found that the root mean squared errors (RMSEs) of the DSGE model forecasts were similar to, and often better than, those of the BVAR and Greenbook forecasts. [However...] these models [all] showed [...] almost no forecasting ability. Thus, our comparison is not between one good forecast and another; rather, all three methods of forecasting are poor....&lt;/a&gt;&lt;/blockquote&gt;
+
+
+---
+class: middle, center, inverse
+
+# Bad models are used in other fields, too.
 
 
 ---
 
 ## Forecasting COVID-19 in the US
 
-* 20 months later, why are so many models worse than Baseline? 
+* 20 months later, why are so many models worse than [Baseline](https://delphi.cmu.edu/forecast-eval/)? 
 
 
 
@@ -202,16 +265,53 @@ Example: Give it Income where it thinks it's getting the Interest Rate, re-train
 
 * Of 38 teams, 10 routinely beat the baseline.
 
+---
+
+## Conclusions
+
+1. Models which predict well can be useless for policy.
+
+2. Models which predict poorly require serious caveats / justification before using for policy.
+
+3. This is hard with social science. In many other fields, we discard models which predict poorly (particle physics, astronomy, medicine, etc.)
+
+4. Suggested minimal criteria for a policy-relevant model:
+    - Internally consistent.
+    - Robust to nonsense.
+    - Better than simple baselines.
+    - Others??
+ 
+---
+
+## Thanks
+
+.pull-left[.center[
+![:scale 30%](gfx/shalizi.jpg)
+
+![:scale 30%](gfx/schervish.jpg)![:scale 39%](gfx/darren.jpg)
+]]
+
+.pull-right[
+.center[
+![:scale 50%](gfx/inet.png)
+
+![:scale 50%](https://www.nsf.gov/images/logos/NSF_4-Color_bitmap_Logo.png)
+
+![](https://www.nserc-crsng.gc.ca/img/logos/img-logo2-en.png)
+]]
+
+--
+
+.center[.huge[<svg aria-hidden="true" role="img" viewBox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#6495ed;overflow:visible;position:relative;"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg> .secondary[ICBINB Organizers] <svg aria-hidden="true" role="img" viewBox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#6495ed;overflow:visible;position:relative;"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg>]]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script src="src/macros.js"></script>
 <script>var slideshow = remark.create({
-"slideNumberFormat": "%current%",
 "highlightStyle": "github",
 "highlightLines": true,
 "ratio": "16:9",
-"countIncrementalSlides": false
+"countIncrementalSlides": true
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));

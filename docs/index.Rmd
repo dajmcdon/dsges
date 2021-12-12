@@ -1,19 +1,17 @@
 ---
 title: "Your model is beautiful, but does it predict?"
-subtitle: ""  
 author: 
-  - "Daniel J. McDonald"
-date: "13 December 2021"
+  - "Daniel J. McDonald<br/>University of British Columbia"
+date: "NeurIPS: I can't believe it's not better"
 output:
   xaringan::moon_reader:
     css: [src/xaringan-themer.css, src/slides-style.css]
     nature:
       beforeInit: ["src/macros.js"]
-      slideNumberFormat: "%current%"
       highlightStyle: github
       highlightLines: true
       ratio: 16:9
-      countIncrementalSlides: false
+      countIncrementalSlides: true
     seal: false
 ---
 
@@ -21,7 +19,7 @@ output:
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(lubridate)
-library(covidcast)
+library(fontawesome)
 pro = fontawesome::fa("thumbs-up", fill="green")
 con = fontawesome::fa("bomb", fill="orange")
 options(htmltools.dir.version = FALSE)
@@ -42,8 +40,8 @@ knitr::opts_chunk$set(
 ```{r xaringan-themer, include=FALSE, warning=FALSE}
 library(xaringanthemer)
 primary = "#002145"
-secondary = "#6ec4e8"
-tertiary = "#0076A5"
+secondary = "#6495ed"
+tertiary = "#ffa319"
 fourth_color = "#DB0B5B"
 
 style_duo_accent(
@@ -52,6 +50,7 @@ style_duo_accent(
   header_font_google = google_font("EB Garamond"),
   text_font_google = google_font("Open Sans"),
   code_font_google = google_font("Fira Mono"),
+  text_color = primary,
   table_row_even_background_color = lighten_color(primary, 0.8),
   colors = c(
     tertiary = tertiary, fourth_color = fourth_color,
@@ -60,34 +59,72 @@ style_duo_accent(
     light_ter = lighten_color(tertiary, 0.8),
     light_fou = lighten_color(fourth_color, 0.8)
     ),
-  title_slide_background_image = "corona.jpeg",
-  #title_slide_background_position = "75% 75%",
-  #title_slide_background_size = "200px 200px"
-  title_slide_text_color = "#FFFFFF",
-  outfile = "src/xaringan-themer.css"
+  outfile = here::here("docs/src/xaringan-themer.css")
 )
 # theme_set(theme_xaringan())
 ```
+
+layout: true
+
+<div class="my-footer"><span><a href="https://dajmcdon.github.io/dsges" style="color:white">dajmcdon.github.io/dsges</a></span></div> 
+
+---
+
+background-image: url("gfx/cover.svg")
+background-size: contain
+background-position: top
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+
+
+.center[# Your model is beautiful, but does it predict?]
+
+
+.pull-left[
+<br/>
+###Daniel J. McDonald
+###University of British Columbia
+#### NeurIPS: I Can't Believe It's Not Better
+]
+
+.pull-right[.center[.middle[
+<br/>
+<table>
+<tr>
+<td>![:scale 50%](gfx/qr-slides.png)</td>
+<td>![:scale 50%](gfx/qr-code.png)</td>
+<td>![:scale 50%](gfx/qr-mywww.png)</td>
+</tr>
+<tr>
+<td>`r fa("chalkboard-teacher")` Slides</td>
+<td>`r fa("code")` Code</td>
+<td>`r fa("at")` My WWW</td>
+</tr>
+</table>
+]]]
+
+---
 
 # Themes
 
 </br>
 
-### "Beauty" or perhaps "intellectual satisfaction" as a research goal
+### `r fa("angle-right")` "Beauty" or perhaps "elegance" as a research goal
 
 </br>
 
-### A long-gestating paper without a home
+### `r fa("angle-right")` A long-gestating paper without a home
 
 </br>
 
-### Why are these models still so bad?
+### `r fa("angle-right")` Why are these models .tertiary[still] so bad?
 
 </br>
 
 --
 
-### $\Longrightarrow$ A parable from Macroeconomics
+### `r fa("long-arrow-alt-right", fill=tertiary)` A parable from Macroeconomics
 
 ---
 
@@ -103,7 +140,7 @@ style_duo_accent(
 ---
 class: middle
 
-<blockquote cite="Carl Richards, NYT 26 March 2012">Over an 13-year period, [David Leinweber] found, [that annual butter production in Bangladesh] “explained” 75% of the variation in the annual returns of the Standard & Poor’s 500-stock index.</br></br>By tossing in U.S. cheese production and the total population of sheep in both Bangladesh and the U.S., Mr. Leinweber was able to “predict” past U.S. stock returns with 99% accuracy.</blockquote>
+<blockquote cite="Jason Zweig, WSJ 8 August 2009"><a href=https://www.wsj.com/articles/SB124967937642715417>Over an 13-year period, [David Leinweber] found, [that annual butter production in Bangladesh] “explained” 75% of the variation in the annual returns of the Standard & Poor’s 500-stock index.</br></br>By tossing in U.S. cheese production and the total population of sheep in both Bangladesh and the U.S., Mr. Leinweber was able to “predict” past U.S. stock returns with 99% accuracy.</a></blockquote>
 
 ---
 class: middle
@@ -112,7 +149,7 @@ class: middle
 
 </br>
 
-### 2. Erroneously conflating .secondary[In-sample] accuracy with .secondary[Out-of-sample] accuracy
+### 2. Erroneously conflating .tertiary[In-sample] accuracy with .tertiary[Out-of-sample] accuracy
 
 
 </br>
@@ -122,13 +159,12 @@ class: middle
 ## Prior to mid-1970s, 
 ### Macroeconomics focused on empirical relationships
 
-.center[![:scale 50%](phillips.png)]
+.center[![:scale 50%](gfx/phillips.png)]
 
-Source: AW Phillips "The Relation Between Unemployment and the Rate of Change of Money Wage Rates in the United Kingdom, 1861–1957"
+.pull-right-wide[.small[Source: [AW Phillips "The Relation Between Unemployment and the Rate of Change of Money Wage Rates in the United Kingdom, 1861–1957"](https://doi.org/10.1111/j.1468-0335.1958.tb00003.x)]]
 
 
 ---
-class: middle
 
 .pull-left-narrow[
 </br></br>
@@ -136,7 +172,7 @@ class: middle
 ]
 
 .pull-right-wide[
-<blockquote cite="Robert Lucas, Econometric Policy Evaluation: A critique">Given that the structure of an econometric model consists of optimal decision rules of economic agents, and that optimal decision rules vary systematically with changes in the structure of series relevant to the decision maker, it follows that any change in policy will systematically alter the structure of econometric models.</blockquote>
+<blockquote cite="Robert Lucas, Econometric Policy Evaluation: A critique"><a href=https://doi.org/10.1016/S0167-2231(76)80003-6>Given that the structure of an econometric model consists of optimal decision rules of economic agents, and that optimal decision rules vary systematically with changes in the structure of series relevant to the decision maker, it follows that any change in policy will systematically alter the structure of econometric models.</a></blockquote>
 ]
 
 --
@@ -145,7 +181,7 @@ class: middle
 
 ---
 
-## Response: Dynamic Stochastic General Equilibrium Models
+## Dynamic Stochastic General Equilibrium Models
 
 * Observe the highly aggregated actions of individual agents, and try to learn their reward function.
 
@@ -165,21 +201,21 @@ class: middle
 ]
 
 .pull-right[
-![:scale 80%](dsge.png)
+![:scale 80%](gfx/dsge.png)
 
-Source: [Brad Delong](https://www.bradford-delong.com) 
+.pull-right-narrow[.small[Source: [Brad Delong](https://www.bradford-delong.com) ]]
 ]
 
 ---
 
-<blockquote cite='"On DSGE Models" by Christino, Eichenbaum, and Trabandt (2017 Working paper version)'>
-People who don’t like dynamic stochastic general equilibrium (DSGE) models are dilettantes. By this we mean they aren’t serious about policy analysis. 
+<blockquote cite='"On DSGE Models" by Christino, Eichenbaum, and Trabandt (2017 Working paper version)'><a href=https://faculty.wcas.northwestern.edu/~yona/research/DSGE.pdf>
+People who don’t like dynamic stochastic general equilibrium (DSGE) models are dilettantes. By this we mean they aren’t serious about policy analysis.</a> 
 <!--Why do we say this? ... As Lucas (1980) pointed out roughly forty years ago, the only place that we can do experiments is in our models. Dilettantes who only point to the existence of competing forces at work – and informally judge their relative importance via implicit thought experiments – can never give serious policy advice.-->
 </blockquote>
 
 --
 
-<blockquote cite='"Where Modern Macroeconomics Went Wrong" by Joseph Stiglitz'>I believe that most of the core constituents of the DSGE model are flawed—sufficiently badly flawed that they do not provide even a good starting point for constructing a good macroeconomic model.</blockquote>
+<blockquote cite='"Where Modern Macroeconomics Went Wrong" by Joseph Stiglitz'><a href=https://www.ineteconomics.org/uploads/papers/Where-Modern-Macroeconomics-Went-Wrong.pdf>I believe that most of the core constituents of the DSGE model are flawed—sufficiently badly flawed that they do not provide even a good starting point for constructing a good macroeconomic model.</a></blockquote>
 
 --
 
@@ -193,24 +229,62 @@ I started (and mostly finished) this work in 2009 with Cosma Shalizi and Mark Sc
 
 Gets revisited every 3 years. Mostly "on the backburner"
 
-### The question: "Why didn't these models predict the Financial Crisis?"
+### The original question: "Why didn't these models predict the Financial Crisis?"
 
 * Macroeconomics answer: because they were missing important structural mechanisms $\longrightarrow$ lets add them
 
-* Our answer: because they don't predict .fourth-color[anything], you just got lucky up to now.
+* Our answer: because they don't predict .tertiary[anything], you just got lucky up to now.
 
 --
 
 3 things your beautiful model should do:
 
-1. Be internally consistent: if you simulate it, and train on the simulation, you should eventually recover the truth.
-2. It should work better on real data than it does on nonsense.
-3. It should predict as well as simple baselines (if not better).
+<table style="width: 100%; vertical-align:top">
+<tr>
+<td style="width:33%; vertical-align:top">.center[.secondary[.large[1.]]] Be internally consistent: if you simulate it, and train on the simulation, you should eventually recover the truth.</td>
+<td style="width:33%; vertical-align:top">.center[.secondary[.large[2.]]] It should work better on real data than it does on nonsense.</td>
+<td style="width:33%; vertical-align:top">.center[.secondary[.large[3.]]]It should predict as well as simple baselines (if not better).</td>
+<tr>
+<table>
 
 
 ---
+class: middle, inverse, center
 
-## 1. A DSGE is a model, can it predict it's own data?
+# So how does the DSGE do?
+
+Repeat many times:
+
+Simulate lots of data. Train on increasingly long periods. Predict.
+
+---
+
+## 1. Are it's parameter estimates consistent? .tertiary[No.]
+
+```{r parm-estimates}
+load(here::here("cluster_output", "SimEst", "summaryStats.Rdata"))
+SummaryStats %>%
+  group_by(nestim) %>%
+  summarise(quant(perror)) %>%
+  pivot_wider() %>%
+  ggplot(aes(nestim / 4)) +
+  theme_bw() +
+  annotate("rect", ymin = -Inf, ymax = Inf, xmin = -Inf, xmax = 60, 
+           fill = "lightsteelblue1", alpha = .5) +
+  geom_ribbon(aes(ymin=`10%`,ymax=`90%`), fill='grey90') +
+  geom_ribbon(aes(ymin=`25%`,ymax=`75%`), fill='grey80') + 
+  geom_line(aes(y = avg), color = "cornflowerblue", size = 1.5) + 
+  geom_line(aes(y = `50%`), color = "orange", size = 1.5) +
+  xlab('Years of training data') +
+  ylab("Mean-squared parameter error")
+```
+
+* Might be OK. Perhaps not identifiable.
+* Local minima might still yield good predictors (but this undermines parameter interpretability)
+
+---
+
+## 1. Can it eventually predict it's own data? .tertiary[No.]
 
 ```{r individual-series, fig.height=4.25}
 load(here::here("cluster_output", "SimEst", "predErrs.Rdata"))
@@ -248,27 +322,6 @@ df %>% ggplot(aes(nestim / 4)) +
         strip.text = element_text(hjust = 0))
 ```
 
----
-
-## 1. Are it's parameter estimates consistent?
-
-```{r parm-estimates}
-load(here::here("cluster_output", "SimEst", "summaryStats.Rdata"))
-SummaryStats %>%
-  group_by(nestim) %>%
-  summarise(quant(perror)) %>%
-  pivot_wider() %>%
-  ggplot(aes(nestim / 4)) +
-  theme_bw() +
-  annotate("rect", ymin = -Inf, ymax = Inf, xmin = -Inf, xmax = 60, 
-           fill = "lightsteelblue1", alpha = .5) +
-  geom_ribbon(aes(ymin=`10%`,ymax=`90%`), fill='grey90') +
-  geom_ribbon(aes(ymin=`25%`,ymax=`75%`), fill='grey80') + 
-  geom_line(aes(y = avg), color = "cornflowerblue", size = 1.5) + 
-  geom_line(aes(y = `50%`), color = "orange", size = 1.5) +
-  xlab('Years of training data') +
-  ylab("Mean-squared parameter error")
-```
 
 ---
 
@@ -320,14 +373,20 @@ ggplot(df, aes(y)) +
 
 ## 3. Compare to simple baselines
 
-<blockquote cite='"How Useful Are Estimated DSGE Model Forecasts for Central Bankers?" -- Edge and G&#252rkaynak'>In line with the results in the DSGE model forecasting literature, we found that the root mean squared errors (RMSEs) of the DSGE model forecasts were similar to, and often better than, those of the BVAR and Greenbook forecasts. [However...] these models [all] showed [...] almost no forecasting ability. Thus, our comparison is not between one good forecast and another; rather, all three methods of forecasting are poor....</blockquote>
+<blockquote cite='"How Useful Are Estimated DSGE Model Forecasts for Central Bankers?" by Edge and G&#252rkaynak'><a href=https://www.jstor.org/stable/41012847>In line with the results in the DSGE model forecasting literature, we found that the root mean squared errors (RMSEs) of the DSGE model forecasts were similar to, and often better than, those of the BVAR and Greenbook forecasts. [However...] these models [all] showed [...] almost no forecasting ability. Thus, our comparison is not between one good forecast and another; rather, all three methods of forecasting are poor....</a></blockquote>
+
+
+---
+class: middle, center, inverse
+
+# Bad models are used in other fields, too.
 
 
 ---
 
 ## Forecasting COVID-19 in the US
 
-* 20 months later, why are so many models worse than Baseline? 
+* 20 months later, why are so many models worse than [Baseline](https://delphi.cmu.edu/forecast-eval/)? 
 
 ```{r grab-cases}
 Mean <- function(x) mean(x, na.rm = TRUE)
@@ -374,3 +433,41 @@ ggplot(case_scores,
 
 * Of `r n_distinct(case_scores$forecaster) - 4` teams, `r case_scores %>% group_by(forecaster) %>% summarise(m = median(relwis, na.rm = TRUE)) %>% filter(m<1) %>% nrow()-4` routinely beat the baseline.
 
+---
+
+## Conclusions
+
+1. Models that predict well can be useless for policy.
+
+2. Models that predict poorly require serious caveats / justification before using for policy.
+
+3. This is hard with social science. In many other fields, we discard models that predict poorly (particle physics, astronomy, medicine, etc.)
+
+4. Suggested minimal criteria for a policy-relevant model:
+    - Internally consistent.
+    - Robust to nonsense.
+    - Better than simple baselines.
+    - Others??
+ 
+---
+
+## Thanks
+
+.pull-left[.center[
+![:scale 30%](gfx/shalizi.jpg)
+
+![:scale 30%](gfx/schervish.jpg)![:scale 39%](gfx/darren.jpg)
+]]
+
+.pull-right[
+.center[
+![:scale 50%](gfx/inet.png)
+
+![:scale 50%](https://www.nsf.gov/images/logos/NSF_4-Color_bitmap_Logo.png)
+
+![](https://www.nserc-crsng.gc.ca/img/logos/img-logo2-en.png)
+]]
+
+--
+
+.center[.huge[`r fa("exclamation-triangle", fill=secondary)` .secondary[ICBINB Organizers] `r fa("exclamation-triangle", fill=secondary)`]]
