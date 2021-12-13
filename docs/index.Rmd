@@ -210,6 +210,10 @@ class: middle
 
 * Morgan and Winship &#8212; Counterfactuals and Causal Inference: Methods and Principles for Social Research (2015, 2ed)
 
+???
+
+* By the contrapositive, inaccurate predictions -> incorrect causal model.
+
 ---
 class: middle, inverse, center
 
@@ -429,7 +433,6 @@ SummaryStats %>%
     2. Years of data
     3. Blue/Orange lines
     4. CI bands are quantiles over replicates (50/80)
-* Hours worked is really easy (sits at )
 
 * Perhaps not identifiable.
 * Local minima might still yield good predictors 
@@ -654,3 +657,7 @@ ggplot(case_scores,
 --
 
 .center[.huge[`r fa("exclamation-triangle", fill=secondary)` .secondary[ICBINB Organizers] `r fa("exclamation-triangle", fill=secondary)`]]
+
+???
+
+* Aaron, Jessica, Stephanie, Francisco, and Melanie
