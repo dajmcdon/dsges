@@ -106,7 +106,7 @@ Perspective}
 grateful for advice and comments to David N. DeJong, J. Bradford DeLong
 and Robert Waldmann (none of whom should be held responsible for our
 choices). DJM was partially supported by the National Science Foundation
-Grants DMS-1407439 and DMS-1753171.CRS wishes to acknowledge support
+Grants DMS-1407439 and DMS-1753171. CRS wishes to acknowledge support
 from the National Science Foundation (grants DMS1207759 and DMS1418124),
 and valuable conversations over many years with Zmarak M. Shalizi.}  \\
   Department of Statistics\\
@@ -206,7 +206,7 @@ predictive ability, since the later does not exist.
 We also undermine the notion that DSGE specifications capture the
 structure of the economy by the simple expedient of swapping the
 different time series on which they are fit --- giving the model as
-``investment'' the series that is really ``hours worked,'' and so forth
+``investment'' the series that is really ``hours worked'', and so forth
 (sec.~\ref{sec:permutation-summary} below). Not only does such series
 swapping do little to degrade the DSGE's performance, in sample or out
 of sample, in a large fraction of permutations it actually
@@ -893,14 +893,14 @@ gives a visual depiction.
 \caption{\label{tab:best-results}Series MSEs for SW and top models.}
 \centering
 \resizebox{\linewidth}{!}{
-\begin{tabular}[t]{lrrrrrrr}
+\begin{tabular}[t]{rrrrrrr}
 \toprule
-  & hours worked & interest rate & inflation & output & consumption & investment & wages\\
+hours worked & interest rate & inflation & output & consumption & investment & wages\\
 \midrule
-SW model & 1.12 & 0.02 & 0.06 & 2.32 & 1.36 & 5.40 & 1.06\\
-Model w/ highest \% improvement & 0.24 & 0.01 & 0.06 & 0.39 & 0.34 & 2.64 & 0.84\\
-Model w/ lowest scaled MSE & 0.25 & 0.02 & 0.09 & 0.33 & 0.41 & 1.56 & 0.97\\
-Model w/ lowest out-of-sample likelihood & 0.32 & 0.01 & 0.09 & 0.42 & 0.35 & 2.07 & 1.33\\
+1.12 & 0.02 & 0.06 & 2.32 & 1.36 & 5.40 & 1.06\\
+0.24 & 0.01 & 0.06 & 0.39 & 0.34 & 2.64 & 0.84\\
+0.25 & 0.02 & 0.09 & 0.33 & 0.41 & 1.56 & 0.97\\
+0.32 & 0.01 & 0.09 & 0.42 & 0.35 & 2.07 & 1.33\\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -1078,7 +1078,7 @@ We now examine how well the SW model predicts future data relative to
 the best models we could have used, had we seen the data.
 \autoref{fig:pc-preds-p1} and \autoref{fig:pc-preds-p2} show the
 out-of-sample predictions for top 20 flips based on ``average percent
-improvement.'' This analysis is a post-hoc measure as the best models
+improvement''. This analysis is a post-hoc measure as the best models
 were selected to make these predictions well, though the parameters were
 estimated without access to this data. We also show the observed data
 and the predictions from the SW model. The SW model is quite bad at
@@ -1159,8 +1159,8 @@ The Truth? How badly would the SW model fit and forecast? Here I
 actually guess it would do OK. Procedure: (1) generate data out of the
 best permutation, (2) get forecasts using it and the SW model (say 100
 each). Which is better? The average negative log-likelihood of the true
-model is 876 compared to 948 for the SW model. The MSEs are 0.256
-compared to 0.525 respectively.
+model is 873 compared to 935 for the SW model. The MSEs are 0.257
+compared to 0.545 respectively.
 
 \attn{We actually have that the SW model (unpermuted) has the lowest in-sample negitive log posterior. These were generated using the best unpenalized predicting permutation by log likelihood.}
 
@@ -1232,8 +1232,8 @@ the economy\footnote{It's conceivable that the issue is one of
   analogous names are good measurements of the theoretical variables.
   (Cf. \citet[p. 6]{Haavelmo-probability-approach}: ``there is hardly an
   economist who feels really happy about identifying current series of
-  `national income,' `consumption,' etc., with the variables by these
-  names in his theories.'') Thus, perhaps, the model is right, but
+  `national income,' `consumption,', etc., with the variables by these
+  names in his theories''.) Thus, perhaps, the model is right, but
   GDPDEF is really a better proxy for \emph{labor}, \(l_t\), than
   PRS85006023 is. This would, needless to say, raise its own set of
   difficulties for the interpretation and use of these models. One
@@ -1258,12 +1258,12 @@ be reliably estimated.
 
 We have not, of course, proved that flaws like this are inherent in the
 DSGE form. But we have \emph{not} cherry-picked an obsolete or marginal
-model\textbackslash footnote\{We obtained very similar results for the
-real-business-cycle model of \citet{KydlandPrescott1982}, but omit them
-here, because that model \emph{is} obsolete.\}. The SW model is widely
-regarded as the baseline DSGE for the economy of the United States,
-which is by far the most important national economy in the world. The SW
-paper has been cited over 5500 times\footnote{Google Scholar
+model\footnote{We obtained very similar results for the real-business-cycle
+model of \citet{KydlandPrescott1982}, but omit them here, because that model
+\emph{is} obsolete.}. The SW model is widely regarded as the baseline
+DSGE for the economy of the United States, which is by far the most
+important national economy in the world. The SW paper has been cited
+over 5500 times\footnote{Google Scholar
 (\url{https://scholar.google.com/scholar?cites=8854430771281116653}), accessed
 11 April 2021.}. What concerns us is that in all that literature, we
 appear to be the first to have subjected it to such direct, even

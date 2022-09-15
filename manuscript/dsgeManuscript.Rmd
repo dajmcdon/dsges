@@ -1197,7 +1197,7 @@ We have not, of course, proved that flaws like this are inherent in the DSGE
 form.  But we have _not_ cherry-picked an obsolete or marginal
 model\footnote{We obtained very similar results for the real-business-cycle
 model of \citet{KydlandPrescott1982}, but omit them here, because that model
-_is_ obsolete.}.  The SW model is widely regarded as the baseline DSGE for the
+\emph{is} obsolete.}.  The SW model is widely regarded as the baseline DSGE for the
 economy of the United States, which is by far the most important national
 economy in the world.  The SW paper has been cited over 5500
 times\footnote{Google Scholar
