@@ -792,6 +792,7 @@ relative to the baseline model. The horizontal line at zero represents performan
 equivalent to baseline. About `r round(mean(df$y<0)*100,0)`\% of permutations had better predictive performance than the baseline model.
 
 ```{r series-percent-improvement, fig.cap="Percentage improvement in out-of-sample forecast MSE for each data series individually. The horizontal red line represents baseline performance. Values to the left are better."}
+percent_better_models <- round(mean(df$y<0)*100,0)
 logperc %>% gather() %>%
   ggplot(aes(key,value)) + geom_violin() + coord_flip() + 
   geom_hline(yintercept = 0, color=red) + ylab(bquote(log("permuted MSE")-log("baseline MSE"))) +
@@ -1047,46 +1048,7 @@ We now examine how well the SW model predicts future data relative to the best m
 \autoref{fig:pc-preds-p1} and \autoref{fig:pc-preds-p2} show the out-of-sample predictions for top `r topn` flips based on "average percent improvement". This analysis is a post-hoc measure as the best models were selected to make these predictions well, though the parameters were estimated without access to this data. We also show the observed data and the predictions from the SW model. The SW model is quite bad at predicting consumption, investment, 
 output, and wages. It predicts a consistent 0.5% increase in the real wage level that never appears. In fact, wages are far more volatile than any of the permutations can account for. For the case of investment, output, and consumption, the SW model drastically lags the 2009 recession and underestimates its severity. Furthermore, it continues to predict a much stronger recovery, even 10 years later, than has ever materialized. The SW model is quite accurate for the interest rate, though this should perhaps be expected given that the Taylor rule may well drive Federal Reserve decisions rather than describe them.
 
-# Things Waldman asked which haven't appeared yet
-
-
-## Do the deep parameters covary with policy parameters?
-
-The idea here is to assess whether the Lucas critique is really avoided for
-this model. In other words, if the Fed changes how they manage interest rates,
-do the other parameters move? Here, we're looking only at the simulate/estimate
-exercise, examining the distribution of Taylor parameters conditional on the
-truth generating the model and estimating said parameters. We're not actually
-considering a distribution of Taylor rule parameters that the Fed might
-consider. These correlations are shown in \autoref{tab:covary-with-Taylor}. The
-Taylor rule parameters are, $\rho$, the autocorrelation in the interest rate,
-$r_\pi$, the response to inflation, $r_y$, the response to deviations of output
-from potential, and $r_{\Delta y}$ the response to changes in the deviation.  A
-handful of deep parameters have correlations larger in magnitude than 0.3
-(shown in bold).
-
-```{r covary-with-Taylor, results="asis"}
-# The 'deep' parameters begin with 'phi1'
-# The Taylor rule parameters are 'rho' (changes in the interest rate should be smooth)
-#             'r[pi]' (response to inflation)
-#             'r[y]' (response to deviation of output from potential)
-#             'r[Delta][y]' (response to changes in output deviation)
-pars = parmEst[,-c(1:5)]
-parmDeep = which(parmGreek=='phi1'):length(parmGreek)
-parmTaylor = seq(from=which(parmGreek=='r[pi]'),length.out = 4)
-covary = as_tibble(cor(pars)[parmDeep,parmTaylor])
-covary$parm = tab$parameter[parmDeep]
-covary = covary %>% select(parm, everything())
-
-
-covary %>% mutate_if(is.numeric, function(x) {
-  cell_spec(round(x,2), bold = text_spec(abs(x)>.3))
-  }) %>%
-knitr::kable(digits=2, booktabs=TRUE, align="r",
-             caption="Correlations between 'deep' parameters and Taylor rule parameters. From the 
-             'Simulate and estimate' exercise.", 
-             escape=FALSE, col.names = c("",tab$parameter[parmTaylor]))
-```
+<!--
 
 ## Changing the truth
 
@@ -1118,7 +1080,7 @@ The average negative log-likelihood of the true model is `r signif(mean(bestPred
 
 \attn{We actually have that the SW model (unpermuted) has the lowest in-sample negitive log posterior. These were generated using the best unpenalized predicting permutation by log likelihood.}
 
-<!-- The next set of figures shows the data (black), predictions from the true model (blue), and SW model (red).-->
+The next set of figures shows the data (black), predictions from the true model (blue), and SW model (red).
 
 
 ```{r sim-pred-sw, echo=FALSE, eval=FALSE}
@@ -1133,23 +1095,10 @@ for(j in 1:dim(newPaths)[1]){
 }
 ```
 
-## Best model by predictive log-likelihood
-
-The true model is 
-\begin{quotation}
-`r names(testerr)`
-\end{quotation}
-\noindent while the best one by out-of-sample log-likelihood is 
-\begin{quotation}
-`r names(testerr)[perms[top20llike[1],]]`.
-\end{quotation}
-\noindent This model is pretty clearly scary to a macroeconomist. 
+-->
 
 
-I think it's also important to note here, that the penalized negative log-likelihood is very flat relative to permutations. In terms of that metric, `r signif(mean(llikeTest/llikeTest[truePerm] < 1.10),2)*100`% of permutations are within 10% of the true permutation. In the Appendix, we rewrite the beginning of \citet{SmetsWouters2007} permuting all the series to reflect the best one by negative predictive log likelihood.
-
-
-# Conclusions
+# Discussion
 
 As we said in the introduction, there are very few who will defend the
 forecasting record of DSGEs.  Rather, their virtues are supposed to lie in
@@ -1185,6 +1134,70 @@ representing tastes, technologies and institutions.
 
 [^align]: It's conceivable that the issue is one of measurement.  The variables in the DSGE model are defined by their roles in the inter-temporal optimization problem.  (Thus labor makes a negative contribution to present utility but a positive contribution to present output, cannot be stored from period to period, etc.)  The series gathered by the official statistical agencies use quite distinct definitions, and nothing guarantees that the series with analogous names are good measurements of the theoretical variables.  (Cf. \citet[p. 6]{Haavelmo-probability-approach}: "there is hardly an economist who feels really happy about identifying current series of 'national income,' 'consumption,', etc., with the variables by these names in his theories".)  Thus, perhaps, the model is right, but GDPDEF is really a better proxy for \emph{labor}, $l_t$, than PRS85006023 is.  This would, needless to say, raise its own set of difficulties for the interpretation and use of these models.  One possible route forward would be to use _many_ observables which are all imperfectly aligned with the theoretical variables, which would, perhaps, require imposing a factor-model structure on the relations between observables and state variables.  \citet{Boivin-Giannoni-DSGEs-in-data-rich-environment} is a step in this direction.
 
+To take this analysis one step further, we can examine the "best" predicting 
+model, in terms of out-of-sample predictive log-likelihood. Recall, this is just one 
+of about `r percent_better_models`\% which forecast better.
+The true model arranges the data as
+\begin{quotation}
+`r names(testerr)`
+\end{quotation}
+\noindent while the best one by out-of-sample log-likelihood is 
+\begin{quotation}
+`r names(testerr)[perms[top20llike[1],]]`.
+\end{quotation}
+\noindent This model is pretty clearly scary to a macroeconomist. 
+It is also important to note here, that the penalized negative log-likelihood 
+(in-sample) is very flat relative to permutations. In terms of that metric, 
+`r signif(mean(llikeTest/llikeTest[truePerm] < 1.10),2)*100`% of permutations 
+are within 10% of the true permutation. In the Appendix, we take this model to 
+most implausible extreme.
+We rewrite the introduction of \citet{SmetsWouters2007}, permuting all the series 
+to reflect the best one by negative predictive log likelihood. Such a description
+of the macroeconomy is doubtless complete nonsense, and yet this interpretation 
+would have led to better predictions of macroeconomic comovements.
+
+
+Ignoring the fact that the DSGE provides generally poor forecasts relative to 
+alternative, yet uninterpretable, similar models, one might wonder whether it manages
+to avoid the Lucas Critique. That is, can policy makers imagine that the model truly decouples policy variables from the "deep" parameters that economic actors maintain?
+Specifically, for example, if the Fed changes how they manage interest rates,
+do the other parameters move? This question can be investigated directly by
+examining the distribution of Taylor parameters conditional on the
+truth generating the model and estimating said parameters in the simulation exercise.
+\footnote{This analysis is not constrained to 
+the distribution of plausible Taylor rule parameters that the Fed might
+consider, but rather simply investigates all possible such parameters.} These correlations are shown in \autoref{tab:covary-with-Taylor}. The
+Taylor rule parameters are, $\rho$, the autocorrelation in the interest rate,
+$r_\pi$, the response to inflation, $r_y$, the response to deviations of output
+from potential, and $r_{\Delta y}$ the response to changes in the deviation.  A
+handful of deep parameters have correlations larger in magnitude than 0.3
+(shown in bold). This magnitude may or may not be large enough for concern, but
+the correlation is also not negligible. So the question of whether these models
+actually address their original motivation.
+
+```{r covary-with-Taylor, results="asis"}
+# The 'deep' parameters begin with 'phi1'
+# The Taylor rule parameters are 'rho' (changes in the interest rate should be smooth)
+#             'r[pi]' (response to inflation)
+#             'r[y]' (response to deviation of output from potential)
+#             'r[Delta][y]' (response to changes in output deviation)
+pars = parmEst[,-c(1:5)]
+parmDeep = which(parmGreek=='phi1'):length(parmGreek)
+parmTaylor = seq(from=which(parmGreek=='r[pi]'),length.out = 4)
+covary = as_tibble(cor(pars)[parmDeep,parmTaylor])
+covary$parm = tab$parameter[parmDeep]
+covary = covary %>% select(parm, everything())
+
+
+covary %>% mutate_if(is.numeric, function(x) {
+  cell_spec(round(x,2), bold = text_spec(abs(x)>.3))
+  }) %>%
+knitr::kable(digits=2, booktabs=TRUE, align="r",
+             caption="Correlations between ``deep'' parameters and Taylor rule parameters from the ``Simulate and estimate'' exercise.", 
+             escape=FALSE, col.names = c("",tab$parameter[parmTaylor]))
+```
+
+
 The results of the two tests are grim.  Series swapping gives us strong reasons
 to doubt that the DSGE machinery manages to capture anything important about
 the structure of the economy.  Even if one dismisses that, and believes
@@ -1197,7 +1210,7 @@ We have not, of course, proved that flaws like this are inherent in the DSGE
 form.  But we have _not_ cherry-picked an obsolete or marginal
 model\footnote{We obtained very similar results for the real-business-cycle
 model of \citet{KydlandPrescott1982}, but omit them here, because that model
-_is_ obsolete.}.  The SW model is widely regarded as the baseline DSGE for the
+\emph{is} obsolete.}.  The SW model is widely regarded as the baseline DSGE for the
 economy of the United States, which is by far the most important national
 economy in the world.  The SW paper has been cited over 5500
 times\footnote{Google Scholar

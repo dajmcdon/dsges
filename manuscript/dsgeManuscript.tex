@@ -106,7 +106,7 @@ Perspective}
 grateful for advice and comments to David N. DeJong, J. Bradford DeLong
 and Robert Waldmann (none of whom should be held responsible for our
 choices). DJM was partially supported by the National Science Foundation
-Grants DMS-1407439 and DMS-1753171.CRS wishes to acknowledge support
+Grants DMS-1407439 and DMS-1753171. CRS wishes to acknowledge support
 from the National Science Foundation (grants DMS1207759 and DMS1418124),
 and valuable conversations over many years with Zmarak M. Shalizi.}  \\
   Department of Statistics\\
@@ -206,7 +206,7 @@ predictive ability, since the later does not exist.
 We also undermine the notion that DSGE specifications capture the
 structure of the economy by the simple expedient of swapping the
 different time series on which they are fit --- giving the model as
-``investment'' the series that is really ``hours worked,'' and so forth
+``investment'' the series that is really ``hours worked'', and so forth
 (sec.~\ref{sec:permutation-summary} below). Not only does such series
 swapping do little to degrade the DSGE's performance, in sample or out
 of sample, in a large fraction of permutations it actually
@@ -1078,7 +1078,7 @@ We now examine how well the SW model predicts future data relative to
 the best models we could have used, had we seen the data.
 \autoref{fig:pc-preds-p1} and \autoref{fig:pc-preds-p2} show the
 out-of-sample predictions for top 20 flips based on ``average percent
-improvement.'' This analysis is a post-hoc measure as the best models
+improvement''. This analysis is a post-hoc measure as the best models
 were selected to make these predictions well, though the parameters were
 estimated without access to this data. We also show the observed data
 and the predictions from the SW model. The SW model is quite bad at
@@ -1093,104 +1093,8 @@ accurate for the interest rate, though this should perhaps be expected
 given that the Taylor rule may well drive Federal Reserve decisions
 rather than describe them.
 
-\hypertarget{things-waldman-asked-which-havent-appeared-yet}{%
-\section{Things Waldman asked which haven't appeared
-yet}\label{things-waldman-asked-which-havent-appeared-yet}}
-
-\hypertarget{do-the-deep-parameters-covary-with-policy-parameters}{%
-\subsection{Do the deep parameters covary with policy
-parameters?}\label{do-the-deep-parameters-covary-with-policy-parameters}}
-
-The idea here is to assess whether the Lucas critique is really avoided
-for this model. In other words, if the Fed changes how they manage
-interest rates, do the other parameters move? Here, we're looking only
-at the simulate/estimate exercise, examining the distribution of Taylor
-parameters conditional on the truth generating the model and estimating
-said parameters. We're not actually considering a distribution of Taylor
-rule parameters that the Fed might consider. These correlations are
-shown in \autoref{tab:covary-with-Taylor}. The Taylor rule parameters
-are, \(\rho\), the autocorrelation in the interest rate, \(r_\pi\), the
-response to inflation, \(r_y\), the response to deviations of output
-from potential, and \(r_{\Delta y}\) the response to changes in the
-deviation. A handful of deep parameters have correlations larger in
-magnitude than 0.3 (shown in bold).
-
-\begin{table}
-
-\caption{\label{tab:covary-with-Taylor}Correlations between 'deep' parameters and Taylor rule parameters. From the 
-             'Simulate and estimate' exercise.}
-\centering
-\begin{tabular}[t]{rrrrr}
-\toprule
- & $r_\pi$ & $\rho$ & $r_y$ & $r_{\Delta y}$\\
-\midrule
-$\phi_1$ & 0.2 & 0.1 & -0.03 & 0.11\\
-$\sigma_c$ & 0.06 & 0.26 & 0.17 & 0.02\\
-$h$ & \textbf{0.33} & 0.08 & 0.02 & \textbf{-0.34}\\
-$\xi_w$ & -0.06 & \textbf{0.43} & 0.02 & 0.08\\
-$\sigma_l$ & 0.01 & 0.19 & 0.03 & \textbf{-0.37}\\
-\addlinespace
-$\xi_p$ & -0.26 & \textbf{0.36} & 0.13 & 0.19\\
-$\iota_w$ & 0.1 & 0.04 & 0.05 & 0.01\\
-$\iota_p$ & 0.03 & 0.17 & -0.03 & 0.04\\
-$\Psi$ & \textbf{0.34} & 0.01 & 0.1 & \textbf{0.33}\\
-$\Phi$ & 0.02 & 0.03 & 0.03 & 0.02\\
-\addlinespace
-$r_\pi$ & \textbf{1} & \textbf{0.31} & 0.24 & 0\\
-$\rho$ & \textbf{0.31} & \textbf{1} & \textbf{0.32} & 0.12\\
-$r_y$ & 0.24 & \textbf{0.32} & \textbf{1} & -0.04\\
-$r_{\Delta y}$ & 0 & 0.12 & -0.04 & \textbf{1}\\
-$\overline{\pi}$ & -0.04 & -0.05 & -0.08 & 0.01\\
-\addlinespace
-$100(\beta^{-1} -1)$ & -0.04 & -0.18 & -0.14 & -0.04\\
-$\overline{l}$ & 0.07 & 0.1 & 0.08 & -0.05\\
-$\overline{\gamma}$ & 0.02 & 0.03 & 0.05 & -0.01\\
-$\rho_{ga}$ & -0.23 & -0.15 & 0 & 0.01\\
-$\alpha$ & 0.18 & 0.11 & 0.16 & -0.04\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\hypertarget{changing-the-truth}{%
-\subsection{Changing the truth}\label{changing-the-truth}}
-
-What if the permuted model with the highest penalized likelihood were
-The Truth? How badly would the SW model fit and forecast? Here I
-actually guess it would do OK. Procedure: (1) generate data out of the
-best permutation, (2) get forecasts using it and the SW model (say 100
-each). Which is better? The average negative log-likelihood of the true
-model is 876 compared to 948 for the SW model. The MSEs are 0.256
-compared to 0.525 respectively.
-
-\attn{We actually have that the SW model (unpermuted) has the lowest in-sample negitive log posterior. These were generated using the best unpenalized predicting permutation by log likelihood.}
-
-\hypertarget{best-model-by-predictive-log-likelihood}{%
-\subsection{Best model by predictive
-log-likelihood}\label{best-model-by-predictive-log-likelihood}}
-
-The true model is
-
-\begin{quotation}
-hours worked, interest rate, inflation, output, consumption, investment, wages
-\end{quotation}
-
-\noindent while the best one by out-of-sample log-likelihood is
-
-\begin{quotation}
-hours worked, interest rate, output, wages, inflation, investment, consumption.
-\end{quotation}
-
-\noindent This model is pretty clearly scary to a macroeconomist.
-
-I think it's also important to note here, that the penalized negative
-log-likelihood is very flat relative to permutations. In terms of that
-metric, 19\% of permutations are within 10\% of the true permutation. In
-the Appendix, we rewrite the beginning of \citet{SmetsWouters2007}
-permuting all the series to reflect the best one by negative predictive
-log likelihood.
-
-\hypertarget{conclusions}{%
-\section{Conclusions}\label{conclusions}}
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
 
 As we said in the introduction, there are very few who will defend the
 forecasting record of DSGEs. Rather, their virtues are supposed to lie
@@ -1232,8 +1136,8 @@ the economy\footnote{It's conceivable that the issue is one of
   analogous names are good measurements of the theoretical variables.
   (Cf. \citet[p. 6]{Haavelmo-probability-approach}: ``there is hardly an
   economist who feels really happy about identifying current series of
-  `national income,' `consumption,' etc., with the variables by these
-  names in his theories.'') Thus, perhaps, the model is right, but
+  `national income,' `consumption,', etc., with the variables by these
+  names in his theories''.) Thus, perhaps, the model is right, but
   GDPDEF is really a better proxy for \emph{labor}, \(l_t\), than
   PRS85006023 is. This would, needless to say, raise its own set of
   difficulties for the interpretation and use of these models. One
@@ -1247,6 +1151,89 @@ of the model are essentially unchanged under permutation, including
 ``deep'' parameters supposedly representing tastes, technologies and
 institutions.
 
+To take this analysis one step further, we can examine the ``best''
+predicting model, in terms of out-of-sample predictive log-likelihood.
+Recall, this is just one of about 38\% which forecast better. The true
+model arranges the data as
+
+\begin{quotation}
+hours worked, interest rate, inflation, output, consumption, investment, wages
+\end{quotation}
+
+\noindent while the best one by out-of-sample log-likelihood is
+
+\begin{quotation}
+hours worked, interest rate, output, wages, inflation, investment, consumption.
+\end{quotation}
+
+\noindent This model is pretty clearly scary to a macroeconomist. It is
+also important to note here, that the penalized negative log-likelihood
+(in-sample) is very flat relative to permutations. In terms of that
+metric, 19\% of permutations are within 10\% of the true permutation. In
+the Appendix, we take this model to most implausible extreme. We rewrite
+the introduction of \citet{SmetsWouters2007}, permuting all the series
+to reflect the best one by negative predictive log likelihood. Such a
+description of the macroeconomy is doubtless complete nonsense, and yet
+this interpretation would have led to better predictions of
+macroeconomic comovements.
+
+Ignoring the fact that the DSGE provides generally poor forecasts
+relative to alternative, yet uninterpretable, similar models, one might
+wonder whether it manages to avoid the Lucas Critique. That is, can
+policy makers imagine that the model truly decouples policy variables
+from the ``deep'' parameters that economic actors maintain?
+Specifically, for example, if the Fed changes how they manage interest
+rates, do the other parameters move? This question can be investigated
+directly by examining the distribution of Taylor parameters conditional
+on the truth generating the model and estimating said parameters in the
+simulation exercise. \footnote{This analysis is not constrained to 
+the distribution of plausible Taylor rule parameters that the Fed might
+consider, but rather simply investigates all possible such parameters.}
+These correlations are shown in \autoref{tab:covary-with-Taylor}. The
+Taylor rule parameters are, \(\rho\), the autocorrelation in the
+interest rate, \(r_\pi\), the response to inflation, \(r_y\), the
+response to deviations of output from potential, and \(r_{\Delta y}\)
+the response to changes in the deviation. A handful of deep parameters
+have correlations larger in magnitude than 0.3 (shown in bold). This
+magnitude may or may not be large enough for concern, but the
+correlation is also not negligible. So the question of whether these
+models actually address their original motivation.
+
+\begin{table}
+
+\caption{\label{tab:covary-with-Taylor}Correlations between ``deep'' parameters and Taylor rule parameters from the ``Simulate and estimate'' exercise.}
+\centering
+\begin{tabular}[t]{rrrrr}
+\toprule
+ & $r_\pi$ & $\rho$ & $r_y$ & $r_{\Delta y}$\\
+\midrule
+$\phi_1$ & 0.2 & 0.1 & -0.03 & 0.11\\
+$\sigma_c$ & 0.06 & 0.26 & 0.17 & 0.02\\
+$h$ & \textbf{0.33} & 0.08 & 0.02 & \textbf{-0.34}\\
+$\xi_w$ & -0.06 & \textbf{0.43} & 0.02 & 0.08\\
+$\sigma_l$ & 0.01 & 0.19 & 0.03 & \textbf{-0.37}\\
+\addlinespace
+$\xi_p$ & -0.26 & \textbf{0.36} & 0.13 & 0.19\\
+$\iota_w$ & 0.1 & 0.04 & 0.05 & 0.01\\
+$\iota_p$ & 0.03 & 0.17 & -0.03 & 0.04\\
+$\Psi$ & \textbf{0.34} & 0.01 & 0.1 & \textbf{0.33}\\
+$\Phi$ & 0.02 & 0.03 & 0.03 & 0.02\\
+\addlinespace
+$r_\pi$ & \textbf{1} & \textbf{0.31} & 0.24 & 0\\
+$\rho$ & \textbf{0.31} & \textbf{1} & \textbf{0.32} & 0.12\\
+$r_y$ & 0.24 & \textbf{0.32} & \textbf{1} & -0.04\\
+$r_{\Delta y}$ & 0 & 0.12 & -0.04 & \textbf{1}\\
+$\overline{\pi}$ & -0.04 & -0.05 & -0.08 & 0.01\\
+\addlinespace
+$100(\beta^{-1} -1)$ & -0.04 & -0.18 & -0.14 & -0.04\\
+$\overline{l}$ & 0.07 & 0.1 & 0.08 & -0.05\\
+$\overline{\gamma}$ & 0.02 & 0.03 & 0.05 & -0.01\\
+$\rho_{ga}$ & -0.23 & -0.15 & 0 & 0.01\\
+$\alpha$ & 0.18 & 0.11 & 0.16 & -0.04\\
+\bottomrule
+\end{tabular}
+\end{table}
+
 The results of the two tests are grim. Series swapping gives us strong
 reasons to doubt that the DSGE machinery manages to capture anything
 important about the structure of the economy. Even if one dismisses
@@ -1258,12 +1245,12 @@ be reliably estimated.
 
 We have not, of course, proved that flaws like this are inherent in the
 DSGE form. But we have \emph{not} cherry-picked an obsolete or marginal
-model\textbackslash footnote\{We obtained very similar results for the
-real-business-cycle model of \citet{KydlandPrescott1982}, but omit them
-here, because that model \emph{is} obsolete.\}. The SW model is widely
-regarded as the baseline DSGE for the economy of the United States,
-which is by far the most important national economy in the world. The SW
-paper has been cited over 5500 times\footnote{Google Scholar
+model\footnote{We obtained very similar results for the real-business-cycle
+model of \citet{KydlandPrescott1982}, but omit them here, because that model
+\emph{is} obsolete.}. The SW model is widely regarded as the baseline
+DSGE for the economy of the United States, which is by far the most
+important national economy in the world. The SW paper has been cited
+over 5500 times\footnote{Google Scholar
 (\url{https://scholar.google.com/scholar?cites=8854430771281116653}), accessed
 11 April 2021.}. What concerns us is that in all that literature, we
 appear to be the first to have subjected it to such direct, even
