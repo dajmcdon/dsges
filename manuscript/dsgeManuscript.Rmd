@@ -1356,7 +1356,7 @@ equation and is given by
 where $i_1 = 1/(1+\beta\gamma^{1-\sigma_c}),$ $i_2 =
 1/[(1+\beta\gamma^{1-\sigma_c})\gamma^2\varphi]$, $\varphi$ is the
 steady-state elasticity of the capital adjustment cost function, and
-is the discount factor applied by households. As in CEE (2005) \attn{GET REFERENCE}, a
+is the discount factor applied by households. As in \citep{ChristianoEichenbaum2005}, a
 higher elasticity of the cost of adjusting capital reduces the
 sensitivity of \investment{} ($\iobs{t}$) to the real value of the
 existing capital stock ($q_t$). Modeling capital adjustment costs as a
