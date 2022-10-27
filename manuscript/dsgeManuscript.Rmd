@@ -705,24 +705,26 @@ Figures \ref{fig:shock-sds}--\ref{fig:deep3} show the estimates of each
 parameter individually.  The horizontal red lines indicate the truth. Here we
 can see that while many parameters are well-estimated with decreasing
 variability as the training sets grow, others converge to the wrong values, or
-fail to converge at all.  This phenomenon holds especially for both the
+fail to converge at all.  This phenomenon holds especially for both of the
 parameters of the shock processes, but also for some of the
 economically-relevant "deep" parameters.  For instance, $\sigma_l$, the
-elasticity of labor supply with respect to the real wage , is consistently
+elasticity of labor supply with respect to the real wage, is consistently
 underestimated by about `r round(1-filter(allpar, key=="sigma[l]",
 nestim==1000)$m / filter(pvec, key=="sigma[l]")$value*100,0)`\%.  The data
 provides essentially no information about $\iota_w$, which measures the
 dependence of real wages on lagged inflation.  Other parameters which are
-poorly estimated include $\varphi$, the steady-state steady-state elasticity of
+poorly estimated include $\varphi$, the steady-state elasticity of
 the capital adjustment cost function.  In all these cases, estimation is
 biased, so using the estimated values from the real data to draw conclusions
 about the real economy is unwise.  It is possible that this bias is due to the
-linearization procedure, in which case, not only should linearized models be
+linearization procedure[^bias], in which case, not only should linearized models be
 avoided for prediction, but also for drawing any economic inferences.  Overall,
 most parameters are poorly identified as evidenced by their stable (rather than
 decreasing) variability with more data.
 
-To examine case (3)---that the data is so correlated that even 250 years is too little to produce accurate estimates of the true parameters---we may ask how closely the information per observation displayed in \autoref{fig:pen-negll} approaches the theoretical asymptotic limit\footnote{We are adapting a procedure recommended by \citet{Andy-Fraser-on-HMMs} for evaluating general hidden Markov models.}  For essentially any stationary ergodic stochastic process, limit of the negative loglikelihood per observation as the number of observations approaches infinity exists and is unique \citep{Gray-entropy-2nd}. This limit is the **entropy rate** of the process. Mathematically, with probability 1,
+[^bias]: It is possible, though not all that plausible, that a misspecified linearized model might be _unbiased_ for these parameters inside the original nonlinear model.
+
+To examine case (3)---that the data is so correlated that even 250 years is too little to produce accurate estimates of the true parameters---we may ask how closely the information per observation displayed in \autoref{fig:pen-negll} approaches the theoretical asymptotic limit.\footnote{We are adapting a procedure recommended by \citet{Andy-Fraser-on-HMMs} for evaluating general hidden Markov models.}  For essentially any stationary ergodic stochastic process, the limit of the negative loglikelihood per observation as the number of observations approaches infinity exists and is unique \citep{Gray-entropy-2nd}. This limit is the _entropy rate_ of the process. Mathematically, with probability 1,
 \[
 \lim_{n\rightarrow\infty} -\frac{1}{n}\ell(X_{1:n}; \theta_0) = h(\theta_0),
 \]
@@ -730,7 +732,7 @@ where $h(\theta_0)$ is the entropy rate. Furthermore, by the generalized asympto
 \[
 \lim_{n\rightarrow\infty} -\frac{1}{n}\ell(X_{1:n}; \theta) = h(\theta_0) + \mathrm{KL}(\theta_0\ ||\ \theta),
 \]
-where the second term is the Kullback-Leibler divergence rate \citep{Gray-entropy-2nd}. Because $\mathrm{KL}(\theta_0\ ||\ \theta) \geq 0$ asymptotically, $h(\theta_0)$ is a lower bound for the average negative loglikelihood of any parameter vector.
+where the second term is the Kullback-Leibler divergence rate \citep{Gray-entropy-2nd}. Because $\mathrm{KL}(\theta_0\ ||\ \theta) \geq 0$, asymptotically, $h(\theta_0)$ is a lower bound for the average negative loglikelihood of any parameter vector.
 
 Because the data is generated from a linear Gaussian state space model, it is not hard to calculate that $h(\theta_0) \approx 2.25$, significantly \emph{larger} than any of the values in \autoref{fig:pen-negll}. Somehow, the estimated parameters generally have \emph{lower} negative loglikelihoods than the true parameter. The fact that the standard deviations of the shocks (\autoref{fig:shock-sds}) are consistently underestimated suggests that, even over this period, the in-sample fit to the data gives an overly optimistic picture of the long run behavior: we have not allowed $n$ to get large enough. \autoref{fig:entropy-investigation} shows the negative loglikelihood per observation over a much longer horizon---up to 75,000 years of quarterly data. For thousands of years, the parameter vector estimated over the first 250 years is less than the theoretical lower bound, but eventually, it starts to curve upward. This suggests that, both explanations (2) and (3) are accurate: in order to estimate a DSGE accurately, we need massive amounts of data.
 
@@ -752,10 +754,9 @@ ggplot(tib, aes(n, neg_loglikelihood, color = name)) +
 
 # Permuting the data {#sec:permutation-summary}
 
-\label{sec:permutation-summary}
 
-One way to assess the predictive ability (and economic content) of the
-\citet{SmetsWouters2007} DSGE model is to perform a simple permutation test,
+A second way to assess the predictive ability (and economic content) of the
+SW DSGE model is to perform a simple permutation test,
 permuting _across_ the series rather than within them.  That is, rather than
 giving the model data in the order it expects, we swap the data series with
 each other and see if the model predicts future data any better.  We estimated
@@ -788,7 +789,7 @@ where a superscript $b$ represents the baseline model and $(p)$ the $p^{th}$
 permutation.  The result is shown in \autoref{fig:mean-percent-improvement}. \autoref{fig:series-percent-improvement}
 shows boxplots for the percentage improvement separately for each time
 series. The best model had an average percentage improvement of `r -round(df$y[1],2)*100`\% 
-relative to the baseline model. The horizontal line at zero represents performance
+relative to the baseline model. The vertical line at zero represents performance
 equivalent to baseline. About `r round(mean(df$y<0)*100,0)`\% of permutations had better predictive performance than the baseline model.
 
 ```{r series-percent-improvement, fig.cap="Percentage improvement in out-of-sample forecast MSE for each data series individually. The horizontal red line represents baseline performance. Values to the left are better."}
