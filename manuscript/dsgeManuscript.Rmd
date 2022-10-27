@@ -9,7 +9,7 @@ authors:
       University of British Columbia  
       Vancouver, BC Canada  
       \email{daniel@stat.ubc.ca}
-    thanks: Both authors were supported by a grant (INO1400020) from the Institute for New Economic Thinking.  We are grateful for advice and comments to David N. DeJong, J. Bradford DeLong and Robert Waldmann (none of whom should be held responsible for our choices).   DJM was partially supported by the National Science Foundation Grants DMS-1407439 and DMS-1753171. CRS wishes to acknowledge support from the National Science Foundation (grants DMS1207759 and DMS1418124), and valuable conversations over many years with Zmarak M. Shalizi.
+    thanks: Both authors were supported by a grant (INO1400020) from the Institute for New Economic Thinking.  We are grateful for advice and comments to David N. DeJong, J. Bradford DeLong and Robert Waldmann (none of whom should be held responsible for our choices).   DJM was partially supported by the National Science Foundation (grants DMS1407439 and DMS1753171) and the National Sciences and Engineering Research Council of Canada (RGPIN-2021-02618). CRS wishes to acknowledge support from the National Science Foundation (grants DMS1207759 and DMS1418124), and valuable conversations over many years with Zmarak M. Shalizi.
   - name: Cosma Rohilla Shalizi
     address: |
       Departments of Statistics and Data Science and of Machine Learning  
@@ -20,9 +20,10 @@ authors:
       \email{cshalizi@cmu.edu}
     
 abstract: |
-  Dynamic stochastic general equilibrium (DSGE) models have been an ubiquitous, and controversial, part of in macroeconomics for decades.  In this paper, we approach DSGEs purely as statstical models.  We do this by applying two common model validation checks to the canonical \citet{SmetsWouters2007} DSGE: (1) we simulate the model and see how well it can be estimated from its own simulation output, and (2) we see how well it can seem to fit nonsense data.  We find that (1) even with centuries' worth of data, the model remains poorly estimated, and (2) when we swap series at random, so that (e.g.) what the model  gets as the inflation rate is really hours worked, what it gets as hours worked is really investment, etc., the fit is often only slightly impaired, and in a large percentage of cases actually _improves_ (even out of sample).  Taken together, these findings cast serious doubt on the meaningfulness of parameter estimates for this DSGE, and on whether this specification represents anything structural about the economy.  Constructively, our approaches can be used for model validation by anyone working with macroeconomic time series.
+  Dynamic stochastic general equilibrium (DSGE) models have been an ubiquitous, and controversial, part of macroeconomics for decades.  In this paper, we approach DSGEs purely as statstical models.  We do this by applying two common model validation checks to the canonical \citet{SmetsWouters2007} DSGE: (1) we simulate the model and see how well it can be estimated from its own simulation output, and (2) we see how well it can seem to fit nonsense data.  We find that (1) even with centuries' worth of data, the model remains poorly estimated, and (2) when we swap series at random, so that (e.g.) what the model  gets as the inflation rate is really hours worked, what it gets as hours worked is really investment, etc., the fit is often only slightly impaired, and in a large percentage of cases actually _improves_ (even out of sample).  Taken together, these findings cast serious doubt on the meaningfulness of parameter estimates for this DSGE, and on whether this specification represents anything structural about the economy.  Constructively, our approaches can be used for model validation by anyone working with macroeconomic time series.
   
-  
+keywords: general equilibrium; model validation; time series; forecasting;
+
 admonition: "DRAFT: comments welcome; please do not quote or cite"
 
 
@@ -129,13 +130,13 @@ supposed to get around the Lucas critique, by ensuring that even if the
 predictions of the model are known and are used as the basis of policy, the
 model will remain valid, _because_ it describes an equilibrium over time.
 
-The model we focus on, that of \citet{SmetsWouters2007}, while now some years
+The model we focus on, that of \citet{SmetsWouters2007}, hereafter denoted SW, while now some years
 old, is still widely regarded as an acceptable baseline model.  A great deal of
 macroeconomic theorizing thus consists of taking this model, or other very
 similar ones, and elaborating on them by adding new frictions or shocks.  These
 additions are generally intended to accommodate observed phenomena, to
 incorporate conjectured mechanisms, or both.  It is not our purpose here to
-comment on specific descendants of the Smet-Wouters or other baseline DSGE
+comment on specific descendants of the SW or other baseline DSGE
 models.  We merely note that the strategy of responding to issues or defects
 with the model by always making it _more_ complex (more frictions, more shocks,
 etc.) is at least questionable from a statistical perspective.
@@ -147,7 +148,7 @@ literature.  We take no sides, here, on whether agents in macroeconomic models
 should be assumed to have rational (rather than adaptive) expectations, should
 have perfect (rather than bounded) rationality, should (or should not) obey the
 Euler equations, etc.  We do not even take a side on whether aggregating large
-number of heterogeneous economic actors into a few representative agents is in
+numbers of heterogeneous economic actors into a few representative agents is in
 fact "microfounded"[^microfound]. Those who are _a priori_ inclined to dismiss
 DSGEs as inappropriate models will, we suspect, find our results on their
 statistical difficulties congenial[^austrians].  But no result we are aware of
@@ -181,7 +182,7 @@ the means used here, or anything like it.  We are also unaware of any previous
 work which probes whether DSGEs are actually capturing the structure of the
 macroeconomy by anything like the expedient of series swapping.
 
-
+\clearpage
 
 # Specification and Baseline Estimation of the DSGE
 
@@ -220,7 +221,7 @@ written as
   \Gamma_0 z_t = \Gamma_1 z_{t-1} + A + B \epsilon_t + C \eta_t
   \label{eq:lin-dsge}
 \end{equation}
-in the notation of \citep{Sims2002}. Here $\epsilon_t$ are exogenous, possibly
+in the notation of \citet{Sims2002}. Here $\epsilon_t$ are exogenous, possibly
 serially correlated, random disturbances and $\eta_t=z_t - \E_t z_{t+1}$ are
 expectational errors determined as part of the model solution. The matrices
 $\Gamma_0$, $\Gamma_1$, $A$, $B$, and $C$ are functions of $\theta$.
@@ -232,7 +233,7 @@ equation \eqref{eq:lin-dsge}.  There are many approaches to solving linear ratio
 expectations models \citep[e.g.][]{BlanchardKahn1980,Klein2000}, but we will
 use that in \citet{Sims2002} due to its ubiquity.  This method essentially uses
 a QZ factorization to remove $\Gamma_0$ from the left side of the equation
-while correctly handling explosive components of the model (multiplying through
+while correctly handling explosive components of the model (merely multiplying through
 by the generalized inverse of $\Gamma_0$, $\Gamma_0^\dagger$, can lead to
 portions of the product $\Gamma_0^\dagger \Gamma_1$ implying nonstationarity).
 Following this procedure, we retrieve a system of the form
@@ -265,8 +266,8 @@ software packages. The procedure outlined above is summarized in
     form for \eqref{eq:lin-dsge}.
   \Procedure{Estimate the model}{$\theta$}
     \State Fix a plausible parameter vector $\theta$.
-    \State For this $\theta$, from \eqref{eq:lin-dsge} into state-space form
-      using the method of \citep{Sims2002}.
+    \State For this $\theta$, form \eqref{eq:lin-dsge} into state-space form
+      using the method of \citet{Sims2002}.
     \State Using equations \eqref{eq:ss-system} and \eqref{eq:obs-equation}, evaluate the
       likelihood of $\theta$ using the Kalman filter.
     \State Maximize the likelihood or explore the posterior, repeating
@@ -351,7 +352,7 @@ macroeconomic forecasting literature, and, though code is readily available
   \url{https://www.aeaweb.org/articles.php?doi=10.1257/aer.97.3.586&fnd=s}}),
 our version is implemented fully in \texttt{R}. A complete description of the
 economic implications of the model and its log-linearized form can be found in
-\citep{SmetsWouters2007} as well as \citet{Iskrev2009} and other sources.
+\citet{SmetsWouters2007} as well as \citet{Iskrev2009} and other sources.
 
 For this model, we use seven observable data series: output growth,
 consumption growth, investment growth, real wage growth, inflation,
@@ -365,7 +366,7 @@ We describe the specific data and preprocessing routines in
 \autoref{sec:data-preprocessing}, but we note that all the data
 are publicly available from the Federal Reserve
 Economic Database
-\href{http://research.stlouisfed.org/fred2/}{FRED}. We use data from
+(\href{http://research.stlouisfed.org/fred2/}{FRED}). We use data from
 the first quarter of 1956  until the fourth quarter of 2018. Following
 preprocessing, we are left with `r ncol(y)` available time points.
 
@@ -390,9 +391,9 @@ for each starting point.  We train the model using only the first
 
 \autoref{tab:parameter-estimate-table} presents the posterior mode based on our
 procedure. Note first that some of the parameter estimates are similar to those
-presented in \citep{SmetsWouters2007} (shown in the last column), while others
+presented in \citet{SmetsWouters2007} (shown in the last column), while others
 differ dramatically.  However, comparing the likelihood of of our estimated
-parameters to those in \citep{SmetsWouters2007}, our fit is significantly
+parameters to those in \citet{SmetsWouters2007}, our fit is significantly
 better.  For our dataset, the penalized negative log likelihood of the
 parameters is `r round(llike[truePerm],0)` compared to
 `r round(getlogLike(repar(prior$sw,prior,TRUE)$outparv,y[,trainset],prior),0)`, an
@@ -405,7 +406,7 @@ confident that we have a parameter combination which nearly achieves the global
 optimum.[^usvsSW]
 
 
-[^usvsSW]: We have been unable to explain why \citet{SmetsWouters2007} gives such a different estimate of the posterior mode. It is worth pointing out however, that their MCMC is not necessarily attempting to maximize the posterior, although it may locate one.
+[^usvsSW]: We have been unable to explain why \citet{SmetsWouters2007} gives such a different estimate of the posterior mode. It is worth pointing out however, that their MCMC is not necessarily attempting to find the maximum of the posterior, although it may locate one.
   
 
 ```{r parameter-estimate-table, results='asis'}
@@ -426,7 +427,7 @@ tab = tibble(parameter = c('$\\sigma_a$','$\\sigma_b$','$\\sigma_g$','$\\sigma_I
              mode = round(pvec,2), SWmode = sw_pvec)
 kable(tab, booktabs=TRUE, digits = 2, escape = FALSE, 
   caption = "Prior distributions, posterior modes, and posterior mode as
-      estimated by \\citep{SmetsWouters2007} for the 36 estimated
+      estimated by \\citet{SmetsWouters2007} for the 36 estimated
       parameters. All values are rounded to two decimal places.",
   align="c",
   col.names = linebreak(
@@ -438,10 +439,9 @@ kable(tab, booktabs=TRUE, digits = 2, escape = FALSE,
 
 ```
 
+\clearpage
 
 # Simulate and estimate {#sec:simulate-estimate}
-
-\label{sec:simulate-estimate}
 
 A simple way to evaluate a stochastic model is to simulate a long time series
 from the model and see how well we can estimate the generating process given
@@ -455,7 +455,7 @@ the data were actually generated by the linearized DSGE represented by
 equations \eqref{eq:ss-system} and \eqref{eq:obs-equation}, can we recover the
 "deep" parameters which generated the data?
 
-To answer this (relatively simple) question, we generate data using using the
+To answer this (relatively simple) question, we generate data using the
 parameters estimated above and presented in
 \autoref{tab:parameter-estimate-table}. To reduce dependence on initial
 conditions, we simulate 3100 data points and discard the first 1000.  We then
@@ -473,7 +473,7 @@ parameters in 275 years' time if the linearized DSGE is actually true, and
 furthermore, how well can we predict future economic movements under this
 idealized scenario.[^industrev]
 
-[^industrev]: It is, of course, wildly implausible to imagine a 275 year interval which does _not_ see massive changes to tastes, technologies and institutions. The differences between 1746 and 2021 are obvious, but your favorite economic historian will explain at length that these were all transformed between 1471 and 1746, too.  But recognizing this will hardly make DSGEs _more_ plausible.
+[^industrev]: It is, of course, wildly implausible to imagine a 275 year interval which does _not_ see massive changes to tastes, technologies and institutions. The differences between 1746 and 2021 are obvious, but your favorite economic historian will explain at length that these were all transformed between 1471 and 1746, too.  Recognizing this hardly makes DSGEs _more_ attractive.
 
 All figures in this section show the mean in red along with 30%, 60%, 80%, and
 90% confidence bands calculated from the replications.
@@ -529,9 +529,8 @@ correlated that the range of training observations we consider is far too
 small---we actually need millions of observations in order to see a meaningful
 decline in out-of-sample predictive performance.  We can better determine which
 of these three is occurring by comparing with the predictive performance of the
-true parameters and examining the error in parameter estimates. The red lines
-in \autoref{fig:test-error} are the out-of-sample mean (solid) and median
-(dashed) prediction error for the true parameters. The test error is not
+true parameters and examining the error in parameter estimates. The blue line
+in \autoref{fig:test-error} is the out-of-sample mean prediction error for the true parameters. The test error is not
 getting any closer to this ideal scenario, plateauing slightly above the
 baseline by about 400 training points.  This seems to suggest that explanation
 (2) is accurate: even with more data, we will never be able to recover
@@ -749,6 +748,7 @@ ggplot(tib, aes(n, neg_loglikelihood, color = name)) +
   theme(legend.title = element_blank(), legend.position = "bottom")
 ```
 
+\clearpage
 
 # Permuting the data {#sec:permutation-summary}
 
@@ -1097,6 +1097,7 @@ for(j in 1:dim(newPaths)[1]){
 
 -->
 
+\clearpage
 
 # Discussion
 
@@ -1163,17 +1164,17 @@ to avoid the Lucas Critique. That is, can policy makers imagine that the model t
 Specifically, for example, if the Fed changes how they manage interest rates,
 do the other parameters move? This question can be investigated directly by
 examining the distribution of Taylor parameters conditional on the
-truth generating the model and estimating said parameters in the simulation exercise.
-\footnote{This analysis is not constrained to 
-the distribution of plausible Taylor rule parameters that the Fed might
-consider, but rather simply investigates all possible such parameters.} These correlations are shown in \autoref{tab:covary-with-Taylor}. The
-Taylor rule parameters are, $\rho$, the autocorrelation in the interest rate,
+truth generating the model and estimating said parameters in the simulation exercise.[^taylor]  These correlations are shown in \autoref{tab:covary-with-Taylor}. The Taylor rule parameters are, $\rho$, the autocorrelation in the interest rate,
 $r_\pi$, the response to inflation, $r_y$, the response to deviations of output
 from potential, and $r_{\Delta y}$ the response to changes in the deviation.  A
 handful of deep parameters have correlations larger in magnitude than 0.3
 (shown in bold). This magnitude may or may not be large enough for concern, but
 the correlation is also not negligible. So the question of whether these models
-actually address their original motivation.
+actually address their original motivation is, at the very least, still open.
+
+[^taylor]: This analysis is not constrained to 
+the distribution of plausible Taylor rule parameters that the Fed might
+consider, but rather simply investigates all possible such parameters.
 
 ```{r covary-with-Taylor, results="asis"}
 # The 'deep' parameters begin with 'phi1'
@@ -1208,14 +1209,14 @@ accurate predictions, or even that it can be reliably estimated.
 
 We have not, of course, proved that flaws like this are inherent in the DSGE
 form.  But we have _not_ cherry-picked an obsolete or marginal
-model\footnote{We obtained very similar results for the real-business-cycle
+model.\footnote{We obtained very similar results for the real-business-cycle
 model of \citet{KydlandPrescott1982}, but omit them here, because that model
-\emph{is} obsolete.}.  The SW model is widely regarded as the baseline DSGE for the
+\emph{is} obsolete.}  The SW model is widely regarded as the baseline DSGE for the
 economy of the United States, which is by far the most important national
 economy in the world.  The SW paper has been cited over 5500
-times\footnote{Google Scholar
+times.\footnote{Google Scholar
 (\url{https://scholar.google.com/scholar?cites=8854430771281116653}), accessed
-11 April 2021.}.  What concerns us is that in all that literature, we appear to
+11 April 2021.} What concerns us is that in all that literature, we appear to
 be the first to have subjected it to such direct, even elementary, tests.  We
 do not assert that all DSGE models must be pathological in the ways we have
 shown the SW model is.  Indeed, readers are free to hope that their favorite
@@ -1277,6 +1278,8 @@ as follows:
   \label{tab:data}
 \end{table}
 
+
+\clearpage
 
 # Rewriting \citet{SmetsWouters2007}
 
@@ -1356,7 +1359,7 @@ equation and is given by
 where $i_1 = 1/(1+\beta\gamma^{1-\sigma_c}),$ $i_2 =
 1/[(1+\beta\gamma^{1-\sigma_c})\gamma^2\varphi]$, $\varphi$ is the
 steady-state elasticity of the capital adjustment cost function, and
-is the discount factor applied by households. As in \citep{ChristianoEichenbaum2005}, a
+is the discount factor applied by households. As in \citet{ChristianoEichenbaum2005}, a
 higher elasticity of the cost of adjusting capital reduces the
 sensitivity of \investment{} ($\iobs{t}$) to the real value of the
 existing capital stock ($q_t$). Modeling capital adjustment costs as a
@@ -1549,7 +1552,7 @@ monetary policy reaction function:
 The monetary authorities follow a generalized Taylor rule by gradually
 adjusting the policy-controlled \interest{} $(\robs{t})$ in response
 to \inflation{} and the \youtput{} gap, defined as the difference between
-actual and potential \youtput{} (John B. Taylor 1993). Consistently
+actual and potential \youtput{} [@Taylor-on-Taylor-rule]. Consistently
 with the DSGE model, potential \youtput{} is defined as the level of
 \youtput{} that would prevail under flexible \prices{} and \wages{} in
 the absence of the two ``mark-up'' shocks.\footnote{In practical
