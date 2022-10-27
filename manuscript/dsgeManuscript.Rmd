@@ -977,7 +977,7 @@ params %>% mutate_all(funs((.-ptrue$.)/ptrue$.)) %>% gather() %>%
 \autoref{fig:scaled-parameter-boxplots} shows boxplots for the parameter estimates across
 permutations scaled to $[0,1]$ by the prior range. Red dots indicate the SW model
 estimates. Clearly, some parameters change very little
-from permutation to permutation while others change massively. \autoref{fig:perc-parameter-deviation} displays
+from permutation to permutation while others change dramatically. \autoref{fig:perc-parameter-deviation} displays
 the same parameter estimates as percent deviations from the SW model estimates.
 
 ## Out-of-sample forecasts
@@ -1047,7 +1047,7 @@ ggplot(flips, aes(x=date,y=value,grp=key)) +
 
 We now examine how well the SW model predicts future data relative to the best models we could have used, had we seen the data. 
 \autoref{fig:pc-preds-p1} and \autoref{fig:pc-preds-p2} show the out-of-sample predictions for top `r topn` flips based on "average percent improvement". This analysis is a post-hoc measure as the best models were selected to make these predictions well, though the parameters were estimated without access to this data. We also show the observed data and the predictions from the SW model. The SW model is quite bad at predicting consumption, investment, 
-output, and wages. It predicts a consistent 0.5% increase in the real wage level that never appears. In fact, wages are far more volatile than any of the permutations can account for. For the case of investment, output, and consumption, the SW model drastically lags the 2009 recession and underestimates its severity. Furthermore, it continues to predict a much stronger recovery, even 10 years later, than has ever materialized. The SW model is quite accurate for the interest rate, though this should perhaps be expected given that the Taylor rule may well drive Federal Reserve decisions rather than describe them.
+output, and wages. It predicts a consistent 0.5% increase in the real wage level that never appears. In fact, wages are far more volatile than any of the permutations can account for. For the case of investment, output, and consumption, the SW model drastically lags the 2009 recession and underestimates its severity. Furthermore, it continues to predict a much stronger recovery, even 10 years later, than has ever materialized. The SW model is quite accurate for the interest rate, though this should perhaps be expected given that the Taylor rule may well _drive_ Federal Reserve decisions rather than _describe_ them.
 
 <!--
 
@@ -1121,15 +1121,15 @@ variances and autocorrelations, but also the "deep" ones whose presence is
 supposed to distinguish a micro-founded DSGE from mere time-series analysis or
 reduced-form regressions.  All this happens in simulations where the model
 specification is correct, where the parameters are constant, and where the
-estimation can make use of centuries of stationary data, far more than is
-available about the actual macroeconomy.
+estimation can make use of centuries of stationary data, far more than will ever be
+available for the actual macroeconomy.
 
 If we randomly re-label the macroeconomic time series and feed them into the
 DSGE, the results are no more comforting.  Much of the time we get a model
 which predicts the (permuted) data _better_ than the model predicts the
 unpermuted data.  Even if one disdains forecasting as end in itself, it is hard
 to see how this is at all compatible with a model capturing something ---
-anything --- essential about the structure of the economy[^align].  Perhaps
+anything --- essential about the structure of the economy.[^align]  Perhaps
 even more disturbing, many of the parameters of the model are essentially
 unchanged under permutation, including "deep" parameters supposedly
 representing tastes, technologies and institutions.
@@ -1138,7 +1138,10 @@ representing tastes, technologies and institutions.
 
 To take this analysis one step further, we can examine the "best" predicting 
 model, in terms of out-of-sample predictive log-likelihood. Recall, this is just one 
-of about `r percent_better_models`\% which forecast better.
+of about `r percent_better_models`\% which forecast better. It is also important to note here, that the penalized negative log-likelihood 
+(in-sample) is very flat relative to permutations. In terms of that metric, 
+`r signif(mean(llikeTest/llikeTest[truePerm] < 1.10),2)*100`% of permutations 
+are within 10% of the true permutation.
 The true model arranges the data as
 \begin{quotation}
 `r names(testerr)`
@@ -1148,10 +1151,7 @@ The true model arranges the data as
 `r names(testerr)[perms[top20llike[1],]]`.
 \end{quotation}
 \noindent This model is pretty clearly scary to a macroeconomist. 
-It is also important to note here, that the penalized negative log-likelihood 
-(in-sample) is very flat relative to permutations. In terms of that metric, 
-`r signif(mean(llikeTest/llikeTest[truePerm] < 1.10),2)*100`% of permutations 
-are within 10% of the true permutation. In the Appendix, we take this model to 
+In the Appendix, we take this model to 
 most implausible extreme.
 We rewrite the introduction of \citet{SmetsWouters2007}, permuting all the series 
 to reflect the best one by negative predictive log likelihood. Such a description
@@ -1164,7 +1164,7 @@ alternative, yet uninterpretable, similar models, one might wonder whether it ma
 to avoid the Lucas Critique. That is, can policy makers imagine that the model truly decouples policy variables from the "deep" parameters that economic actors maintain?
 Specifically, for example, if the Fed changes how they manage interest rates,
 do the other parameters move? This question can be investigated directly by
-examining the distribution of Taylor parameters conditional on the
+examining the distribution of Taylor Rule parameters conditional on the
 truth generating the model and estimating said parameters in the simulation exercise.[^taylor]  These correlations are shown in \autoref{tab:covary-with-Taylor}. The Taylor rule parameters are, $\rho$, the autocorrelation in the interest rate,
 $r_\pi$, the response to inflation, $r_y$, the response to deviations of output
 from potential, and $r_{\Delta y}$ the response to changes in the deviation.  A
@@ -1200,7 +1200,7 @@ knitr::kable(digits=2, booktabs=TRUE, align="r",
 ```
 
 
-The results of the two tests are grim.  Series swapping gives us strong reasons
+The results of the two tests described here are grim.  Series swapping gives us strong reasons
 to doubt that the DSGE machinery manages to capture anything important about
 the structure of the economy.  Even if one dismisses that, and believes
 (perhaps because "theory is evidence too") that the DSGE must be right, the
@@ -1214,10 +1214,10 @@ model.\footnote{We obtained very similar results for the real-business-cycle
 model of \citet{KydlandPrescott1982}, but omit them here, because that model
 \emph{is} obsolete.}  The SW model is widely regarded as the baseline DSGE for the
 economy of the United States, which is by far the most important national
-economy in the world.  The SW paper has been cited over 5500
+economy in the world.  The SW paper has been cited over 6300
 times.\footnote{Google Scholar
 (\url{https://scholar.google.com/scholar?cites=8854430771281116653}), accessed
-11 April 2021.} What concerns us is that in all that literature, we appear to
+27 October 2022.} What concerns us is that in all that literature, we appear to
 be the first to have subjected it to such direct, even elementary, tests.  We
 do not assert that all DSGE models must be pathological in the ways we have
 shown the SW model is.  Indeed, readers are free to hope that their favorite
