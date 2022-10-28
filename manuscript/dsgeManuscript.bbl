@@ -1,4 +1,4 @@
-\begin{thebibliography}{26}
+\begin{thebibliography}{27}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -171,5 +171,12 @@ M.~Stone.
 \newblock \emph{Journal of the Royal Statistical Society {B}}, 36:\penalty0
   111--147, 1974.
 \newblock URL \url{http://www.jstor.org/stable/2984809}.
+
+\bibitem[Taylor(1993)]{Taylor-on-Taylor-rule}
+John~B. Taylor.
+\newblock Discretion versus policy rules in practice.
+\newblock \emph{{Carnegie}-{Rochester} Conference Series on Public Policy},
+  39:\penalty0 195--214, 1993.
+\newblock \doi{10.1016/0167-2231(93)90009-L}.
 
 \end{thebibliography}
