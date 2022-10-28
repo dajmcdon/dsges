@@ -296,7 +296,7 @@ opts_chunk$set(message=FALSE, warning=FALSE, cache=TRUE,
                autodep = TRUE, echo=FALSE,
                include=TRUE, size="small",
                fig.align='center', fig.width=6, fig.height=4,
-               fig.path = here::here("manuscript","gfx/"), 
+               fig.path = "gfx/", 
                fig.pos="t"
                )
 theme_set(theme_bw(base_family="Times",base_size = 12))
