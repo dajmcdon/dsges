@@ -403,7 +403,7 @@ The procedure outlined above is summarized in \autoref{alg:solveRE}.
     form for \eqref{eq:lin-dsge}.
   \Procedure{Estimate the model}{$\theta$}
     \State Fix a plausible parameter vector $\theta$.
-    \State For this $\theta$, form \eqref{eq:lin-dsge} into state-space form
+    \State For this $\theta$, cast \eqref{eq:lin-dsge} into state-space form
       using the method of \citet{Sims2002}.
     \State Using equations \eqref{eq:ss-system} and \eqref{eq:obs-equation}, evaluate the
       likelihood of $\theta$ using the Kalman filter.
@@ -905,14 +905,14 @@ gives a visual depiction.
 \caption{\label{tab:best-results}Series MSEs for SW and top models.}
 \centering
 \resizebox{\linewidth}{!}{
-\begin{tabular}[t]{rrrrrrr}
+\begin{tabular}[t]{lrrrrrrr}
 \toprule
-hours worked & interest rate & inflation & output & consumption & investment & wages\\
+  & hours worked & interest rate & inflation & output & consumption & investment & wages\\
 \midrule
-1.12 & 0.02 & 0.06 & 2.32 & 1.36 & 5.40 & 1.06\\
-0.24 & 0.01 & 0.06 & 0.39 & 0.34 & 2.64 & 0.84\\
-0.25 & 0.02 & 0.09 & 0.33 & 0.41 & 1.56 & 0.97\\
-0.32 & 0.01 & 0.09 & 0.42 & 0.35 & 2.07 & 1.33\\
+SW model & 1.12 & 0.02 & 0.06 & 2.32 & 1.36 & 5.40 & 1.06\\
+Model w/ highest \% improvement & 0.24 & 0.01 & 0.06 & 0.39 & 0.34 & 2.64 & 0.84\\
+Model w/ lowest scaled MSE & 0.25 & 0.02 & 0.09 & 0.33 & 0.41 & 1.56 & 0.97\\
+Model w/ lowest out-of-sample likelihood & 0.32 & 0.01 & 0.09 & 0.42 & 0.35 & 2.07 & 1.33\\
 \bottomrule
 \end{tabular}}
 \end{table}

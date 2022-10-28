@@ -266,7 +266,7 @@ software packages. The procedure outlined above is summarized in
     form for \eqref{eq:lin-dsge}.
   \Procedure{Estimate the model}{$\theta$}
     \State Fix a plausible parameter vector $\theta$.
-    \State For this $\theta$, form \eqref{eq:lin-dsge} into state-space form
+    \State For this $\theta$, cast \eqref{eq:lin-dsge} into state-space form
       using the method of \citet{Sims2002}.
     \State Using equations \eqref{eq:ss-system} and \eqref{eq:obs-equation}, evaluate the
       likelihood of $\theta$ using the Kalman filter.
