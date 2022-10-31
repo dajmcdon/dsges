@@ -24,7 +24,6 @@ abstract: |
   
 keywords: general equilibrium; model validation; time series; forecasting;
 
-admonition: "DRAFT: comments welcome; please do not quote or cite"
 
 
 bibliography: dsges.bib
