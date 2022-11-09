@@ -24,7 +24,6 @@ abstract: |
   
 keywords: general equilibrium; model validation; time series; forecasting;
 
-admonition: "DRAFT: comments welcome; please do not quote or cite"
 
 
 bibliography: dsges.bib
@@ -266,7 +265,7 @@ software packages. The procedure outlined above is summarized in
     form for \eqref{eq:lin-dsge}.
   \Procedure{Estimate the model}{$\theta$}
     \State Fix a plausible parameter vector $\theta$.
-    \State For this $\theta$, form \eqref{eq:lin-dsge} into state-space form
+    \State For this $\theta$, cast \eqref{eq:lin-dsge} into state-space form
       using the method of \citet{Sims2002}.
     \State Using equations \eqref{eq:ss-system} and \eqref{eq:obs-equation}, evaluate the
       likelihood of $\theta$ using the Kalman filter.
@@ -296,7 +295,7 @@ opts_chunk$set(message=FALSE, warning=FALSE, cache=TRUE,
                autodep = TRUE, echo=FALSE,
                include=TRUE, size="small",
                fig.align='center', fig.width=6, fig.height=4,
-               fig.path = here::here("manuscript","gfx/"), 
+               fig.path = "gfx/", 
                fig.pos="t"
                )
 theme_set(theme_bw(base_family="Times",base_size = 12))
@@ -1256,10 +1255,10 @@ as follows:
 \begin{table}[h]
   \centering
   \resizebox{\linewidth}{!}{
-  \begin{tabular}{lll}
-    \hline\hline
+  \begin{tabular}{@{}lll@{}}
+    \toprule
     Series ID & Description & Unit \\
-    \hline
+    \midrule
     GDPC1 & Real Gross Domestic Product & Billions of Chained 2012 \$\\
     GDPDEF & GDP Implicit Price Deflator & Index: 2012=100\\
     PCEC & Personal Consumption Expenditures & Billions of \$\\
@@ -1272,7 +1271,7 @@ as follows:
                                                                   Index:
                                                                   2012=100\\
     COMPNFB & Nonfarm business sector: Compensation per hour & Index: 2012=100\\
-    \hline\hline
+    \bottomrule
   \end{tabular}
   }
   \caption{Data series from FRED for estimating the DSGE.}
@@ -1553,7 +1552,7 @@ monetary policy reaction function:
 The monetary authorities follow a generalized Taylor rule by gradually
 adjusting the policy-controlled \interest{} $(\robs{t})$ in response
 to \inflation{} and the \youtput{} gap, defined as the difference between
-actual and potential \youtput{} [@Taylor-on-Taylor-rule]. Consistently
+actual and potential \youtput{} \citep{Taylor-on-Taylor-rule}. Consistently
 with the DSGE model, potential \youtput{} is defined as the level of
 \youtput{} that would prevail under flexible \prices{} and \wages{} in
 the absence of the two ``mark-up'' shocks.\footnote{In practical

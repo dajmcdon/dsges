@@ -25,13 +25,6 @@
 \renewcommand*{\subsectionautorefname}{Section}%
 \renewcommand*{\subsubsectionautorefname}{Section}%
 
-\newlength{\cslhangindent}
-\setlength{\cslhangindent}{1.5em}
-\newenvironment{CSLReferences}%
-{\setlength{\parindent}{0pt}%
-\everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces}%
-{\par}
-
 
 %% load any required packages here
 
@@ -132,9 +125,6 @@ Santa Fe, NM USA\\
 
 \maketitle
 
-\begin{quotation}
-DRAFT: comments welcome; please do not quote or cite
-\end{quotation}
 
 \begin{abstract}
   Dynamic stochastic general equilibrium (DSGE) models have been an
@@ -403,7 +393,7 @@ The procedure outlined above is summarized in \autoref{alg:solveRE}.
     form for \eqref{eq:lin-dsge}.
   \Procedure{Estimate the model}{$\theta$}
     \State Fix a plausible parameter vector $\theta$.
-    \State For this $\theta$, form \eqref{eq:lin-dsge} into state-space form
+    \State For this $\theta$, cast \eqref{eq:lin-dsge} into state-space form
       using the method of \citet{Sims2002}.
     \State Using equations \eqref{eq:ss-system} and \eqref{eq:obs-equation}, evaluate the
       likelihood of $\theta$ using the Kalman filter.
@@ -586,7 +576,7 @@ All figures in this section show the mean in red along with 30\%, 60\%,
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/train-error-1} 
+{\centering \includegraphics{gfx/train-error-1} 
 
 }
 
@@ -595,7 +585,7 @@ All figures in this section show the mean in red along with 30\%, 60\%,
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/test-error-1} 
+{\centering \includegraphics{gfx/test-error-1} 
 
 }
 
@@ -628,7 +618,7 @@ improvement in predictions relatively quickly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/parm-error-1} 
+{\centering \includegraphics{gfx/parm-error-1} 
 
 }
 
@@ -637,7 +627,7 @@ improvement in predictions relatively quickly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/pen-negll-1} 
+{\centering \includegraphics{gfx/pen-negll-1} 
 
 }
 
@@ -646,7 +636,7 @@ improvement in predictions relatively quickly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/predict-negll-1} 
+{\centering \includegraphics{gfx/predict-negll-1} 
 
 }
 
@@ -655,7 +645,7 @@ improvement in predictions relatively quickly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/individual-series-1} 
+{\centering \includegraphics{gfx/individual-series-1} 
 
 }
 
@@ -680,7 +670,7 @@ poorly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/shock-sds-1} 
+{\centering \includegraphics{gfx/shock-sds-1} 
 
 }
 
@@ -689,7 +679,7 @@ poorly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/autocorrelations-shocks-1} 
+{\centering \includegraphics{gfx/autocorrelations-shocks-1} 
 
 }
 
@@ -698,7 +688,7 @@ poorly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/deep1-1} 
+{\centering \includegraphics{gfx/deep1-1} 
 
 }
 
@@ -707,7 +697,7 @@ poorly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/deep2-1} 
+{\centering \includegraphics{gfx/deep2-1} 
 
 }
 
@@ -716,7 +706,7 @@ poorly.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/deep3-1} 
+{\centering \includegraphics{gfx/deep3-1} 
 
 }
 
@@ -787,7 +777,7 @@ DSGE accurately, we need massive amounts of data.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/entropy-investigation-1} 
+{\centering \includegraphics{gfx/entropy-investigation-1} 
 
 }
 
@@ -813,7 +803,7 @@ is tested on the remaining 51.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/mean-percent-improvement-1} 
+{\centering \includegraphics{gfx/mean-percent-improvement-1} 
 
 }
 
@@ -841,7 +831,7 @@ than the baseline model.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/series-percent-improvement-1} 
+{\centering \includegraphics{gfx/series-percent-improvement-1} 
 
 }
 
@@ -850,7 +840,7 @@ than the baseline model.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/mean-scaled-mse-1} 
+{\centering \includegraphics{gfx/mean-scaled-mse-1} 
 
 }
 
@@ -859,7 +849,7 @@ than the baseline model.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/series-scaled-mse-1} 
+{\centering \includegraphics{gfx/series-scaled-mse-1} 
 
 }
 
@@ -882,7 +872,7 @@ performance of the baseline model.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/loglike-pred-ml-1} 
+{\centering \includegraphics{gfx/loglike-pred-ml-1} 
 
 }
 
@@ -1042,7 +1032,7 @@ in the correct places.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/scaled-parameter-boxplots-1} 
+{\centering \includegraphics{gfx/scaled-parameter-boxplots-1} 
 
 }
 
@@ -1051,7 +1041,7 @@ in the correct places.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/perc-parameter-deviation-1} 
+{\centering \includegraphics{gfx/perc-parameter-deviation-1} 
 
 }
 
@@ -1070,7 +1060,7 @@ parameter estimates as percent deviations from the SW model estimates.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/pc-preds-p1-1} 
+{\centering \includegraphics{gfx/pc-preds-p1-1} 
 
 }
 
@@ -1079,7 +1069,7 @@ parameter estimates as percent deviations from the SW model estimates.
 
 \begin{figure}[t]
 
-{\centering \includegraphics{/Users/dajmcdon/Documents/Work/Manuscripts/DSGEs-github/manuscript/gfx/pc-preds-p2-1} 
+{\centering \includegraphics{gfx/pc-preds-p2-1} 
 
 }
 
@@ -1304,10 +1294,10 @@ to create \(x_t\) as follows: \begin{align*}
 \begin{table}[h]
   \centering
   \resizebox{\linewidth}{!}{
-  \begin{tabular}{lll}
-    \hline\hline
+  \begin{tabular}{@{}lll@{}}
+    \toprule
     Series ID & Description & Unit \\
-    \hline
+    \midrule
     GDPC1 & Real Gross Domestic Product & Billions of Chained 2012 \$\\
     GDPDEF & GDP Implicit Price Deflator & Index: 2012=100\\
     PCEC & Personal Consumption Expenditures & Billions of \$\\
@@ -1320,7 +1310,7 @@ to create \(x_t\) as follows: \begin{align*}
                                                                   Index:
                                                                   2012=100\\
     COMPNFB & Nonfarm business sector: Compensation per hour & Index: 2012=100\\
-    \hline\hline
+    \bottomrule
   \end{tabular}
   }
   \caption{Data series from FRED for estimating the DSGE.}
@@ -1575,10 +1565,11 @@ policy reaction function: \begin{align}
 The monetary authorities follow a generalized Taylor rule by gradually
 adjusting the policy-controlled \interest{} \((\robs{t})\) in response
 to \inflation{} and the \youtput{} gap, defined as the difference
-between actual and potential \youtput{} (Taylor 1993). Consistently with
-the DSGE model, potential \youtput{} is defined as the level of
-\youtput{} that would prevail under flexible \prices{} and \wages{} in
-the absence of the two ``mark-up'\,' shocks.\footnote{In practical
+between actual and potential \youtput{} \citep{Taylor-on-Taylor-rule}.
+Consistently with the DSGE model, potential \youtput{} is defined as the
+level of \youtput{} that would prevail under flexible \prices{} and
+\wages{} in the absence of the two ``mark-up'\,'
+shocks.\footnote{In practical
   terms, we expand the model consisting of equations \eqref{eq:1} to
   \eqref{eq:14} with a flexible-\price-and-\wage{} version in order to
   calculate the model-consistent \youtput{} gap. Note that the assumption
@@ -1604,15 +1595,6 @@ risk premium \((\epsilon_t^b)\), exogenous spending \((\epsilon_t^g)\),
 \price{} mark-up \((\epsilon_t^p)\), \wage{} mark-up \((\epsilon_t^w)\),
 and monetary policy \((\epsilon_t^r)\) shocks. Next we turn to the
 estimation of the model.
-
-\hypertarget{refs}{}
-\begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-Taylor-on-Taylor-rule}{}}%
-Taylor, John B. 1993. {``Discretion Versus Policy Rules in Practice.''}
-\emph{{Carnegie}-{Rochester} Conference Series on Public Policy} 39:
-195--214. \url{https://doi.org/10.1016/0167-2231(93)90009-L}.
-
-\end{CSLReferences}
 
 
 

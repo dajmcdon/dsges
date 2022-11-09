@@ -1,0 +1,182 @@
+\begin{thebibliography}{27}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Algoet and Cover(1988)]{Algoet-and-Cover-on-AEP}
+Paul~H. Algoet and Thomas~M. Cover.
+\newblock A sandwich proof of the {Shannon}-{McMillan}-{Breiman} theorem.
+\newblock \emph{Annals of Probability}, 16:\penalty0 899--909, 1988.
+\newblock \doi{10.1214/aop/1176991794}.
+\newblock URL \url{http://projecteuclid.org/euclid.aop/1176991794}.
+
+\bibitem[Blanchard and Kahn(1980)]{BlanchardKahn1980}
+Olivier~Jean Blanchard and Charles~M. Kahn.
+\newblock The solution of linear difference models under rational expectations.
+\newblock \emph{Econometrica}, 48:\penalty0 1305--1311, 1980.
+
+\bibitem[Boivin and
+  Giannoni(2006)]{Boivin-Giannoni-DSGEs-in-data-rich-environment}
+Jean Boivin and Marc Giannoni.
+\newblock {DSGE} models in a data-rich environment.
+\newblock Technical Report 12772, National Bureau of Economic Research, 2006.
+\newblock URL \url{https://www.nber.org/papers/w12772}.
+
+\bibitem[Christiano et~al.(2005)Christiano, Eichenbaum, and
+  Evans]{ChristianoEichenbaum2005}
+Lawrence~J. Christiano, Martin Eichenbaum, and Charles~L. Evans.
+\newblock Nominal rigidities and the dynamic effects of a shock to monetary
+  policy.
+\newblock \emph{Journal of Political Economy}, 113\penalty0 (1):\penalty0
+  1--45, 2005.
+
+\bibitem[DeJong and Dave(2011)]{DeJongDave2007}
+David~N. DeJong and C.~Dave.
+\newblock \emph{Structural Macroeconometrics}.
+\newblock Princeton University Press, Princeton, New Jersey, second edition,
+  2011.
+
+\bibitem[Edge and Gurkaynak(2010)]{Edge-Gurkaynak-on-dsges}
+Rochelle~M. Edge and Refet~S. Gurkaynak.
+\newblock How useful are estimated {DSGE} model forecasts for central bankers?
+\newblock \emph{Brookings Papers on Economic Activity}, Fall 2010:\penalty0
+  210--244, 2010.
+\newblock URL \url{https://www.jstor.org/stable/41012847}.
+
+\bibitem[Fraser(2008)]{Andy-Fraser-on-HMMs}
+Andrew~M. Fraser.
+\newblock \emph{Hidden Markov Models and Dynamical Systems}.
+\newblock SIAM Press, Philadelphia, 2008.
+\newblock URL \url{http://www.siam.org/books/ot107/}.
+
+\bibitem[Geisser(1975)]{Geisser-predictive-sample-reuse}
+Seymour Geisser.
+\newblock The predictive sample reuse method with applications.
+\newblock \emph{Journal of the American Statistical Association}, 70:\penalty0
+  320--328, 1975.
+\newblock \doi{10.1080/01621459.1975.10479865}.
+
+\bibitem[Geisser and Eddy(1979)]{Geisser-Eddy-predictive-approach}
+Seymour Geisser and William~F. Eddy.
+\newblock A predictive approach to model selection.
+\newblock \emph{Journal of the American Statistical Association}, 74:\penalty0
+  153--160, 1979.
+\newblock \doi{10.1080/01621459.1979.10481632}.
+
+\bibitem[Gray(2011)]{Gray-entropy-2nd}
+Robert~M. Gray.
+\newblock \emph{Entropy and Information Theory}.
+\newblock Springer-Verlag, Mew York, second edition, 2011.
+
+\bibitem[Haavelmo(1944)]{Haavelmo-probability-approach}
+Trygve Haavelmo.
+\newblock The probability approach in econometrics.
+\newblock \emph{Econometrica}, 12 (supplement):\penalty0 iii--115, 1944.
+\newblock \doi{10.2307/1906935}.
+\newblock URL \url{http://www.jstor.org/stable/1906935}.
+
+\bibitem[Hastie et~al.(2009)Hastie, Tibshirani, and Friedman]{tEoSL-2nd}
+Trevor Hastie, Robert Tibshirani, and Jerome Friedman.
+\newblock \emph{The Elements of Statistical Learning: Data Mining, Inference,
+  and Prediction}.
+\newblock Springer, Berlin, second edition, 2009.
+\newblock URL \url{http://www-stat.stanford.edu/~tibs/ElemStatLearn/}.
+
+\bibitem[Iskrev(2010)]{Iskrev2009}
+Nikolay Iskrev.
+\newblock Local identification in {DSGE} models.
+\newblock \emph{Journal of Monetary Economics}, 57:\penalty0 189--202, 2010.
+\newblock \doi{10.1016/j.jmoneco.2009.12.007}.
+
+\bibitem[Jackson and
+  Yariv(2017)]{Jackson-Yariv-non-existence-of-representative-agents}
+Matthew~O. Jackson and Leeat Yariv.
+\newblock The non-existence of representative agents, 2017.
+\newblock URL \url{https://doi.org/10.2139/ssrn.2684776}.
+
+\bibitem[Kalman(1960)]{Kalman1960}
+Rudolf~E. Kalman.
+\newblock A new approach to linear filtering and prediction problems.
+\newblock \emph{Journal of Basic Engineering}, 82\penalty0 (1):\penalty0
+  35--45, 1960.
+
+\bibitem[Kirman(1992)]{Kirman-contra-representative-agent}
+Alan Kirman.
+\newblock Whom or what does the representative individual represent?
+\newblock \emph{Journal of Economic Perspectives}, 6:\penalty0 117--136, 1992.
+\newblock URL \url{http://www.jstor.org/pss/2138411}.
+
+\bibitem[Klein(2000)]{Klein2000}
+Paul Klein.
+\newblock Using the generalized schur form to solve a multivariate linear
+  rational expectations model.
+\newblock \emph{Journal of Economic Dynamics and Control}, 24\penalty0
+  (10):\penalty0 1405--1423, 2000.
+
+\bibitem[Komunjer and Ng(2011)]{Komunjer-Ng-identification-of-DSGEs}
+Ivana Komunjer and Serena Ng.
+\newblock Dynamic identification of dsge models.
+\newblock \emph{Econometrica}, 79:\penalty0 1995--2032, 2011.
+\newblock \doi{10.3982/ECTA8916}.
+\newblock URL \url{http://ivana.georgetown.domains/files/papers/ecta8916.pdf}.
+
+\bibitem[Kydland and Prescott(1982)]{KydlandPrescott1982}
+Finn~E. Kydland and Edward~C. Prescott.
+\newblock Time to build and aggregate fluctuations.
+\newblock \emph{Econometrica}, 50\penalty0 (6):\penalty0 1345--1370, November
+  1982.
+
+\bibitem[Lucas(1976)]{Lucas1976}
+Robert~E. Lucas.
+\newblock Econometric policy evaluation: A critique.
+\newblock In K.~Brunner and Alan Meltzer, editors, \emph{The {Phillips} Curve
+  and Labor Markets}, volume~1 of \emph{Carnegie-{Rochester} Conference Series
+  on Public Policy}, Amsterdam, 1976. North-Holland.
+
+\bibitem[Morgan and Winship(2015)]{Morgan-Winship-counterfactuals-2nd}
+Stephen~L. Morgan and Christopher Winship.
+\newblock \emph{Counterfactuals and Causal Inference: Methods and Principles
+  for Social Research}.
+\newblock Cambridge University Press, Cambridge, England, second edition, 2015.
+
+\bibitem[Pearl(2000)]{Pearl-causality}
+Judea Pearl.
+\newblock \emph{Causality: Models, Reasoning, and Inference}.
+\newblock Cambridge University Press, Cambridge, England, first edition, 2000.
+
+\bibitem[Sims(2002)]{Sims2002}
+Christopher~A. Sims.
+\newblock Solving linear rational expectations models.
+\newblock \emph{Computational Economics}, 20:\penalty0 1--20, 2002.
+\newblock \doi{10.1023/A:1020517101123}.
+
+\bibitem[Smets and Wouters(2007)]{SmetsWouters2007}
+Frank Smets and Rafael Wouters.
+\newblock Shocks and frictions in {US} business cycles: A {Bayesian} {DSGE}
+  approach.
+\newblock \emph{American Economic Review}, 97:\penalty0 586--606, 2007.
+\newblock \doi{10.1257/aer.97.3.586}.
+
+\bibitem[Spirtes et~al.(1993)Spirtes, Glymour, and
+  Scheines]{Spirtes-Glymour-Scheines-1st}
+Peter Spirtes, Clark Glymour, and Richard Scheines.
+\newblock \emph{Causation, Prediction, and Search}.
+\newblock Springer-Verlag, Berlin, first edition, 1993.
+
+\bibitem[Stone(1974)]{Stone1974}
+M.~Stone.
+\newblock Cross-validatory choice and assessment of statistical predictions.
+\newblock \emph{Journal of the Royal Statistical Society {B}}, 36:\penalty0
+  111--147, 1974.
+\newblock URL \url{http://www.jstor.org/stable/2984809}.
+
+\bibitem[Taylor(1993)]{Taylor-on-Taylor-rule}
+John~B. Taylor.
+\newblock Discretion versus policy rules in practice.
+\newblock \emph{{Carnegie}-{Rochester} Conference Series on Public Policy},
+  39:\penalty0 195--214, 1993.
+\newblock \doi{10.1016/0167-2231(93)90009-L}.
+
+\end{thebibliography}

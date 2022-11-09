@@ -4,7 +4,7 @@ This repo contains code and data necessary to reproduce the manuscript
 
 **Empirical Macroeconomics and DSGE Modeling in Statistical
 Perspective**  
-Daniel J. McDonald and Cosma R. Shalizi
+Daniel J. McDonald and Cosma Rohilla Shalizi
 
 ## Manifest
 
