@@ -9,7 +9,8 @@
 require(BatchExperiments)
 load('DSGEs/StdPvec.Rdata')
 
-reg = makeExperimentRegistry(id='SWSimulateEstimate2', packages=c('QZ','FKF'), src.dirs='DSGEs/code/functions',
+reg = makeExperimentRegistry(id='SWSimulateEstimate2', packages=c('QZ','FKF'), 
+                             src.dirs='DSGEs/code/functions',
     src.files=c('DSGEs/code/priorsetup.R'))
 
 generator <- function(static){

@@ -26,7 +26,7 @@ gensolution <- function(pvec) {
     cindw = pvec[23]
     cindp = pvec[24]
     czcap = pvec[25]
-    cfc = pvec[27]
+    cfc = pvec[26]
     crpi = pvec[27]
     crr = pvec[28]
     cry = pvec[29]
@@ -739,7 +739,7 @@ generate <- function(nobs, pvec = priordraw(nsamp), nburn = 1000, kill = 1e-10) 
     y = matrix(NA, ny, nobs + nburn)
     x = matrix(0, nx, 1)
     for (i in 1:(nobs + nburn)) {
-        w = matrix(rnorm(ns, 0, sd = pvec[1:7]), ns, 1)
+        w = matrix(rnorm(ns), ns, 1)
         x = dt + Tt %*% x + Ht %*% w
         y[, i] = Zt %*% x
     }
