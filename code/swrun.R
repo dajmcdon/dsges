@@ -29,4 +29,4 @@ batchMap(estim.pred.wrap, perms, more.args = list(
 ids = findJobs()
 
 ids$chunk = chunk(ids$job.id, n.chunks = 96)
-submitJobs(ids, resources=list(nodes = 1, ppn=1, walltime='48:00:00'))
+submitJobs(ids, resources=list(nodes = 1, ncpus=1, walltime='48:00:00'))
