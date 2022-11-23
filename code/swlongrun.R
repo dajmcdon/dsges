@@ -17,7 +17,7 @@ makeRegistry('SWlong2022',
                         'code/dataload.R'))
 
 
-perms = 1:7
+perms = list(1:7)
 
 
     
