@@ -11,7 +11,7 @@ load('cluster_output/StdPvec.Rdata')
 
 makeExperimentRegistry(
   file.dir = 'SWSimulateEstimate2022', 
-  packages = c('QZ','FKF'), 
+  packages = c('QZ', 'FKF', 'optimr'), 
   source = c(
     list.files("code/functions", full.names = TRUE),
     "code/priorsetup.R"
@@ -46,10 +46,11 @@ ades = list(Estimator = data.frame(nestim = estim.pts))
 addExperiments(pdes, ades, repls = 100)
 
 ids <- getJobPars()
-ids <- tidyr::unnest_wider(ids, algo.pars) |>
-  dplyr::select(job.id, nestim)
+ids <- tidyr::unnest_wider(ids, algo.pars)
+ids <- dplyr::select(ids, job.id, nestim)
 ids$chunk <- lpt(ids$nestim, n.chunks = 500) # 
 submitJobs(ids, 
            resources = list(
-             nodes = 1, ppn = 1, walltime = '24:00:00'
+             nodes = 1, ncpus = 1, walltime = '24:00:00',
+             memory = "4Gb"
            ))
