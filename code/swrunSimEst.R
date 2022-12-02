@@ -7,7 +7,7 @@
 ## This file is meant to run on the head node using the package BatchJobs
 
 library(batchtools)
-load('cluster_output/StdPvec.Rdata')
+pvec = readRDS("update2022/swlong-run-pars.rds")
 
 makeExperimentRegistry(
   file.dir = 'SWSimulateEstimate2022', 
