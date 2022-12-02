@@ -49,8 +49,8 @@ ids <- getJobPars()
 ids <- tidyr::unnest_wider(ids, algo.pars)
 ids <- dplyr::select(ids, job.id, nestim)
 ids$chunk <- lpt(ids$nestim, n.chunks = 500) # 
-submitJobs(ids, 
-           resources = list(
-             nodes = 1, ncpus = 1, walltime = '24:00:00',
-             memory = "4Gb"
-           ))
+# submitJobs(ids, 
+#            resources = list(
+#              nodes = 1, ncpus = 1, walltime = '24:00:00',
+#              memory = "4Gb"
+#            ))
