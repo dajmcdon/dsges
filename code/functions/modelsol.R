@@ -713,7 +713,8 @@ estim.pred.gen <- function(y, parm2start, prior, nestim = 100, npred = 1000,
 
 generate <- function(nobs, pvec = priordraw(nsamp), nburn = 1000, kill = 1e-10) {
     simsout = gensolution(pvec)
-    if (simsout$eu == -2 || simsout$eu == -2) stop('Parameter vector does not satisfy Sims.')
+    #if (simsout$eu == -2 || simsout$eu == -2) 
+    #  stop('Parameter vector does not satisfy Sims.')
         
     G = simsout$G
     C = simsout$C

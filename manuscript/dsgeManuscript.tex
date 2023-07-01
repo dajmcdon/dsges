@@ -458,17 +458,17 @@ similar to those presented in \citet{SmetsWouters2007} (shown in the
 last column), while others differ dramatically. However, comparing the
 likelihood of of our estimated parameters to those in
 \citet{SmetsWouters2007}, our fit is significantly better. For our
-dataset, the penalized negative log likelihood of the parameters is 1145
-compared to 1232, an improvement of more than 7.1\%. The result is
+dataset, the penalized negative log likelihood of the parameters is 1148
+compared to 1224, an improvement of more than 6.2\%. The result is
 similar for the unpenalized negative log likelihood. To check for
 robustness, we also ran the optimization procedure for 1 million
-parameter draws and the likelihood only decreased by about 1\%. We are
-therefore confident that we have a parameter combination which nearly
-achieves the global optimum.\footnote{We have been unable to explain why
-  \citet{SmetsWouters2007} gives such a different estimate of the
-  posterior mode. It is worth pointing out however, that their MCMC is
-  not necessarily attempting to find the maximum of the posterior,
-  although it may locate one.}
+parameter draws and the likelihood only decreased by less than 0.001\%.
+We are therefore confident that we have a parameter combination which
+nearly achieves the global optimum.\footnote{We have been unable to
+  explain why \citet{SmetsWouters2007} gives such a different estimate
+  of the posterior mode. It is worth pointing out however, that their
+  MCMC is not necessarily attempting to find the maximum of the
+  posterior, although it may locate one.}
 
 \begin{table}
 
@@ -481,49 +481,49 @@ achieves the global optimum.\footnote{We have been unable to explain why
 \toprule
  & \makecell[c]{prior\\distribution} & \makecell[c]{prior\\mean} & \makecell[c]{prior\\stdev} & \makecell[c]{lower\\bound} & \makecell[c]{upper\\bound} & \makecell[c]{posterior\\mode} & \makecell[c]{SW posterior\\mode}\\
 \midrule
-$\sigma_a$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.44 & 0.45\\
-$\sigma_b$ & igamma & 0.10 & 2.00 & 0.03 & 5.00 & 0.30 & 0.24\\
-$\sigma_g$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.57 & 0.52\\
-$\sigma_I$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.48 & 0.45\\
-$\sigma_r$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.22 & 0.24\\
+$\sigma_a$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.48 & 0.45\\
+$\sigma_b$ & igamma & 0.10 & 2.00 & 0.03 & 5.00 & 0.27 & 0.24\\
+$\sigma_g$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.50 & 0.52\\
+$\sigma_I$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.49 & 0.45\\
+$\sigma_r$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.23 & 0.24\\
 \addlinespace
-$\sigma_p$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.15 & 0.14\\
+$\sigma_p$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.14 & 0.14\\
 $\sigma_w$ & igamma & 0.10 & 2.00 & 0.01 & 3.00 & 0.27 & 0.24\\
-$\rho_a$ & beta & 0.50 & 0.20 & 0.01 & 1.00 & 0.97 & 0.95\\
-$\rho_b$ & beta & 0.50 & 0.20 & 0.01 & 1.00 & 0.14 & 0.18\\
-$\rho_g$ & beta & 0.50 & 0.20 & 0.01 & 1.00 & 0.95 & 0.97\\
+$\rho_a$ & beta & 0.50 & 0.20 & 0.01 & 1.00 & 0.98 & 0.95\\
+$\rho_b$ & beta & 0.50 & 0.20 & 0.01 & 1.00 & 0.18 & 0.18\\
+$\rho_g$ & beta & 0.50 & 0.20 & 0.01 & 1.00 & 0.97 & 0.97\\
 \addlinespace
-$\rho_I$ & beta & 0.50 & 0.20 & 0.01 & 1.00 & 0.66 & 0.71\\
-$\rho_r$ & beta & 0.50 & 0.20 & 0.01 & 1.00 & 0.13 & 0.12\\
-$\rho_p$ & beta & 0.50 & 0.20 & 0.01 & 1.00 & 0.99 & 0.90\\
-$\rho_w$ & beta & 0.50 & 0.20 & 0.00 & 1.00 & 0.95 & 0.97\\
-$\mu_p$ & beta & 0.50 & 0.20 & 0.01 & 1.00 & 0.88 & 0.74\\
+$\rho_I$ & beta & 0.50 & 0.20 & 0.01 & 1.00 & 0.62 & 0.71\\
+$\rho_r$ & beta & 0.50 & 0.20 & 0.01 & 1.00 & 0.21 & 0.12\\
+$\rho_p$ & beta & 0.50 & 0.20 & 0.01 & 1.00 & 0.98 & 0.90\\
+$\rho_w$ & beta & 0.50 & 0.20 & 0.00 & 1.00 & 0.98 & 0.97\\
+$\mu_p$ & beta & 0.50 & 0.20 & 0.01 & 1.00 & 0.84 & 0.74\\
 \addlinespace
-$\mu_w$ & beta & 0.50 & 0.20 & 0.01 & 1.00 & 0.90 & 0.88\\
-$\phi_1$ & gaussian & 4.00 & 1.50 & 2.00 & 15.00 & 5.73 & 5.48\\
-$\sigma_c$ & gaussian & 1.50 & 0.38 & 0.25 & 3.00 & 1.55 & 1.39\\
-$h$ & beta & 0.70 & 0.10 & 0.00 & 0.99 & 0.72 & 0.71\\
-$\xi_w$ & beta & 0.50 & 0.10 & 0.30 & 0.95 & 0.78 & 0.73\\
+$\mu_w$ & beta & 0.50 & 0.20 & 0.01 & 1.00 & 0.89 & 0.88\\
+$\phi_1$ & gaussian & 4.00 & 1.50 & 2.00 & 15.00 & 5.40 & 5.48\\
+$\sigma_c$ & gaussian & 1.50 & 0.38 & 0.25 & 3.00 & 1.35 & 1.39\\
+$h$ & beta & 0.70 & 0.10 & 0.00 & 0.99 & 0.77 & 0.71\\
+$\xi_w$ & beta & 0.50 & 0.10 & 0.30 & 0.95 & 0.69 & 0.73\\
 \addlinespace
-$\sigma_l$ & gaussian & 2.00 & 0.75 & 0.25 & 10.00 & 2.01 & 1.92\\
-$\xi_p$ & beta & 0.50 & 0.10 & 0.50 & 0.95 & 0.60 & 0.65\\
-$\iota_w$ & beta & 0.50 & 0.15 & 0.01 & 0.99 & 0.34 & 0.59\\
-$\iota_p$ & beta & 0.50 & 0.15 & 0.01 & 0.99 & 0.26 & 0.22\\
-$\Psi$ & beta & 0.50 & 0.15 & 0.01 & 1.00 & 0.57 & 0.54\\
+$\sigma_l$ & gaussian & 2.00 & 0.75 & 0.25 & 10.00 & 1.60 & 1.92\\
+$\xi_p$ & beta & 0.50 & 0.10 & 0.50 & 0.95 & 0.63 & 0.65\\
+$\iota_w$ & beta & 0.50 & 0.15 & 0.01 & 0.99 & 0.47 & 0.59\\
+$\iota_p$ & beta & 0.50 & 0.15 & 0.01 & 0.99 & 0.23 & 0.22\\
+$\Psi$ & beta & 0.50 & 0.15 & 0.01 & 1.00 & 0.37 & 0.54\\
 \addlinespace
-$\Phi$ & gaussian & 1.25 & 0.12 & 1.00 & 3.00 & 1.13 & 1.61\\
-$r_\pi$ & gaussian & 1.50 & 0.25 & 1.00 & 3.00 & 2.06 & 2.03\\
-$\rho$ & beta & 0.75 & 0.10 & 0.50 & 0.98 & 0.83 & 0.81\\
-$r_y$ & gaussian & 0.12 & 0.05 & 0.00 & 0.50 & 0.10 & 0.08\\
-$r_{\Delta y}$ & gaussian & 0.12 & 0.05 & 0.00 & 0.50 & 0.21 & 0.22\\
+$\Phi$ & gaussian & 1.25 & 0.12 & 1.00 & 3.00 & 1.59 & 1.61\\
+$r_\pi$ & gaussian & 1.50 & 0.25 & 1.00 & 3.00 & 1.96 & 2.03\\
+$\rho$ & beta & 0.75 & 0.10 & 0.50 & 0.98 & 0.79 & 0.81\\
+$r_y$ & gaussian & 0.12 & 0.05 & 0.00 & 0.50 & 0.09 & 0.08\\
+$r_{\Delta y}$ & gaussian & 0.12 & 0.05 & 0.00 & 0.50 & 0.18 & 0.22\\
 \addlinespace
-$\overline{\pi}$ & gamma & 0.62 & 0.10 & 0.10 & 2.00 & 0.63 & 0.81\\
-$100(\beta^{-1} -1)$ & gamma & 0.25 & 0.10 & 0.01 & 2.00 & 0.13 & 0.16\\
-$\overline{l}$ & gaussian & 0.00 & 2.00 & -10.00 & 10.00 & 3.34 & -0.10\\
+$\overline{\pi}$ & gamma & 0.62 & 0.10 & 0.10 & 2.00 & 0.71 & 0.81\\
+$100(\beta^{-1} -1)$ & gamma & 0.25 & 0.10 & 0.01 & 2.00 & 0.09 & 0.16\\
+$\overline{l}$ & gaussian & 0.00 & 2.00 & -10.00 & 10.00 & 1.86 & -0.10\\
 $\overline{\gamma}$ & gaussian & 0.40 & 0.10 & 0.10 & 0.80 & 0.47 & 0.43\\
-$\rho_{ga}$ & gaussian & 0.50 & 0.25 & 0.01 & 2.00 & 0.63 & 0.52\\
+$\rho_{ga}$ & gaussian & 0.50 & 0.25 & 0.01 & 2.00 & 0.61 & 0.52\\
 \addlinespace
-$\alpha$ & gaussian & 0.30 & 0.05 & 0.01 & 1.00 & 0.28 & 0.19\\
+$\alpha$ & gaussian & 0.30 & 0.05 & 0.01 & 1.00 & 0.22 & 0.19\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -571,8 +571,8 @@ movements under this idealized scenario.\footnote{It is, of course,
   were all transformed between 1471 and 1746, too. Recognizing this
   hardly makes DSGEs \emph{more} attractive.}
 
-All figures in this section show the mean in red along with 30\%, 60\%,
-80\%, and 90\% confidence bands calculated from the replications.
+All figures in this section show the mean in red along with 50\%, 75\%,
+and 90\% confidence bands calculated from the replications.
 
 \begin{figure}[t]
 
@@ -580,7 +580,7 @@ All figures in this section show the mean in red along with 30\%, 60\%,
 
 }
 
-\caption{Training (in sample) error averaged across series as the number of training points increases. We would expect the variability to decline while the average remains constant. The mean is shown in red along with 30\%, 60\%, 80\%, and 90\% confidence bands calculated from the replications.}\label{fig:train-error}
+\caption{Training (in sample) error averaged across series as the number of training points increases. We would expect the variability to decline while the average remains constant. The median is shown in black along with 50\%, 80\%, and 95\% confidence bands calculated over the replications.}\label{fig:train-error}
 \end{figure}
 
 \begin{figure}[t]
@@ -589,7 +589,7 @@ All figures in this section show the mean in red along with 30\%, 60\%,
 
 }
 
-\caption{Out-of-sample error averaged across series as the number of training points increases. We would expect both the variability and the average to decline. The blue line is the test error for the true model.}\label{fig:test-error}
+\caption{Out-of-sample error averaged across series as the number of training points increases. We would expect both the variability and the average to decline. The orange line is the test error for the true (oracle) model.}\label{fig:test-error}
 \end{figure}
 
 \autoref{fig:train-error} shows the average training error (averaged
@@ -634,13 +634,21 @@ improvement in predictions relatively quickly.
 \caption{The negative log-likelihood (in-sample) per observation.}\label{fig:pen-negll}
 \end{figure}
 
+\begin{verbatim}
+## $y
+## [1] "(penalized) negative log-likelihood (training data)"
+## 
+## attr(,"class")
+## [1] "labels"
+\end{verbatim}
+
 \begin{figure}[t]
 
 {\centering \includegraphics{gfx/predict-negll-1} 
 
 }
 
-\caption{The negative predictive log-likelihood (out-of-sample) per observation.}\label{fig:predict-negll}
+\caption{The negative predictive log-likelihood (out-of-sample) per observation. The horizontal line is the theoretical limit.}\label{fig:predict-negll}
 \end{figure}
 
 \begin{figure}[t]
@@ -719,22 +727,23 @@ Here we can see that while many parameters are well-estimated with
 decreasing variability as the training sets grow, others converge to the
 wrong values, or fail to converge at all. This phenomenon holds
 especially for both of the parameters of the shock processes, but also
-for some of the economically-relevant ``deep'' parameters. For instance,
-\(\sigma_l\), the elasticity of labor supply with respect to the real
-wage, is consistently underestimated by about -93\%. The data provides
-essentially no information about \(\iota_w\), which measures the
-dependence of real wages on lagged inflation. Other parameters which are
-poorly estimated include \(\varphi\), the steady-state elasticity of the
-capital adjustment cost function. In all these cases, estimation is
-biased, so using the estimated values from the real data to draw
-conclusions about the real economy is unwise. It is possible that this
-bias is due to the linearization procedure\footnote{It is possible,
-  though not all that plausible, that a misspecified linearized model
-  might be \emph{unbiased} for these parameters inside the original
-  nonlinear model.}, in which case, not only should linearized models be
-avoided for prediction, but also for drawing any economic inferences.
-Overall, most parameters are poorly identified as evidenced by their
-stable (rather than decreasing) variability with more data.
+for some of the economically-relevant ``deep'' parameters.\\
+For instance, \(\sigma_l\), the elasticity of labor supply with respect
+to the real wage, is consistently underestimated by about -99\%.\\
+The data provides essentially no information about \(\iota_w\), which
+measures the dependence of real wages on lagged inflation. Other
+parameters which are poorly estimated include \(\varphi\), the
+steady-state elasticity of the capital adjustment cost function. In all
+these cases, estimation is biased, so using the estimated values from
+the real data to draw conclusions about the real economy is unwise. It
+is possible that this bias is due to the linearization
+procedure\footnote{It is possible, though not all that plausible, that a
+  misspecified linearized model might be \emph{unbiased} for these
+  parameters inside the original nonlinear model.}, in which case, not
+only should linearized models be avoided for prediction, but also for
+drawing any economic inferences. Overall, most parameters are poorly
+identified as evidenced by their stable (rather than decreasing)
+variability with more data.
 
 To examine case (3)---that the data is so correlated that even 250 years
 is too little to produce accurate estimates of the true parameters---we
@@ -759,11 +768,12 @@ parameter vector \(\theta \neq \theta_0\), with probability 1, \[
 of any parameter vector.
 
 Because the data is generated from a linear Gaussian state space model,
-it is not hard to calculate that \(h(\theta_0) \approx 2.25\),
+it is not hard to calculate that \(h(\theta_0) \approx\) 5.32,
 significantly \emph{larger} than any of the values in
 \autoref{fig:pen-negll}. Somehow, the estimated parameters generally
-have \emph{lower} negative loglikelihoods than the true parameter. The
-fact that the standard deviations of the shocks
+have \emph{lower} negative loglikelihoods than the true parameter.
+
+The fact that the standard deviations of the shocks
 (\autoref{fig:shock-sds}) are consistently underestimated suggests that,
 even over this period, the in-sample fit to the data gives an overly
 optimistic picture of the long run behavior: we have not allowed \(n\)
@@ -799,7 +809,7 @@ previous section) as well as all 5039 other permutations of the 7 data
 series. For each estimation, we used the same estimation procedure as
 before to minimize the (penalized) negative log likelihood. The model is
 trained using the first 200 time points and its predictive performance
-is tested on the remaining 51.
+is tested on the remaining 1557.
 
 \begin{figure}[t]
 
@@ -824,9 +834,9 @@ and \((p)\) the \(p^{th}\) permutation. The result is shown in
 \autoref{fig:mean-percent-improvement}.
 \autoref{fig:series-percent-improvement} shows boxplots for the
 percentage improvement separately for each time series. The best model
-had an average percentage improvement of 95\% relative to the baseline
+had an average percentage improvement of 100\% relative to the baseline
 model. The vertical line at zero represents performance equivalent to
-baseline. About 38\% of permutations had better predictive performance
+baseline. About 41\% of permutations had better predictive performance
 than the baseline model.
 
 \begin{figure}[t]
@@ -863,9 +873,9 @@ by the observed variance and then averaged across the 7 series:
   \frac{\sum_{t=201}^{251} (\hat{x}_{it}^{(p)}-x_{it})^2}
     {\mbox{Var}(x_i)}.
 \end{equation} \autoref{fig:mean-scaled-mse} displays the average of
-this measure across all 251 series. Again, about 51\% of permutations
+this measure across all 251 series. Again, about 55\% of permutations
 achieved better average scaled MSE than the baseline model. The best
-permutation achieved an average scaled MSE of 0.53 relative to 1.39 for
+permutation achieved an average scaled MSE of 0.52 relative to 1.43 for
 the baseline model. \autoref{fig:series-scaled-mse} shows boxplots for
 the scaled MSE separately for each series. Red dots indicate the
 performance of the baseline model.
@@ -879,30 +889,30 @@ performance of the baseline model.
 \caption{Negative log predictive likelihood for each model. The horizontal red line represents baseline performance. Note that this is an out-of-sample performance measure.}\label{fig:loglike-pred-ml}
 \end{figure}
 
-A total of 0 of permutations resulted in a lower negative penalized log
-likelihood. A Bayesian interpretation of these results would be that 0
-of the permuted ``models'' are preferable to the true, unpermuted,
+A total of 0 permutations resulted in a lower negative penalized log
+likelihood. A Bayesian interpretation of these results would be that
+none of the permuted ``models'' are preferable to the true, unpermuted,
 economic model. It should be noted that this is an in-sample measure of
 performance and that the Bayesian interpretation is conditional on the
 model being true and the priors accurately reflecting expert
 information. An out-of-sample evaluation (without penalty) shows that
-8\% of the premuted models actually have better prediction performance
-when evaluated through the likelihood. \autoref{fig:loglike-pred-ml}
-gives a visual depiction.
+6.57\% of the premuted models actually have better prediction
+performance when evaluated through the likelihood.
+\autoref{fig:loglike-pred-ml} gives a visual depiction.
 
 \begin{table}
 
 \caption{\label{tab:best-results}Series MSEs for SW and top models.}
 \centering
 \resizebox{\linewidth}{!}{
-\begin{tabular}[t]{rrrrrrr}
+\begin{tabular}[t]{lrrrrrrr}
 \toprule
-hours worked & interest rate & inflation & output & consumption & investment & wages\\
+metric & hours worked & interest rate & inflation & output & consumption & investment & wages\\
 \midrule
-1.12 & 0.02 & 0.06 & 2.32 & 1.36 & 5.40 & 1.06\\
-0.24 & 0.01 & 0.06 & 0.39 & 0.34 & 2.64 & 0.84\\
-0.25 & 0.02 & 0.09 & 0.33 & 0.41 & 1.56 & 0.97\\
-0.32 & 0.01 & 0.09 & 0.42 & 0.35 & 2.07 & 1.33\\
+SW model & 1.05 & 0.03 & 0.06 & 2.28 & 1.43 & 6.17 & 1.10\\
+Model w/ highest \% improvement & 0.20 & 0.02 & 0.06 & 0.37 & 0.30 & 1.88 & 0.91\\
+Model w/ lowest out-of-sample likelihood & 0.23 & 0.01 & 0.06 & 0.35 & 0.40 & 1.73 & 0.91\\
+Model w/ lowest scaled MSE & 0.39 & 0.01 & 0.05 & 0.33 & 0.32 & 2.17 & 0.87\\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -916,29 +926,29 @@ hours worked & interest rate & inflation & output & consumption & investment & w
 \toprule
 hours worked & interest rate & inflation & output & consumption & investment & wages & \# different\\
 \midrule
-investment & hours worked & interest rate & wages & output & inflation & consumption & 7\\
-hours worked & interest rate & consumption & wages & inflation & output & investment & 5\\
 hours worked & interest rate & output & wages & inflation & consumption & investment & 5\\
-hours worked & investment & inflation & wages & interest rate & consumption & output & 5\\
-hours worked & interest rate & wages & output & inflation & consumption & investment & 4\\
-\addlinespace
-consumption & hours worked & interest rate & wages & output & investment & inflation & 6\\
-hours worked & investment & interest rate & wages & inflation & output & consumption & 6\\
-inflation & hours worked & interest rate & output & consumption & investment & wages & 3\\
-consumption & hours worked & inflation & wages & interest rate & output & investment & 6\\
-inflation & hours worked & interest rate & consumption & output & investment & wages & 5\\
-\addlinespace
-hours worked & interest rate & wages & consumption & inflation & output & investment & 5\\
-investment & hours worked & inflation & output & interest rate & consumption & wages & 4\\
-hours worked & inflation & consumption & output & wages & investment & interest rate & 4\\
-consumption & hours worked & interest rate & wages & inflation & output & investment & 7\\
-hours worked & inflation & interest rate & investment & output & consumption & wages & 5\\
-\addlinespace
-hours worked & inflation & output & consumption & wages & investment & interest rate & 5\\
-inflation & hours worked & interest rate & output & investment & wages & consumption & 6\\
+hours worked & interest rate & consumption & wages & inflation & output & investment & 5\\
 hours worked & inflation & consumption & wages & interest rate & output & investment & 6\\
-investment & hours worked & interest rate & wages & consumption & inflation & output & 6\\
-inflation & hours worked & interest rate & investment & output & wages & consumption & 7\\
+investment & hours worked & inflation & wages & interest rate & consumption & output & 6\\
+investment & hours worked & interest rate & wages & inflation & consumption & output & 7\\
+\addlinespace
+output & hours worked & interest rate & wages & inflation & consumption & investment & 7\\
+hours worked & investment & consumption & wages & interest rate & output & inflation & 6\\
+hours worked & interest rate & wages & output & inflation & consumption & investment & 4\\
+inflation & hours worked & interest rate & output & consumption & investment & wages & 3\\
+hours worked & consumption & interest rate & wages & inflation & output & investment & 6\\
+\addlinespace
+inflation & hours worked & interest rate & wages & consumption & investment & output & 5\\
+inflation & hours worked & interest rate & consumption & output & investment & wages & 5\\
+hours worked & output & inflation & wages & investment & interest rate & consumption & 5\\
+consumption & hours worked & inflation & wages & interest rate & output & investment & 6\\
+hours worked & inflation & wages & output & interest rate & consumption & investment & 5\\
+\addlinespace
+investment & hours worked & inflation & consumption & interest rate & output & wages & 5\\
+hours worked & interest rate & consumption & output & wages & investment & inflation & 3\\
+hours worked & inflation & interest rate & investment & output & consumption & wages & 5\\
+inflation & hours worked & interest rate & wages & output & investment & consumption & 6\\
+hours worked & interest rate & wages & investment & inflation & consumption & output & 5\\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -952,29 +962,29 @@ inflation & hours worked & interest rate & investment & output & wages & consump
 \toprule
 hours worked & interest rate & inflation & output & consumption & investment & wages & \# different\\
 \midrule
-hours worked & inflation & consumption & wages & interest rate & output & investment & 6\\
+investment & hours worked & inflation & wages & interest rate & consumption & output & 6\\
 hours worked & interest rate & output & wages & inflation & consumption & investment & 5\\
+hours worked & inflation & consumption & wages & interest rate & output & investment & 6\\
+interest rate & hours worked & inflation & output & consumption & investment & wages & 2\\
+investment & hours worked & inflation & wages & interest rate & output & consumption & 6\\
+\addlinespace
 hours worked & interest rate & consumption & wages & inflation & output & investment & 5\\
-hours worked & investment & consumption & wages & interest rate & output & inflation & 6\\
+investment & hours worked & interest rate & wages & inflation & consumption & output & 7\\
+interest rate & investment & inflation & wages & consumption & hours worked & output & 5\\
+inflation & hours worked & consumption & wages & interest rate & output & investment & 7\\
+inflation & hours worked & interest rate & output & consumption & investment & wages & 3\\
+\addlinespace
+inflation & hours worked & interest rate & consumption & output & investment & wages & 5\\
+investment & interest rate & hours worked & wages & inflation & consumption & output & 6\\
 hours worked & interest rate & wages & output & inflation & consumption & investment & 4\\
+inflation & hours worked & interest rate & wages & output & investment & consumption & 6\\
+hours worked & consumption & interest rate & wages & inflation & output & investment & 6\\
 \addlinespace
+interest rate & hours worked & inflation & output & investment & consumption & wages & 4\\
 consumption & hours worked & inflation & wages & interest rate & output & investment & 6\\
-hours worked & interest rate & wages & consumption & inflation & output & investment & 5\\
-hours worked & inflation & consumption & output & interest rate & investment & wages & 3\\
-hours worked & output & inflation & wages & interest rate & consumption & investment & 5\\
-inflation & hours worked & consumption & wages & output & interest rate & investment & 7\\
-\addlinespace
-hours worked & investment & consumption & wages & output & interest rate & inflation & 6\\
-hours worked & investment & output & wages & consumption & interest rate & inflation & 5\\
-investment & hours worked & inflation & output & interest rate & consumption & wages & 4\\
-hours worked & inflation & interest rate & wages & consumption & output & investment & 5\\
-consumption & hours worked & interest rate & wages & inflation & output & investment & 7\\
-\addlinespace
-hours worked & consumption & interest rate & wages & inflation & investment & output & 5\\
-consumption & hours worked & inflation & wages & output & interest rate & investment & 6\\
-hours worked & consumption & inflation & wages & interest rate & output & investment & 5\\
-hours worked & output & interest rate & consumption & inflation & investment & wages & 4\\
-hours worked & investment & output & wages & inflation & interest rate & consumption & 6\\
+investment & hours worked & consumption & wages & interest rate & output & inflation & 7\\
+output & hours worked & interest rate & wages & inflation & consumption & investment & 7\\
+hours worked & investment & interest rate & output & inflation & consumption & wages & 4\\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -988,29 +998,29 @@ hours worked & investment & output & wages & inflation & interest rate & consump
 \toprule
 hours worked & interest rate & inflation & output & consumption & investment & wages & \# different\\
 \midrule
-hours worked & interest rate & output & wages & inflation & investment & consumption & 4\\
-hours worked & interest rate & consumption & wages & inflation & investment & output & 4\\
 hours worked & interest rate & consumption & wages & inflation & output & investment & 5\\
-investment & hours worked & interest rate & wages & output & inflation & consumption & 7\\
-interest rate & hours worked & inflation & wages & consumption & investment & output & 4\\
-\addlinespace
-inflation & hours worked & interest rate & consumption & output & investment & wages & 5\\
-inflation & hours worked & interest rate & wages & output & investment & consumption & 6\\
-inflation & hours worked & interest rate & wages & consumption & investment & output & 5\\
-inflation & hours worked & interest rate & output & consumption & investment & wages & 3\\
-hours worked & inflation & interest rate & investment & output & consumption & wages & 5\\
-\addlinespace
-hours worked & consumption & interest rate & wages & inflation & investment & output & 5\\
-hours worked & interest rate & output & wages & inflation & consumption & investment & 5\\
-hours worked & inflation & interest rate & wages & consumption & investment & output & 4\\
-consumption & hours worked & interest rate & wages & output & investment & inflation & 6\\
+hours worked & interest rate & output & wages & inflation & investment & consumption & 4\\
 hours worked & output & interest rate & wages & inflation & investment & consumption & 5\\
+hours worked & interest rate & output & wages & inflation & consumption & investment & 5\\
+inflation & hours worked & interest rate & wages & consumption & investment & output & 5\\
 \addlinespace
-interest rate & hours worked & inflation & wages & output & investment & consumption & 5\\
-hours worked & consumption & output & wages & inflation & investment & interest rate & 5\\
-interest rate & hours worked & inflation & wages & output & consumption & investment & 6\\
-inflation & hours worked & interest rate & wages & investment & consumption & output & 7\\
+hours worked & interest rate & wages & output & inflation & consumption & investment & 4\\
+hours worked & inflation & interest rate & investment & output & consumption & wages & 5\\
+inflation & hours worked & interest rate & consumption & output & investment & wages & 5\\
+hours worked & inflation & consumption & wages & interest rate & investment & output & 5\\
+hours worked & interest rate & consumption & wages & inflation & investment & output & 4\\
+\addlinespace
+hours worked & inflation & interest rate & wages & consumption & investment & output & 4\\
+inflation & hours worked & interest rate & wages & output & investment & consumption & 6\\
+output & hours worked & interest rate & wages & inflation & consumption & investment & 7\\
+hours worked & output & consumption & wages & interest rate & investment & inflation & 5\\
+inflation & hours worked & interest rate & output & consumption & investment & wages & 3\\
+\addlinespace
+hours worked & inflation & interest rate & wages & consumption & output & investment & 5\\
+hours worked & inflation & interest rate & wages & output & investment & consumption & 5\\
 hours worked & inflation & consumption & wages & interest rate & output & investment & 6\\
+hours worked & consumption & interest rate & wages & inflation & investment & output & 5\\
+investment & hours worked & interest rate & wages & output & inflation & consumption & 7\\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -1064,7 +1074,7 @@ parameter estimates as percent deviations from the SW model estimates.
 
 }
 
-\caption{Out-of-sample predictions for the best predicting permutations (black), the SW model (red), and the observed data (blue).}\label{fig:pc-preds-p1}
+\caption{Out-of-sample predictions for the best predicting permutations (black), the SW model (orange), and the observed data (blue).}\label{fig:pc-preds-p1}
 \end{figure}
 
 \begin{figure}[t]
@@ -1073,7 +1083,7 @@ parameter estimates as percent deviations from the SW model estimates.
 
 }
 
-\caption{Out-of-sample predictions for the best predicting permutations (black), the SW model (red), and the observed data (blue).}\label{fig:pc-preds-p2}
+\caption{Out-of-sample predictions for the best predicting permutations (black), the SW model (orange), and the observed data (blue).}\label{fig:pc-preds-p2}
 \end{figure}
 
 We now examine how well the SW model predicts future data relative to
@@ -1157,10 +1167,10 @@ institutions.
 
 To take this analysis one step further, we can examine the ``best''
 predicting model, in terms of out-of-sample predictive log-likelihood.
-Recall, this is just one of about 38\% which forecast better. It is also
-important to note here, that the penalized negative log-likelihood
-(in-sample) is very flat relative to permutations. In terms of that
-metric, 19\% of permutations are within 10\% of the true permutation.
+Recall, this is just one of about 0.07\% which forecast better. It is
+also important to note here, that the penalized negative log-likelihood
+(out-of-sample) is very flat relative to permutations. In terms of that
+metric, 17\% of permutations are within 10\% of the true permutation.
 The true model arranges the data as
 
 \begin{quotation}
@@ -1170,7 +1180,7 @@ hours worked, interest rate, inflation, output, consumption, investment, wages
 \noindent while the best one by out-of-sample log-likelihood is
 
 \begin{quotation}
-hours worked, interest rate, output, wages, inflation, investment, consumption.
+hours worked, interest rate, consumption, wages, inflation, output, investment.
 \end{quotation}
 
 \noindent This model is pretty clearly scary to a macroeconomist. In the
@@ -1210,31 +1220,31 @@ motivation is, at the very least, still open.
 \centering
 \begin{tabular}[t]{rrrrr}
 \toprule
- & $r_\pi$ & $\rho$ & $r_y$ & $r_{\Delta y}$\\
+ & r[pi] & rho & r[y] & r[Delta][y]\\
 \midrule
-$\phi_1$ & 0.2 & 0.1 & -0.03 & 0.11\\
-$\sigma_c$ & 0.06 & 0.26 & 0.17 & 0.02\\
-$h$ & \textbf{0.33} & 0.08 & 0.02 & \textbf{-0.34}\\
-$\xi_w$ & -0.06 & \textbf{0.43} & 0.02 & 0.08\\
-$\sigma_l$ & 0.01 & 0.19 & 0.03 & \textbf{-0.37}\\
+$\phi_1$ & 0.3 & \textbf{0.42} & 0.1 & 0.15\\
+$\sigma_c$ & 0.2 & 0.22 & \textbf{0.31} & 0.03\\
+$h$ & 0.23 & \textbf{0.36} & -0.08 & 0\\
+$\xi_w$ & 0.27 & \textbf{0.5} & 0.14 & 0.24\\
+$\sigma_l$ & -0.04 & -0.03 & -0.02 & -0.12\\
 \addlinespace
-$\xi_p$ & -0.26 & \textbf{0.36} & 0.13 & 0.19\\
-$\iota_w$ & 0.1 & 0.04 & 0.05 & 0.01\\
-$\iota_p$ & 0.03 & 0.17 & -0.03 & 0.04\\
-$\Psi$ & \textbf{0.34} & 0.01 & 0.1 & \textbf{0.33}\\
-$\Phi$ & 0.02 & 0.03 & 0.03 & 0.02\\
+$\xi_p$ & \textbf{0.32} & \textbf{0.46} & 0.21 & \textbf{0.3}\\
+$\iota_w$ & 0 & -0.02 & -0.03 & -0.05\\
+$\iota_p$ & -0.22 & -0.22 & -0.06 & -0.12\\
+$\Psi$ & -0.18 & -0.23 & 0.06 & 0.09\\
+$\Phi$ & \textbf{0.32} & \textbf{0.43} & 0.07 & 0.17\\
 \addlinespace
-$r_\pi$ & \textbf{1} & \textbf{0.31} & 0.24 & 0\\
-$\rho$ & \textbf{0.31} & \textbf{1} & \textbf{0.32} & 0.12\\
-$r_y$ & 0.24 & \textbf{0.32} & \textbf{1} & -0.04\\
-$r_{\Delta y}$ & 0 & 0.12 & -0.04 & \textbf{1}\\
-$\overline{\pi}$ & -0.04 & -0.05 & -0.08 & 0.01\\
+$r_\pi$ & \textbf{1} & \textbf{0.66} & \textbf{0.41} & 0.26\\
+$\rho$ & \textbf{0.66} & \textbf{1} & \textbf{0.4} & 0.22\\
+$r_y$ & \textbf{0.41} & \textbf{0.4} & \textbf{1} & 0.18\\
+$r_{\Delta y}$ & 0.26 & 0.22 & 0.18 & \textbf{1}\\
+$\overline{\pi}$ & 0.12 & 0.12 & 0.06 & -0.02\\
 \addlinespace
-$100(\beta^{-1} -1)$ & -0.04 & -0.18 & -0.14 & -0.04\\
-$\overline{l}$ & 0.07 & 0.1 & 0.08 & -0.05\\
-$\overline{\gamma}$ & 0.02 & 0.03 & 0.05 & -0.01\\
-$\rho_{ga}$ & -0.23 & -0.15 & 0 & 0.01\\
-$\alpha$ & 0.18 & 0.11 & 0.16 & -0.04\\
+$100(\beta^{-1} -1)$ & \textbf{-0.38} & \textbf{-0.45} & -0.14 & -0.27\\
+$\overline{l}$ & -0.03 & -0.05 & 0.06 & -0.08\\
+$\overline{\gamma}$ & 0.07 & 0.02 & 0.06 & -0.02\\
+$\rho_{ga}$ & -0.05 & -0.06 & 0.08 & 0.01\\
+$\alpha$ & 0.01 & 0.01 & 0.05 & -0.13\\
 \bottomrule
 \end{tabular}
 \end{table}

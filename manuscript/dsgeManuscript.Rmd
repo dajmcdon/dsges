@@ -291,48 +291,63 @@ library(FKF)
 library(lubridate)
 library(scales)
 
-opts_chunk$set(message=FALSE, warning=FALSE, cache=TRUE, 
-               autodep = TRUE, echo=FALSE,
-               include=TRUE, size="small",
-               fig.align='center', fig.width=6, fig.height=4,
-               fig.path = "gfx/", 
-               fig.pos="t"
-               )
-theme_set(theme_bw(base_family="Times",base_size = 12))
+opts_chunk$set(
+  message = FALSE, warning = FALSE, cache = TRUE, 
+  autodep = TRUE, echo = FALSE,
+  include = TRUE, size = "small",
+  fig.align = 'center', fig.width = 6, fig.height = 4,
+  fig.path = "gfx/", 
+  fig.pos = "t"
+)
+theme_set(theme_bw(base_family = "Times", base_size = 12))
 green = '#00AF64'
 blue = '#0B61A4'
 red = '#FF4900'
 orange = '#FF9200'
-colvec = c(green,blue,red,orange)
+colvec = c(green, blue, red, orange)
 trainset = 1:200
 ```
 
 
 ```{r load-dsge-data}
-load(here::here("cluster_output","perm_results.Rdata"))
-load(here::here("data", "SWdataUpdated.Rdata"))
-testset = (1:ncol(y))[-trainset]
+perm_res <- read_rds(here::here("update2022", "permutation_results.rds"))
+load(here::here("data", "SWdataUpdated.Rdata")) # named y
+n <- ncol(y)
+testset <- seq(y)[-trainset]
 source(here::here('code', 'functions', 'modelsol.R'))
 source(here::here('code', 'functions', 'reparlogp.R'))
 source(here::here('code', 'functions', 'SimsCodesFort.R'))
 source(here::here('code', 'priorsetup.R'))
-load(here::here("cluster_output", "llike-calculations.Rdata"))
-load(here::here("cluster_output", "SWlong.Rdata"))
+long_run_pars <- read_rds(here::here("update2022", "swlong-run-pars.rds"))
+#load(here::here("cluster_output", "SWlong.Rdata"))
 #source('../cluster_output/SWlong.Rdata')
-perms = perm(7,7)
-SWPerm = perms[1,]
+perms = perm(7, 7)
+SWPerm = perms[1, ]
 truePerm = 1
-pvec = par_ests[truePerm,]
-unPerm=t(apply(perms,1,function(x) match(1:7,x)))
+pvec <- perm_res$par_ests[truePerm, ]
+unPerm <- map(split(perms, seq(nrow(perms))), ~ match(1:7, .x))
 series = rownames(y)
-testerr = matrix(NA, nrow(perms),7)
-for(i in 1:nrow(test_mse)) testerr[i,] = test_mse[i,][unPerm[i,]] # unscramble the permuted test errors
-testerr = as_tibble(testerr)
-names(testerr) = c('hours worked','interest rate','inflation','output','consumption','investment','wages') #series
-baseline = testerr[truePerm,]
-logperc = as_tibble(sweep(mutate_all(testerr, log), 2, unlist(log(baseline)), '-') )
-nperms = nrow(testerr)
-sw_pvec = c(.45,.24,.52,.45,.24,.14,.24,.95,.18,.97,.71,.12,.9,.97,.74 ,.88, 5.48,1.39,.71,.73, 1.92,.65,.59,.22,.54,1.61,2.03,.81,.08,.22,.81,.16,-.1,.43, .52,.19)
+# unscramble the permuted test errors
+testerr <- map2(split(perm_res$test_mse, seq(nrow(perms))), unPerm, ~ .x[.y]) %>%
+  do.call("rbind", .) %>%
+  as_tibble(.name_repair = "unique")
+series_names <- c('hours worked', 'interest rate', 'inflation', 
+                   'output', 'consumption', 'investment', 'wages') 
+names(testerr) = series_names
+testerr$permutation = seq(nrow(perms))
+testerr <- testerr %>% pivot_longer(-permutation)
+baseline <-  testerr %>% 
+  filter(permutation == truePerm) %>% 
+  select(-permutation) %>%
+  rename(baseline = value)
+logperc <- left_join(testerr, baseline, by = "name") %>%
+  mutate(value = log(value) - log(baseline)) %>%
+  select(-baseline)
+
+nperms = nrow(perms)
+sw_pvec = c(.45,.24,.52,.45,.24,.14,.24,.95,.18,.97,.71,.12,.9,.97,.74,
+            .88, 5.48,1.39,.71,.73, 1.92,.65,.59,.22,.54,1.61,2.03,.81,.08,
+            .22,.81,.16,-.1,.43, .52,.19)
 parmGreek = c('sigma[a]','sigma[b]','sigma[g]','sigma[I]', 'sigma[r]', 
               'sigma[p]','sigma[w]',
               'rho[a]', 'rho[b]', 'rho[g]', 
@@ -388,19 +403,28 @@ for each starting point.  We train the model using only the first
 `r length(trainset)` time points, saving the remainder to evaluate the model's
 (pseudo-out-of-sample) predictive performance.
 
+```{r}
+our_llike <- getlogLike(repar(pvec, prior, TRUE)$outparv, 
+                        y[,trainset], prior)
+sw_llike <- getlogLike(repar(sw_pvec, prior, TRUE)$outparv, 
+                        y[,trainset], prior)
+long_llike <- getlogLike(repar(long_run_pars, prior, TRUE)$outparv, 
+                        y[,trainset], prior)
+```
+
 \autoref{tab:parameter-estimate-table} presents the posterior mode based on our
 procedure. Note first that some of the parameter estimates are similar to those
 presented in \citet{SmetsWouters2007} (shown in the last column), while others
 differ dramatically.  However, comparing the likelihood of of our estimated
 parameters to those in \citet{SmetsWouters2007}, our fit is significantly
 better.  For our dataset, the penalized negative log likelihood of the
-parameters is `r round(llike[truePerm],0)` compared to
-`r round(getlogLike(repar(prior$sw,prior,TRUE)$outparv,y[,trainset],prior),0)`, an
+parameters is `r round(our_llike, 0)` compared to
+`r round(sw_llike, 0)`, an
 improvement of more than
-`r round(1- llike[truePerm]/getlogLike(repar(prior$sw,prior,TRUE)$outparv,y[,trainset],prior),3)*100`%.
+`r round(1 - our_llike/sw_llike, 3)*100`%.
 The result is similar for the unpenalized negative log likelihood.  To check
 for robustness, we also ran the optimization procedure for 1 million parameter
-draws and the likelihood only decreased by about 1\%.  We are therefore
+draws and the likelihood only decreased by less than 0.001\%.  We are therefore
 confident that we have a parameter combination which nearly achieves the global
 optimum.[^usvsSW]
 
@@ -409,33 +433,37 @@ optimum.[^usvsSW]
   
 
 ```{r parameter-estimate-table, results='asis'}
-
-#cat("```{=latex} ")
-tab = tibble(parameter = c('$\\sigma_a$','$\\sigma_b$','$\\sigma_g$','$\\sigma_I$', '$\\sigma_r$', 
-              '$\\sigma_p$','$\\sigma_w$',
-              '$\\rho_a$', '$\\rho_b$', '$\\rho_g$', 
-              '$\\rho_I$', '$\\rho_r$', '$\\rho_p$','$\\rho_w$', '$\\mu_p$',
-              '$\\mu_w$', '$\\phi_1$', '$\\sigma_c$', '$h$', '$\\xi_w$', '$\\sigma_l$', 
-              '$\\xi_p$', '$\\iota_w$',
-              '$\\iota_p$', '$\\Psi$', '$\\Phi$', '$r_\\pi$', '$\\rho$', '$r_y$', 
-              '$r_{\\Delta y}$', '$\\overline{\\pi}$', 
-              '$100(\\beta^{-1} -1)$', '$\\overline{l}$', '$\\overline{\\gamma}$',
-              '$\\rho_{ga}$', '$\\alpha$'),
-             dist = prior$dist, mean = prior$m,
-             std = prior$sd, lb = round(prior$lb,2), ub = prior$ub,
-             mode = round(pvec,2), SWmode = sw_pvec)
-kable(tab, booktabs=TRUE, digits = 2, escape = FALSE, 
+parameter_latex = c(
+    '$\\sigma_a$','$\\sigma_b$','$\\sigma_g$','$\\sigma_I$', 
+    '$\\sigma_r$', '$\\sigma_p$','$\\sigma_w$',
+    '$\\rho_a$', '$\\rho_b$', '$\\rho_g$', 
+    '$\\rho_I$', '$\\rho_r$', '$\\rho_p$','$\\rho_w$', '$\\mu_p$',
+    '$\\mu_w$', '$\\phi_1$', '$\\sigma_c$', '$h$', '$\\xi_w$', '$\\sigma_l$', 
+    '$\\xi_p$', '$\\iota_w$',
+    '$\\iota_p$', '$\\Psi$', '$\\Phi$', '$r_\\pi$', '$\\rho$', '$r_y$', 
+    '$r_{\\Delta y}$', '$\\overline{\\pi}$', 
+    '$100(\\beta^{-1} -1)$', '$\\overline{l}$', '$\\overline{\\gamma}$',
+    '$\\rho_{ga}$', '$\\alpha$')
+tab = tibble(
+  parameter = parameter_latex,
+  dist = prior$dist, 
+  mean = prior$m,
+  std = prior$sd, 
+  lb = round(prior$lb, 2), 
+  ub = prior$ub,
+  mode = round(pvec, 2), 
+  SWmode = sw_pvec)
+kable(tab, booktabs = TRUE, digits = 2, escape = FALSE, 
   caption = "Prior distributions, posterior modes, and posterior mode as
       estimated by \\citet{SmetsWouters2007} for the 36 estimated
       parameters. All values are rounded to two decimal places.",
-  align="c",
+  align = "c",
   col.names = linebreak(
-        c("","prior\ndistribution","prior\nmean", "prior\nstdev",
-          "lower\nbound","upper\nbound","posterior\nmode",
-          "SW posterior\nmode"), align="c")) %>%
+    c("",
+      "prior\ndistribution", "prior\nmean", "prior\nstdev",
+      "lower\nbound", "upper\nbound", "posterior\nmode",
+      "SW posterior\nmode"), align = "c")) %>%
   kable_styling(font_size = 9)
-#cat("```")
-
 ```
 
 \clearpage
@@ -474,43 +502,94 @@ idealized scenario.[^industrev]
 
 [^industrev]: It is, of course, wildly implausible to imagine a 275 year interval which does _not_ see massive changes to tastes, technologies and institutions. The differences between 1746 and 2021 are obvious, but your favorite economic historian will explain at length that these were all transformed between 1471 and 1746, too.  Recognizing this hardly makes DSGEs _more_ attractive.
 
-All figures in this section show the mean in red along with 30%, 60%, 80%, and
+All figures in this section show the mean in red along with 50%, 75%, and
 90% confidence bands calculated from the replications.
 
-```{r flipping-setup}
-p = c(.05,.1,.2,.35,.65,.8,.9,.95)
-quant = function(x){ 
-  d = as.data.frame(t(quantile(x,probs=p)))
-  d$m = mean(x)
-  d
+```{r}
+simest <- read_rds(here::here("update2022", "simulate_estimate.rds"))
+scales <- simest %>% select(job.id, nestim, ends_with("_sc")) %>%
+    rename_with(.cols = ends_with("_sc"), ~ sub("[_]sc$", "", .)) %>%
+    pivot_longer(
+      -c(job.id, nestim), 
+      names_to = "series", values_to = "scaling")
+```
+
+```{r plot-ribbons-fun}
+plot_ribbons <- function(dat, col, centre = c("median", "mean"), 
+                         probs = c(.95, .8, .5)) {
+  centre <- match.arg(centre, several.ok = TRUE)
+  line_cols <- c(mean = orange, median = "black")
+  dat <- dat %>%
+    group_by(nestim, .add = TRUE) %>%
+    summarise(
+      itvals = list(ggdist::median_qi({{ col }}, .width = probs)),
+      mean = mean({{ col }})
+    ) %>%
+    unnest(itvals)
+  g <- dat %>% 
+    ggplot(aes(x = nestim)) +
+    ggdist::geom_lineribbon(aes(ymin = ymin, ymax = ymax)) +
+    scale_fill_brewer()
+  
+  if ("median" %in% centre) 
+    g <- g + geom_line(aes(y = y), color = line_cols["median"])
+  
+  if ("mean" %in% centre)
+    g <- g + geom_line(aes(y = mean), color = line_cols["mean"])
+
+  return(g + xlab("Number of training observations"))
 }
 ```
 
-```{r train-error, fig.cap="Training (in sample) error averaged across series as the number of training points increases. We would expect the variability to decline while the average remains constant. The mean is shown in red along with 30\\%, 60\\%, 80\\%, and 90\\% confidence bands calculated from the replications."}
-load(here::here("cluster_output", "SimEst", "summaryStats.Rdata"))
-df = SummaryStats %>% group_by(nestim) %>% do(quant(.$sc.mste))
-df %>% ggplot(aes(x=nestim,y=m)) +
-  geom_ribbon(aes(ymin=`5%`,ymax=`95%`), fill='grey90') + 
-  geom_ribbon(aes(ymin=`10%`,ymax=`90%`), fill='grey80') + 
-  geom_ribbon(aes(ymin=`20%`,ymax=`80%`), fill='grey70') + 
-  geom_ribbon(aes(ymin=`35%`,ymax=`65%`), fill='grey60') + 
-  geom_line(color=red) +
-  xlab('number of training points') +
-  ylab('scaled in-sample MSE')
+```{r train-error, fig.cap="Training (in sample) error averaged across series as the number of training points increases. We would expect the variability to decline while the average remains constant. The median is shown in black along with 50\\%, 80\\%, and 95\\% confidence bands calculated over the replications."}
+scaled_train_error <- full_join(
+  scales,
+  simest %>% select(job.id, starts_with("mste_")) %>%
+    rename_with(.cols = starts_with("mste_"), ~ sub("^mste[_]", "", .)) %>%
+    pivot_longer(-job.id, names_to = "series", values_to = "mste"),
+  by = c("job.id", "series"))
+
+scaled_train_error %>%
+  mutate(mste = mste / scaling) %>%
+  group_by(job.id) %>%
+  summarise(mste = mean(mste), nestim = mean(nestim)) %>%
+  ungroup() %>%
+  plot_ribbons(mste, "median") +
+  ylab('Scaled in-sample MSE')
 ```
 
-```{r test-error, fig.cap="Out-of-sample error averaged across series as the number of training points increases. We would expect both the variability and the average to decline. The blue line is the test error for the true model."}
-df = SummaryStats %>% group_by(nestim) %>% do(quant(.$sc.mspe))
-df$base = by(SummaryStats$sc.msbe,SummaryStats$nestim, mean)
-df %>% ggplot(aes(x=nestim)) +
-  geom_ribbon(aes(ymin=`5%`,ymax=`95%`), fill='grey90') + 
-  geom_ribbon(aes(ymin=`10%`,ymax=`90%`), fill='grey80') + 
-  geom_ribbon(aes(ymin=`20%`,ymax=`80%`), fill='grey70') + 
-  geom_ribbon(aes(ymin=`35%`,ymax=`65%`), fill='grey60') + 
-  geom_line(aes(y=m), color=red) + coord_cartesian(ylim=c(.4,.7)) +
-  geom_line(aes(y=base),color=blue) +
-  xlab('number of training points') +
-  ylab('scaled out-of-sample MSE')
+```{r test-error, fig.cap="Out-of-sample error averaged across series as the number of training points increases. We would expect both the variability and the average to decline. The orange line is the test error for the true (oracle) model."}
+scaled_test_error <- full_join(
+  scales,
+  simest %>% select(job.id, starts_with("mspe_")) %>%
+    rename_with(.cols = starts_with("mspe_"), ~ sub("^mspe[_]", "", .)) %>%
+    pivot_longer(-job.id, names_to = "series", values_to = "mspe"),
+  by = c("job.id", "series"))
+
+scaled_oracle_error <- full_join(
+  scales,
+  simest %>% select(job.id, starts_with("base_")) %>%
+    rename_with(.cols = starts_with("base_"), ~ sub("^base[_]", "", .)) %>%
+    pivot_longer(-job.id, names_to = "series", values_to = "oracle"),
+  by = c("job.id", "series"))
+
+mean_oracle_error <- scaled_oracle_error %>%
+  mutate(oracle = oracle / scaling) %>%
+  group_by(job.id) %>%
+  summarise(oracle = mean(oracle), nestim = mean(nestim)) %>%
+  ungroup() %>%
+  group_by(nestim) %>%
+  summarise(mean = mean(oracle), median = median(oracle))
+
+scaled_test_error %>%
+  mutate(mspe = mspe / scaling) %>%
+  group_by(job.id) %>%
+  summarise(mspe = mean(mspe), nestim = mean(nestim)) %>%
+  ungroup() %>%
+  plot_ribbons(mspe, "median") +
+  coord_cartesian(ylim = c(0.4, 0.7)) +
+  geom_line(data = mean_oracle_error, aes(y = mean), color = orange) +
+  ylab('Scaled out-of-sample MSE')
 ```
 
 
@@ -537,74 +616,77 @@ the true parameters, though we get some improvement in predictions relatively
 quickly.
 
 ```{r parm-error, fig.cap="The parameter MSE shows similar behavior to the predictive MSE: steep initial decline toward an asymptote greater than that of the true model."}
-df = SummaryStats %>% group_by(nestim) %>% do(quant(.$perror))
-df %>% ggplot(aes(x=nestim)) +
-  geom_ribbon(aes(ymin=`5%`,ymax=`95%`), fill='grey90') + 
-  geom_ribbon(aes(ymin=`10%`,ymax=`90%`), fill='grey80') + 
-  geom_ribbon(aes(ymin=`20%`,ymax=`80%`), fill='grey70') + 
-  geom_ribbon(aes(ymin=`35%`,ymax=`65%`), fill='grey60') + 
-  geom_line(aes(y=m), color=red) + #coord_cartesian(ylim=c(0,1)) +
-  xlab('number of training points') +
-  ylab('parameter MSE')
+tib_parm <- tibble(parm = parmGreek, true_parm = pvec)
+parm_error <- simest %>%
+  select(job.id, nestim, `sigma[a]`:alpha) %>%
+  pivot_longer(-c(job.id, nestim), names_to = "parm") %>%
+  left_join(tib_parm, by = "parm")
+  
+msparm_error <- parm_error %>%
+  mutate(value = (value - true_parm)^2) %>%
+  group_by(job.id) %>%
+  summarise(nestim = mean(nestim), msparm = mean(value))
+
+plot_ribbons(msparm_error, msparm, "median") +
+  geom_hline(yintercept = 0, color = orange) +
+  ylab('Parameter MSE')
 ```
 
 ```{r pen-negll, fig.cap="The negative log-likelihood (in-sample) per observation."}
-df = SummaryStats %>% group_by(nestim) %>% do(quant(.$llike/.$nestim))
-df %>% ggplot(aes(x=nestim)) +
-  geom_ribbon(aes(ymin=`5%`,ymax=`95%`), fill='grey90') + 
-  geom_ribbon(aes(ymin=`10%`,ymax=`90%`), fill='grey80') + 
-  geom_ribbon(aes(ymin=`20%`,ymax=`80%`), fill='grey70') + 
-  geom_ribbon(aes(ymin=`35%`,ymax=`65%`), fill='grey60') + 
-  geom_line(aes(y=m), color=red) + #coord_cartesian(ylim=c(0,1)) +
-  xlab('number of training points') +
+simest %>%
+  select(nestim, lltrain) %>%
+  mutate(lltrain = lltrain / nestim) %>%
+  plot_ribbons(lltrain, "median")
   ylab('(penalized) negative log-likelihood (training data)')
 ```
 
-```{r predict-negll, fig.cap="The negative predictive log-likelihood (out-of-sample) per observation."}
-df = SummaryStats %>% group_by(nestim) %>% 
-  # would be better to have llike from only the 1000 obs after the training
-  # period, but this would require rerunning the whole thing since I screwed
-  # this up the first time
-  do(quant(-.$logPred / (2100 - .$nestim))) 
-df %>% ggplot(aes(x=nestim)) +
-  geom_ribbon(aes(ymin=`5%`,ymax=`95%`), fill='grey90') + 
-  geom_ribbon(aes(ymin=`10%`,ymax=`90%`), fill='grey80') + 
-  geom_ribbon(aes(ymin=`20%`,ymax=`80%`), fill='grey70') + 
-  geom_ribbon(aes(ymin=`35%`,ymax=`65%`), fill='grey60') + 
-  geom_line(aes(y=m), color=red) + coord_cartesian(ylim=c(-6,10)) +
-  geom_hline(yintercept = -2.9, color = "blue") +
-  xlab('number of training points') + 
-  ylab('predictive log-likelihood (testing data)')
+```{r entropy-limit, eval=FALSE}
+n <- 1e6
+long <- generate(n, pvec)
+filt <- getFilterOutput(long, pvec)
+Zt <- filt$ssmats$Zt
+GG <- filt$ssmats$GG
+Pbar <- filt$Pt[,,n + 1]
+Plast <- filt$Pt[,,n]
+rm(filt)
+frobenius_norm <- sqrt(sum((Pbar - Plast)^2))
+limit_obs_var <- Zt %*% Pbar %*% t(Zt) + GG
+entropy_rate <- determinant(2 * pi * exp(1) * limit_obs_var)$modulus / 2
+saveRDS(entropy_rate, here::here("update2022", "entropy_rate.rds"))
+```
+
+```{r load-entropy-rate}
+entropy_rate <- read_rds(here::here("update2022", "entropy_rate.rds"))
+```
+
+
+```{r predict-negll, fig.cap="The negative predictive log-likelihood (out-of-sample) per observation. The horizontal line is the theoretical limit."}
+simest %>%
+  select(nestim, llpred) %>%
+  mutate(llpred = -llpred / (2100 - nestim)) %>%
+  plot_ribbons(llpred, "median") +
+  geom_hline(yintercept = entropy_rate, color = orange) + 
+  coord_cartesian(ylim = c(5, 10)) +
+  ylab('Predictive log-likelihood (testing data)')
 ```
 
 ```{r individual-series, fig.cap="Mean-squared prediction error for each series."}
-load(here::here("cluster_output", "SimEst", "predErrs.Rdata"))
-load(here::here("cluster_output", "SimEst", "baselineErrs.Rdata"))
-prederrs = pred.errs.sc %>% select(-prob,-algo,-repl) %>%
-  gather(key='series',value='mspe',-id,-nestim) %>%
-  mutate(series = recode(
-    series, dc = "consumption", dinve = "investment", dw = "wages",
-    dy = "output", labobs = "hours worked", 
-    pinfobs = "inflation", robs = "interest rate")) %>%
-  group_by(series, nestim) %>% 
-  mutate(id = as.character(id))
-baseline = base.errs.sc %>% select(-prob,-algo,-repl) %>%
-  gather(key='series',value='bmspe',-id,-nestim) %>% 
-  mutate(series = recode(
-    series, dc = "consumption", dinve = "investment", dw = "wages",
-    dy = "output", labobs = "hours worked", 
-    pinfobs = "inflation", robs = "interest rate")) %>%
-  group_by(series, nestim) %>% mutate(id = as.character(id))
-df = full_join(prederrs, baseline) %>% 
-  mutate(excess = (log(mspe) - log(bmspe))*100) %>% do(quant(.$excess))
-df %>% ggplot(aes(x=nestim)) + facet_wrap(~series) + #scale_y_log10() +
-  geom_ribbon(aes(ymin=`5%`,ymax=`95%`), fill='grey90') + 
-  geom_ribbon(aes(ymin=`10%`,ymax=`90%`), fill='grey80') + 
-  geom_ribbon(aes(ymin=`20%`,ymax=`80%`), fill='grey70') + 
-  geom_ribbon(aes(ymin=`35%`,ymax=`65%`), fill='grey60') + 
-  geom_line(aes(y=m), color=red) + coord_cartesian(ylim=c(0,25)) +
-  geom_hline(aes(yintercept=0), color=blue) +
-  xlab('number of training points') + 
+left_join(
+  scaled_test_error %>% select(-scaling),
+  scaled_oracle_error %>% select(-scaling),
+  by = c("job.id", "nestim", "series")) %>%
+  mutate(
+    series = recode(
+      series, dc = "consumption", dinve = "investment", 
+      dw = "wages", dy = "output", labobs = "hours worked", 
+      pinfobs = "inflation", robs = "interest rate"),
+    mspe = log(mspe / oracle) * 100
+  ) %>%
+  group_by(series) %>%
+  plot_ribbons(mspe, "median") + 
+  facet_wrap(~ series) + 
+  coord_cartesian(ylim = c(0, 25)) +
+  geom_hline(yintercept = 0, color = orange) +
   ylab('100 x log(MSE / oracle)')
 ```
 
@@ -624,80 +706,69 @@ truth).  The other series are all predicted poorly.
 
 
 
-```{r parameter-convergence}
-load(here::here("cluster_output", "SimEst", "parmEst.Rdata"))
-load(here::here("cluster_output", "StdPvec.Rdata"))
-names(parmEst)[-c(1:5)] = parmGreek
-allpar = parmEst %>% select(-id,-prob,-algo,-repl) %>% 
-  gather('key','value',-nestim) %>% group_by(key,nestim) %>%
-  do(quant(.$value))
-names(pvec) = parmGreek
-pvec = as.data.frame(t(pvec)) %>% gather()
-```
-
 ```{r shock-sds, fig.cap = "Estimates for the standard deviations of stochastic shocks."}
-allpar %>% filter(key %in% parmGreek[1:7]) %>%
-  ggplot(aes(x=nestim)) + 
-  facet_wrap(~key, scales = 'free_y',labeller = label_parsed) +
-  geom_ribbon(aes(ymin=`5%`,ymax=`95%`), fill='grey90') + 
-  geom_ribbon(aes(ymin=`10%`,ymax=`90%`), fill='grey80') + 
-  geom_ribbon(aes(ymin=`20%`,ymax=`80%`), fill='grey70') + 
-  geom_ribbon(aes(ymin=`35%`,ymax=`65%`), fill='grey60') + 
-  geom_line(aes(y=m), color=red) +
-  geom_hline(data=pvec[1:7,], aes(yintercept=value), color=blue) +
-  xlab('number of training points') + ylab('')
+shocks <- parmGreek[1:7]
+parm_error %>% 
+  filter(parm %in% shocks) %>%
+  group_by(parm) %>%
+  plot_ribbons(value, "median") +
+  facet_wrap(~ parm, scales = "free_y", labeller = label_parsed) +
+  geom_hline(
+    data = tib_parm %>% filter(parm %in% shocks), 
+    mapping = aes(yintercept = true_parm), color = orange) + 
+  ylab('')
 ```
 
 ```{r autocorrelations-shocks, fig.cap="Estimates for the autocorrelation parameters in the shock processes."}
-allpar %>% filter(key %in% parmGreek[8:14]) %>%
-  ggplot(aes(x=nestim)) + 
-  facet_wrap(~key, scales = 'free_y',labeller = label_parsed) +
-  geom_ribbon(aes(ymin=`5%`,ymax=`95%`), fill='grey90') + 
-  geom_ribbon(aes(ymin=`10%`,ymax=`90%`), fill='grey80') + 
-  geom_ribbon(aes(ymin=`20%`,ymax=`80%`), fill='grey70') + 
-  geom_ribbon(aes(ymin=`35%`,ymax=`65%`), fill='grey60') + 
-  geom_line(aes(y=m), color=red) +
-  geom_hline(data=pvec[8:14,], aes(yintercept=value), color=blue) +
-  xlab('number of training points') + ylab('')
+autocorrelations <- parmGreek[8:14]
+parm_error %>% 
+  filter(parm %in% autocorrelations) %>%
+  group_by(parm) %>%
+  plot_ribbons(value, "median") +
+  facet_wrap(~ parm, scales = "free_y", labeller = label_parsed) +
+  geom_hline(
+    data = tib_parm %>% filter(parm %in% autocorrelations), 
+    mapping = aes(yintercept = true_parm), color = orange) + 
+  ylab('')
 ```
 
 ```{r deep1, fig.cap='Estimates of "deep" parameters'}
-allpar %>% filter(key %in% parmGreek[15:22]) %>%
-  ggplot(aes(x=nestim)) + 
-  facet_wrap(~key, scales = 'free_y',labeller = label_parsed) +
-  geom_ribbon(aes(ymin=`5%`,ymax=`95%`), fill='grey90') + 
-  geom_ribbon(aes(ymin=`10%`,ymax=`90%`), fill='grey80') + 
-  geom_ribbon(aes(ymin=`20%`,ymax=`80%`), fill='grey70') + 
-  geom_ribbon(aes(ymin=`35%`,ymax=`65%`), fill='grey60') + 
-  geom_line(aes(y=m), color=red) +
-  geom_hline(data=pvec[15:22,], aes(yintercept=value), color=blue) +
-  xlab('number of training points') + ylab('')
+deep <- parmGreek[15:22]
+parm_error %>% 
+  filter(parm %in% deep) %>%
+  group_by(parm) %>%
+  plot_ribbons(value, "median") +
+  facet_wrap(~ parm, scales = "free_y", labeller = label_parsed) +
+  geom_hline(
+    data = tib_parm %>% filter(parm %in% deep), 
+    mapping = aes(yintercept = true_parm), color = orange) + 
+  ylab('')
 ```
 
 ```{r deep2, fig.cap='Estimates of "deep" parameters'}
-allpar %>% filter(key %in% parmGreek[23:30]) %>%
-  ggplot(aes(x=nestim)) + 
-  facet_wrap(~key, scales = 'free_y',labeller = label_parsed) +
-  geom_ribbon(aes(ymin=`5%`,ymax=`95%`), fill='grey90') + 
-  geom_ribbon(aes(ymin=`10%`,ymax=`90%`), fill='grey80') + 
-  geom_ribbon(aes(ymin=`20%`,ymax=`80%`), fill='grey70') + 
-  geom_ribbon(aes(ymin=`35%`,ymax=`65%`), fill='grey60') + 
-  geom_line(aes(y=m), color=red) +
-  geom_hline(data=pvec[23:30,], aes(yintercept=value), color=blue) +
-  xlab('number of training points') + ylab('')
+deep <- parmGreek[23:30]
+parm_error %>% 
+  filter(parm %in% deep) %>%
+  group_by(parm) %>%
+  plot_ribbons(value, "median") +
+  facet_wrap(~ parm, scales = "free_y", labeller = label_parsed) +
+  geom_hline(
+    data = tib_parm %>% filter(parm %in% deep), 
+    mapping = aes(yintercept = true_parm), color = orange) + 
+  ylab('')
 ```
 
 ```{r deep3, fig.cap='Estimates of "deep" parameters'}
-allpar %>% filter(key %in% parmGreek[31:36]) %>%
-  ggplot(aes(x=nestim)) + 
-  facet_wrap(~key, scales = 'free_y',labeller = label_parsed) +
-  geom_ribbon(aes(ymin=`5%`,ymax=`95%`), fill='grey90') + 
-  geom_ribbon(aes(ymin=`10%`,ymax=`90%`), fill='grey80') + 
-  geom_ribbon(aes(ymin=`20%`,ymax=`80%`), fill='grey70') + 
-  geom_ribbon(aes(ymin=`35%`,ymax=`65%`), fill='grey60') + 
-  geom_line(aes(y=m), color=red) +
-  geom_hline(data=pvec[31:36,], aes(yintercept=value), color=blue) +
-  xlab('number of training points') + ylab('')
+deep <- parmGreek[31:36]
+parm_error %>% 
+  filter(parm %in% deep) %>%
+  group_by(parm) %>%
+  plot_ribbons(value, "median") +
+  facet_wrap(~ parm, scales = "free_y", labeller = label_parsed) +
+  geom_hline(
+    data = tib_parm %>% filter(parm %in% deep), 
+    mapping = aes(yintercept = true_parm), color = orange) + 
+  ylab('')
 ```
 
 Figures \ref{fig:shock-sds}--\ref{fig:deep3} show the estimates of each
@@ -706,10 +777,11 @@ can see that while many parameters are well-estimated with decreasing
 variability as the training sets grow, others converge to the wrong values, or
 fail to converge at all.  This phenomenon holds especially for both of the
 parameters of the shock processes, but also for some of the
-economically-relevant "deep" parameters.  For instance, $\sigma_l$, the
+economically-relevant "deep" parameters.  
+For instance, $\sigma_l$, the
 elasticity of labor supply with respect to the real wage, is consistently
-underestimated by about `r round(1-filter(allpar, key=="sigma[l]",
-nestim==1000)$m / filter(pvec, key=="sigma[l]")$value*100,0)`\%.  The data
+underestimated by about `r round(1 - filter(parm_error, parm=="sigma[l]", nestim==1000) %>% summarise(mean(value)) %>% pull() / pvec[parmGreek == "sigma[l]"] * 100, 0)`\%.  
+The data
 provides essentially no information about $\iota_w$, which measures the
 dependence of real wages on lagged inflation.  Other parameters which are
 poorly estimated include $\varphi$, the steady-state elasticity of
@@ -733,19 +805,22 @@ where $h(\theta_0)$ is the entropy rate. Furthermore, by the generalized asympto
 \]
 where the second term is the Kullback-Leibler divergence rate \citep{Gray-entropy-2nd}. Because $\mathrm{KL}(\theta_0\ ||\ \theta) \geq 0$, asymptotically, $h(\theta_0)$ is a lower bound for the average negative loglikelihood of any parameter vector.
 
-Because the data is generated from a linear Gaussian state space model, it is not hard to calculate that $h(\theta_0) \approx 2.25$, significantly \emph{larger} than any of the values in \autoref{fig:pen-negll}. Somehow, the estimated parameters generally have \emph{lower} negative loglikelihoods than the true parameter. The fact that the standard deviations of the shocks (\autoref{fig:shock-sds}) are consistently underestimated suggests that, even over this period, the in-sample fit to the data gives an overly optimistic picture of the long run behavior: we have not allowed $n$ to get large enough. \autoref{fig:entropy-investigation} shows the negative loglikelihood per observation over a much longer horizon---up to 75,000 years of quarterly data. For thousands of years, the parameter vector estimated over the first 250 years is less than the theoretical lower bound, but eventually, it starts to curve upward. This suggests that, both explanations (2) and (3) are accurate: in order to estimate a DSGE accurately, we need massive amounts of data.
+Because the data is generated from a linear Gaussian state space model, it is not hard to calculate that $h(\theta_0) \approx$ `r round(entropy_rate, 2)`, significantly \emph{larger} than any of the values in \autoref{fig:pen-negll}. Somehow, the estimated parameters generally have \emph{lower} negative loglikelihoods than the true parameter. 
+
+The fact that the standard deviations of the shocks (\autoref{fig:shock-sds}) are consistently underestimated suggests that, even over this period, the in-sample fit to the data gives an overly optimistic picture of the long run behavior: we have not allowed $n$ to get large enough. \autoref{fig:entropy-investigation} shows the negative loglikelihood per observation over a much longer horizon---up to 75,000 years of quarterly data. For thousands of years, the parameter vector estimated over the first 250 years is less than the theoretical lower bound, but eventually, it starts to curve upward. This suggests that, both explanations (2) and (3) are accurate: in order to estimate a DSGE accurately, we need massive amounts of data.
 
 ```{r entropy-investigation, fig.cap = "Comparing the in-sample negative loglikelihood per observation of a parameter estimated with 1000 observations relative to the true parameter. In the long-run, the entropy rate is a lower bound, but only after about 12,000 years of quarterly data."}
-tib <- readRDS(here::here("data","entropy-investigation.RDS")) 
+tib <- readRDS(here::here("update2022","entropy-investigation-long.rds")) 
 ggplot(tib, aes(n, neg_loglikelihood, color = name)) +
   geom_line() + 
   ylab("negative loglikelihood per observation") +
   xlab("number of observations (log scale)") +
   scale_x_log10(labels = scales::label_number_si()) + 
   geom_point() + 
-  scale_color_viridis_d(begin=.25, end=.75, 
-                        labels = expression(estimated~hat(theta),
-                                            true~theta[0])) +
+  geom_hline(yintercept = entropy_rate, color = orange) +
+  scale_color_viridis_d(
+    begin = .25, end = .75, 
+    labels = expression(estimated~hat(theta), true~theta[0])) +
   theme(legend.title = element_blank(), legend.position = "bottom")
 ```
 
@@ -767,10 +842,17 @@ the first `r length(trainset)` time points and its predictive performance is
 tested on the remaining `r length(testset)`.
 
 ```{r mean-percent-improvement, fig.cap="Average percentage improvement in out-of-sample forecast MSE. The horizontal red line represents baseline performance. Lower values are better."}
-df = tibble(y = logperc %>% rowMeans() %>% sort(), x = 1:nperms)
-imp = round(mean(df$y<0)*100,2)
-ggplot(df, aes(x,y)) + geom_point() + geom_hline(yintercept=0,color=red) + 
-  ylab(bquote(log("permuted MSE")-log("baseline MSE"))) + 
+df <- logperc %>%
+  group_by(permutation) %>%
+  summarise(value = mean(value)) %>%
+  arrange(value) %>%
+  mutate(x = 1:nperms)
+
+imp = round(mean(df$value < 0) * 100, 1)
+ggplot(df, aes(x, value)) + 
+  geom_point(color = blue) + 
+  geom_hline(yintercept = 0, color = orange) + 
+  ylab(bquote(log("permuted MSE") - log("baseline MSE"))) + 
   xlab(paste0(imp,"% of permutations improved"))
 ```
 
@@ -787,35 +869,62 @@ baseline model and then averaged across all `r nrow(y)` series:
 where a superscript $b$ represents the baseline model and $(p)$ the $p^{th}$
 permutation.  The result is shown in \autoref{fig:mean-percent-improvement}. \autoref{fig:series-percent-improvement}
 shows boxplots for the percentage improvement separately for each time
-series. The best model had an average percentage improvement of `r -round(df$y[1],2)*100`\% 
+series. The best model had an average percentage improvement of `r -round(min(df$value), 1) * 100`\% 
 relative to the baseline model. The vertical line at zero represents performance
-equivalent to baseline. About `r round(mean(df$y<0)*100,0)`\% of permutations had better predictive performance than the baseline model.
+equivalent to baseline. About `r round(mean(df$value < 0) * 100, 0)`\% of permutations had better predictive performance than the baseline model.
 
 ```{r series-percent-improvement, fig.cap="Percentage improvement in out-of-sample forecast MSE for each data series individually. The horizontal red line represents baseline performance. Values to the left are better."}
-percent_better_models <- round(mean(df$y<0)*100,0)
-logperc %>% gather() %>%
-  ggplot(aes(key,value)) + geom_violin() + coord_flip() + 
-  geom_hline(yintercept = 0, color=red) + ylab(bquote(log("permuted MSE")-log("baseline MSE"))) +
+percent_better_models <- round(mean(df$value < 0) * 100, 0)
+logperc %>% 
+  ggplot(aes(name, value)) + 
+  geom_violin(aes(fill = name)) + 
+  geom_boxplot(width = 0.1, outlier.shape = NA) +
+  coord_flip() + 
+  geom_hline(yintercept = 0) + 
+  scale_fill_viridis_d(guide = "none") +
+  ylab(bquote(log("permuted MSE") - log("baseline MSE"))) +
   xlab('')
 ```
 
 ```{r mean-scaled-mse, fig.cap="Average improvement in out-of-sample forecast MSE scaled by the variance of the data. The horizontal red line represents baseline performance."}
-sc = t(apply(y,1,var))
-scMSE = sweep(testerr, 2, sc, '/')
-df = tibble(y = scMSE %>% rowMeans() %>% sort(), x = 1:nperms)
-scMSEtrue = mean(unlist(scMSE[truePerm,]))
-imp = round(mean(df$y<scMSEtrue)*100, 2)
-ggplot(df, aes(x,y)) + geom_point() + geom_hline(yintercept=scMSEtrue,color=red) + 
+yvar <- t(apply(y, 1, var))
+colnames(yvar) <- series_names
+yvar <- as_tibble(yvar) %>% 
+  pivot_longer(everything(), names_to = "name", values_to = "var")
+sc_test_err <- left_join(testerr, yvar, by = "name") %>%
+  mutate(value = value / var, var = NULL)
+
+df <- sc_test_err %>%
+  group_by(permutation) %>%
+  summarise(value = mean(value)) %>%
+  arrange(value) %>%
+  mutate(x = 1:nperms)
+
+sw_sc_test_err <- df %>% filter(permutation == 1) %>% pull(value)
+
+
+imp = round(mean(df$value < sw_sc_test_err) * 100, 1)
+ggplot(df, aes(x, value)) + 
+  geom_point(color = blue) + 
+  geom_hline(yintercept = sw_sc_test_err, color = orange) + 
   ylab('mean MSE scaled by series variance') + 
-  xlab(paste0(imp,"% improved")) + scale_y_log10()
+  xlab(paste0(imp,"% of permutations improved"))
 ```
 
 ```{r series-scaled-mse, fig.cap="Improvement in out-of-sample forecast MSE scaled by the variance of the data for each data series individually. The red dots represents baseline performance."}
-scMSE %>% gather() %>%
-  ggplot(aes(key,value)) + geom_violin() + coord_flip() + 
-  ylab('MSE scaled by series variance') + 
-  scale_y_log10(labels=trans_format("log10", math_format(10^.x))) +
-  xlab('') + geom_point(data=scMSE[truePerm,] %>% gather(), color=red,size=3)
+sc_test_err %>% 
+  ggplot(aes(name)) + 
+  geom_violin(aes(y = value, fill = name)) + 
+  geom_boxplot(aes(y = value), width = 0.1, outlier.shape = NA) +
+  geom_crossbar(
+    data = sc_test_err %>% filter(permutation == 1L), 
+    mapping = aes(y = value, ymin = value, ymax = value)) +
+  # geom_point(data = sc_test_err %>% filter(permutation == 1L)) +
+  coord_flip() + 
+  scale_fill_viridis_d(guide = "none") +
+  ylab('MSE scaled by series variance (log scale)') + 
+  scale_y_log10() +
+  xlab('')
 ```
 
 
@@ -829,106 +938,149 @@ observed variance and then averaged across the 7 series:
 \autoref{fig:mean-scaled-mse} displays the average of this measure across all `r ncol(y)`
 series. Again, about `r round(imp,0)`\% of permutations achieved better average scaled MSE
 than the baseline model. The best permutation achieved an average scaled MSE of
-`r round(df$y[1],2)` relative to `r round(scMSEtrue,2)` for the baseline model.
+`r round(min(df$value), 2)` relative to `r round(sw_sc_test_err, 2)` for the baseline model.
 \autoref{fig:series-scaled-mse} shows
 boxplots for the scaled MSE separately for each series. Red dots indicate the
 performance of the baseline model.
 
-```{r likelihood-preprocessing, eval=FALSE}
-llike = double(nrow(perms))
-llikeML = double(nrow(perms))
-llikeAll = double(nrow(perms))
-llikeAllML = double(nrow(perms))
-
-for(ii in 1:nrow(perms)){
-  if(ii %% 50 == 0) print(ii)
-  ppp = repar(par_ests[ii,],prior,TRUE)$outparv
-  llike[ii] = getlogLike(ppp, y[perms[ii,],trainset], prior)
-  llikeML[ii] = getlogLike(ppp, y[perms[ii,],trainset], prior, ML=TRUE)
-  llikeAll[ii] = getlogLike(ppp, y[perms[ii,],], prior)
-  llikeAllML[ii] = getlogLike(ppp, y[perms[ii,],], prior, ML=TRUE)
+```{r likelihood-preprocessing}
+fpath <- here::here("update2022", "likelihoods.rds")
+if (file.exists(fpath)) {
+  likelihoods <- read_rds(fpath)
+} else {
+  likelihoods <- vector("list", nrow(perms))
+  for (ii in 1:nrow(perms)) {
+    if (ii %% 50 == 0) print(ii)
+    ppp = repar(perm_res$par_ests[ii,], prior, TRUE)$outparv
+    lpost = getlogLike(ppp, y[perms[ii,], trainset], prior)
+    llike = getlogLike(ppp, y[perms[ii,], trainset], prior, ML = TRUE)
+    lpostAll = getlogLike(ppp, y[perms[ii,], ], prior)
+    llikeAll = getlogLike(ppp, y[perms[ii,], ], prior, ML = TRUE)
+    likelihoods[[ii]] <- data.frame(
+      llike = llike, llikeAll = llikeAll, lpost = lpost, lpostAll = lpostAll
+    )
+  }
+  likelihoods <- purrr::list_rbind(likelihoods)
+  write_rds(likelihoods, fpath)
 }
-save(llike,llikeAll,llikeML,llikeAllML, file=here::here("cluster_output", "llike-calculations.Rdata"))
 ```
 
 ```{r likelihood-calculations}
-dftrain = tibble(y=sort(llike), x=1:nperms)
-implltrain = round(mean(llike<llike[truePerm])*100,3)
-llikeTestML = llikeAllML - llikeML
-llikeTest = llikeAll - llike
-# no prior here
-dftest = tibble(y=sort(llikeTestML),x=1:nperms)
-implltest = round(mean(llikeTestML<llikeTestML[truePerm])*100,3)
+likelihoods <- as_tibble(likelihoods) %>%
+  mutate(
+    permutation = 1:nperms,
+    llikeTest = llikeAll - llike,
+    lpostTest = lpostAll - lpost
+  )
 ```
 
-```{r loglike-train,fig.cap="Negative penalized log likelihood (negative log posterior) for each model. The horizontal red line represents baseline performance. Note that this is an in-sample performance measure.", eval=FALSE}
-ggplot(dftrain, aes(x,y)) + geom_point() + 
-  geom_hline(yintercept=llike[truePerm],color=red) + 
+```{r loglike-train, fig.cap="Negative penalized log likelihood (negative log posterior) for each model. The horizontal orange line represents baseline performance. Note that this is an in-sample performance measure.", eval=FALSE}
+imp = round(mean(likelihoods$lpost < likelihoods$lpost[truePerm]) * 100, 1)
+likelihoods %>% 
+  select(lpost) %>% 
+  arrange(lpost) %>% 
+  mutate(x = 1:nperms) %>%
+  ggplot(aes(x, lpost)) + 
+  geom_point(color = blue) + 
+  geom_hline(yintercept = likelihoods$lpost[truePerm], color = orange) + 
   ylab('penalized loglikelihood (training data)') + 
-  xlab(paste0(implltrain,"% improved"))
-# mean(llike < llike[truePerm]*1.1) # % perms within 10% of true perm
+  xlab(paste0(imp,"% of permutations improved"))
 ```
 
 ```{r loglike-pred-ml,fig.cap="Negative log predictive likelihood for each model. The horizontal red line represents baseline performance. Note that this is an out-of-sample performance measure.", eval=TRUE}
-ggplot(dftest, aes(x,y)) + geom_point() + 
-  geom_hline(yintercept=llikeTestML[truePerm],color=red) + 
-  ylab('predictive loglikelihood (test data)') + 
-  xlab(paste0(implltest,"% improved"))
-#mean(llikeTestML < llikeTestML[truePerm]*1.1) # % perms within 10% of true perm
+imp = round(mean(likelihoods$llikeTest < likelihoods$llikeTest[truePerm]) * 100, 2)
+likelihoods %>% 
+  select(llikeTest) %>% 
+  arrange(llikeTest) %>% 
+  mutate(x = 1:nperms) %>%
+  ggplot(aes(x, llikeTest)) + 
+  geom_point(color = blue) + 
+  geom_hline(yintercept = likelihoods$llikeTest[truePerm], color = orange) + 
+  ylab('predictive negative log-likelihood (test data)') + 
+  xlab(paste0(imp,"% of permutations improved"))
 ```
 
 <!--Finally, \autoref{fig:loglike-train} shows the negative log posterior for each
 permutation. The red horizontal line indicates the negative log posterior for
 the baseline model. -->
-A total of `r sum(llike < llike[truePerm])` of permutations resulted in a lower negative
+A total of `r sum(likelihoods$lpost < likelihoods$lpost[truePerm])` permutations resulted in a lower negative
 penalized log likelihood. A Bayesian interpretation of these results would be
-that `r sum(llike < llike[truePerm])` of the permuted "models" are preferable to the true, unpermuted,
+that none of the permuted "models" are preferable to the true, unpermuted,
 economic model.  It should be noted that this is an in-sample measure of
 performance and that the Bayesian interpretation is conditional on the
 model being true and the priors accurately reflecting expert information.
-An out-of-sample evaluation (without penalty) shows that `r round(implltest,0)`\% of the premuted models actually have better prediction performance when evaluated through the likelihood.
+An out-of-sample evaluation (without penalty) shows that `r imp`\% of the premuted models actually have better prediction performance when evaluated through the likelihood.
 \autoref{fig:loglike-pred-ml} gives a visual depiction.
 
 ```{r top-20-table-processing}
 topn = 20
-top20sc = sort(logperc %>% rowMeans(), index.return=TRUE)$ix[1:topn]
-top20perc = sort(testerr %>% rowMeans(), index.return=TRUE)$ix[1:topn]
-top20llike = sort(llikeTestML, index.return=TRUE)$ix[1:topn]
-mat = rbind(matrix(names(testerr)[perms[top20sc,]],nrow=topn),
-            matrix(names(testerr)[perms[top20perc,]],nrow=topn),
-            matrix(names(testerr)[perms[top20llike,]],nrow=topn))
-ndiff = rowSums(mat!=matrix(names(testerr)[perms[truePerm,]],nrow=3*topn, ncol=7, byrow=T))
-mat = cbind(mat,ndiff)
-colnames(mat) = c(names(testerr),"# different")
+top20perc <- logperc %>%
+  group_by(permutation) %>%
+  summarise(value = mean(value)) %>%
+  arrange(value) %>% 
+  slice_head(n = topn) %>%
+  pull(permutation)
+top20sc <- sc_test_err %>%
+  group_by(permutation) %>%
+  summarise(value = mean(value)) %>%
+  arrange(value) %>% 
+  slice_head(n = topn) %>%
+  pull(permutation)
+top20llike <- likelihoods %>%
+  arrange(llikeTest) %>%
+  slice_head(n = topn) %>%
+  pull(permutation)
+mat = rbind(
+  matrix(series_names[perms[top20perc, ]], nrow = topn),
+  matrix(series_names[perms[top20sc, ]], nrow = topn),
+  matrix(series_names[perms[top20llike, ]], nrow = topn)
+)
+ndiff = rowSums(mat != matrix(
+  series_names[perms[truePerm,]], nrow = 3 * topn, ncol = 7, byrow = T
+))
+mat = cbind(mat, ndiff)
+colnames(mat) = c(series_names,"# different")
 mat = as_tibble(mat)
 # Use pander?
-mat$metric = c(rep("series % improvement",topn), rep("scaled MSE", topn), rep("predictive likelihood",topn))
+mat$metric = c(
+  rep("series % improvement", topn), 
+  rep("scaled MSE", topn), 
+  rep("predictive likelihood", topn))
 ```
 
 ```{r best-results}
-best_tab = testerr[c(truePerm, top20sc[1],top20perc[1],top20llike[1]),]
-rownames(best_tab) = c("SW model", "Model w/ highest % improvement", 
-                       "Model w/ lowest scaled MSE", "Model w/ lowest out-of-sample likelihood")
-kable(best_tab, booktabs=T,digits=2,
-      caption = "Series MSEs for SW and top models.") %>% 
+best_perms <- tibble(
+  metric = c(
+    "SW model", "Model w/ highest % improvement", 
+    "Model w/ lowest scaled MSE", "Model w/ lowest out-of-sample likelihood"),
+  permutation = c(truePerm, top20perc[1], top20sc[1], top20llike[1])
+)
+best_tab = testerr %>% right_join(best_perms, by = "permutation") %>%
+  select(-permutation) %>%
+  pivot_wider(names_from = name, values_from = value)
+kable(best_tab, booktabs = T, digits = 2,
+      caption = "Series MSEs for SW and top models.") %>%
   kable_styling(latex_options = "scale_down")
 ```
 
 ```{r top-20-perc}
-mat %>% filter(metric=="series % improvement") %>% mutate(metric=NULL) %>%
-  kable(booktabs=T, caption="Permutations with highest \\% improvement") %>% 
+mat %>% filter(metric == "series % improvement") %>% 
+  select(-metric) %>%
+  kable(booktabs = TRUE, caption = "Permutations with highest \\% improvement") %>% 
   kable_styling(latex_options = "scale_down")
 ```
 
 ```{r top-20-scmse}
-mat %>% filter(metric=="scaled MSE") %>% mutate(metric=NULL) %>%
-  kable(booktabs=T, caption="Permutations with lowest average scaled MSE") %>% 
+mat %>% filter(metric == "scaled MSE") %>%
+  select(-metric) %>%
+  kable(booktabs = TRUE, caption = "Permutations with lowest average scaled MSE") %>% 
   kable_styling(latex_options = "scale_down")
 ```
 
 ```{r top-20-llike}
-mat %>% filter(metric=="predictive likelihood") %>% mutate(metric=NULL) %>%
-  kable(booktabs=T, caption="Permutations with lowest negative log likelihood") %>%
+mat %>% filter(metric == "predictive likelihood") %>%
+  select(-metric) %>%
+  kable(booktabs = TRUE, caption = "Permutations with lowest negative log likelihood") %>%
   kable_styling(latex_options = "scale_down")
 ```
 
@@ -946,30 +1098,51 @@ predict series with small variance, or because that slot is simply over-regulari
 
 
 ```{r parameter-processing}
-params = as_tibble(par_ests)
+params <- as.data.frame(perm_res$par_ests)
 names(params) = parmGreek
-plower = as_tibble(t(prior$lb))
-prange = as_tibble(t(prior$ub-prior$lb))
+params <- as_tibble(params) %>% 
+  mutate(permutation = 1:nrow(perms)) %>%
+  pivot_longer(-permutation)
+plower = as_tibble(t(prior$lb), .name_repair = "minimal")
+prange = as_tibble(t(prior$ub - prior$lb), .name_repair = "minimal")
 names(plower) = parmGreek
 names(prange) = parmGreek
-scaled_pars = mutate_all(params, funs((.-plower$.)/prange$.))
-ptrue = params[truePerm,]
+plower <- pivot_longer(plower, everything(), values_to = "lower")
+prange <- pivot_longer(prange, everything(), values_to = "range")
+params <- left_join(
+  params,
+  full_join(plower, prange, by = "name"),
+  by = "name"
+) %>%
+  mutate(scaled = (value - lower) / range)
+
+ptrue = params %>% filter(permutation == truePerm)
 ```
 
 ```{r scaled-parameter-boxplots, fig.cap="Parameter estimates rescaled to [0,1] based on the prior limits. Red points indicate the SW estimates. Black points are outliers relative to the bulk of the permuted estimates.",fig.height=6}
-scaled_pars %>% gather() %>%
-  ggplot(aes(key,value,)) + geom_boxplot() + coord_flip() + 
+params %>%
+  ggplot(aes(name, scaled)) + 
+  geom_boxplot(outlier.shape = ".", width = .5, fill = "cornflowerblue") + 
+  coord_flip() + 
   ylab('scaled parameter estimates') + 
-  xlab('') + geom_point(data=scaled_pars[truePerm,] %>% gather(), color=red, size=2) +
-  scale_x_discrete(labels = parse(text=parmGreek))
+  xlab('') + 
+  geom_point(data = ptrue, color = orange) +
+  scale_x_discrete(labels = label_parse()) +
+  scale_y_continuous(expand = expansion())
 ```
 
 ```{r perc-parameter-deviation, fig.cap="Percentage change in estimated parameter relative to the SW estimates. Some large outliers have been removed to better show the bulk.", fig.height=6}
-params %>% mutate_all(funs((.-ptrue$.)/ptrue$.)) %>% gather() %>%
-  ggplot(aes(key,value)) + geom_boxplot() + coord_flip(ylim = c(-5,25)) + 
+params %>% 
+  left_join(ptrue %>% select(name, base = value), by = "name") %>%
+  mutate(value = (value - base) / base) %>%
+  ggplot(aes(name, value)) + 
+  geom_boxplot(outlier.shape = ".", fill = "cornflowerblue") + 
+  coord_flip(ylim = c(-5, 25)) + 
   ylab('% change relative to SW model') + 
-  xlab('') + geom_hline(yintercept = 0, color=red) +
-  scale_x_discrete(labels = parse(text=parmGreek))
+  xlab('') + 
+  geom_hline(yintercept = 0, color = orange) +
+  scale_x_discrete(labels = label_parse()) +
+  scale_y_continuous(expand = expansion())
 ```
 
 
@@ -982,60 +1155,67 @@ the same parameter estimates as percent deviations from the SW model estimates.
 ## Out-of-sample forecasts
 
 ```{r perc-improve-preds, echo=FALSE}
-library(ggforce)
-dt = seq(to=2018.75,by=.25,length=ncol(y))
-dt = yq(paste(dt %/% 1,dt %% 1 * 4 + 1, sep='-'))
+dt = seq(to = 2018.75, by = .25, length = ncol(y))
+dt = yq(paste(dt %/% 1, dt %% 1 * 4 + 1, sep = '-'))
 
 errs = list()
 preds = list()
 predPerms = c(truePerm, top20perc)
 predList = list() 
-for(i in 1:length(predPerms)){
+for (i in 1:length(predPerms)) {
   ypermed = y[perms[predPerms[i],],]
-  filt = getFilterOutput(ypermed, par_ests[predPerms[i],])
-  errs[[i]] = filt$vt[unPerm[predPerms[i],],]
-  predList[[i]] = as.data.frame(t(y-errs[[i]]))
-  preds[[i]] = predList[[i]] %>% gather() %>% mutate(key=NULL)
+  filt = getFilterOutput(ypermed, perm_res$par_ests[predPerms[i], ])
+  errs[[i]] = filt$vt[unPerm[[predPerms[i]]], ]
+  predList[[i]] = as.data.frame(t(y - errs[[i]]))
+  preds[[i]] = predList[[i]] %>% 
+    pivot_longer(everything(), values_to = as.character(predPerms[i])) %>% 
+    select(-name)
 }
 
 ydf = as_tibble(t(y))
-names(ydf) = names(testerr)
+names(ydf) = series_names
 ydf$date = dt
 ydf = ydf %>% pivot_longer(-date, names_to = "series")
 allpreds = bind_cols(ydf, preds)
-names(allpreds)[3:4] = c('observed','SW_model')
-truth = allpreds %>% 
-  select(-starts_with('value')) %>% 
-  filter(date > yq('2006-1')) %>%
-  gather(key='key',value='value',-date,-series) 
-flips = allpreds %>% select(date, series, starts_with('value')) %>%
-  filter(date > yq('2006-1')) %>%
-  gather(key='key',value='value',-date,-series)
+names(allpreds)[3:4] = c('observed', 'SW_model')
+allpreds <- allpreds %>% filter(date > yq("2006-1"))
+truth <- allpreds %>% 
+  select(date:SW_model) %>% 
+  pivot_longer(observed:SW_model)
+flips = allpreds %>% 
+  select(-observed, -SW_model) %>%
+  pivot_longer(-c(date, series))
 ```
 
-```{r pc-preds-p1, fig.height=8, fig.cap="Out-of-sample predictions for the best predicting permutations (black), the SW model (red), and the observed data (blue)."}
-ggplot(flips, aes(x=date,y=value,grp=key)) +
-  geom_line(color='black',size=.1) + 
-  facet_wrap_paginate(~series, scales='free_y', ncol=1, nrow=4, page=1,
-                      strip.position = 'left') +
-  geom_line(data=truth, aes(color=key)) + 
-  geom_point(data=truth, aes(color=key), size=1.5) +
-  scale_color_manual(values=c(blue,red)) + 
-  theme(legend.position = 'bottom', legend.title = element_blank(), 
+```{r pc-preds-p1, fig.height=8, fig.cap="Out-of-sample predictions for the best predicting permutations (black), the SW model (orange), and the observed data (blue)."}
+flips %>% filter(series %in% series_names[1:4]) %>%
+  ggplot(aes(x = date, y = value, group = name)) +
+  geom_line(color = 'black', linewidth = .1) + 
+  facet_wrap(~ series, scales = 'free_y', ncol = 1, strip.position = 'left') +
+  geom_line(data = truth %>% filter(series %in% series_names[1:4]), 
+            aes(color = name)) + 
+  geom_point(data = truth %>% filter(series %in% series_names[1:4]), 
+             aes(color = name), size = 1.5) +
+  scale_color_manual(values = c(blue, orange)) + 
+  theme(legend.position = 'bottom', 
+        legend.title = element_blank(), 
         strip.placement = 'outside',
         strip.background = element_blank()) +
   xlab('') + ylab('')
 ```
 
-```{r pc-preds-p2, fig.height=6, fig.cap="Out-of-sample predictions for the best predicting permutations (black), the SW model (red), and the observed data (blue)."}
-ggplot(flips, aes(x=date,y=value,grp=key)) +
-  geom_line(color='black',size=.1) + 
-  facet_wrap_paginate(~series, scales = 'free_y',nrow=3, ncol = 1, page = 2, 
-                      strip.position = 'left') + 
-  geom_line(data=truth, aes(color=key)) +
-  geom_point(data=truth, aes(color=key), size=1.5)+
-  scale_color_manual(values=c(blue,red)) + 
-  theme(legend.position = 'bottom', legend.title = element_blank(), 
+```{r pc-preds-p2, fig.height=6, fig.cap="Out-of-sample predictions for the best predicting permutations (black), the SW model (orange), and the observed data (blue)."}
+flips %>% filter(series %in% series_names[5:7]) %>%
+  ggplot(aes(x = date, y = value, group = name)) +
+  geom_line(color = 'black', linewidth = .1) + 
+  facet_wrap(~ series, scales = 'free_y', ncol = 1, strip.position = 'left') +
+  geom_line(data = truth %>% filter(series %in% series_names[5:7]), 
+            aes(color = name)) + 
+  geom_point(data = truth %>% filter(series %in% series_names[5:7]), 
+             aes(color = name), size = 1) +
+  scale_color_manual(values = c(blue, orange)) + 
+  theme(legend.position = 'bottom', 
+        legend.title = element_blank(), 
         strip.placement = 'outside',
         strip.background = element_blank()) +
   xlab('') + ylab('')
@@ -1053,7 +1233,7 @@ output, and wages. It predicts a consistent 0.5% increase in the real wage level
 ## Changing the truth
 
 
-```{r simulate-test-sw}
+```{r simulate-test-sw, eval=FALSE}
 bestLlikePvec = par_ests[top20llike[1],]
 newPaths = replicate(100, generate(200, bestLlikePvec, nburn=100))
 getMSEs <- function(paths, parm, drop = 1:100){
@@ -1076,7 +1256,7 @@ SWPreds = getMSEs(newPaths, pvec$value)
 
 What if the permuted model with the highest penalized likelihood were The Truth?  How badly would the SW model fit and forecast?  Here I actually guess it would do OK. 
 Procedure: (1) generate data out of the best permutation, (2) get forecasts using it and the SW model (say 100 each). Which is better?
-The average negative log-likelihood of the true model is `r signif(mean(bestPreds$llike),3)` compared to `r signif(mean(SWPreds$llike),3)` for the SW model. The MSEs are `r signif(mean(bestPreds$mses),3)` compared to `r signif(mean(SWPreds$mses),3)` respectively. 
+The average negative log-likelihood of the true model is `r #signif(mean(bestPreds$llike),3)` compared to `r #signif(mean(SWPreds$llike),3)` for the SW model. The MSEs are `r #signif(mean(bestPreds$mses),3)` compared to `r #signif(mean(SWPreds$mses),3)` respectively. 
 
 \attn{We actually have that the SW model (unpermuted) has the lowest in-sample negitive log posterior. These were generated using the best unpenalized predicting permutation by log likelihood.}
 
@@ -1137,17 +1317,17 @@ representing tastes, technologies and institutions.
 
 To take this analysis one step further, we can examine the "best" predicting 
 model, in terms of out-of-sample predictive log-likelihood. Recall, this is just one 
-of about `r percent_better_models`\% which forecast better. It is also important to note here, that the penalized negative log-likelihood 
-(in-sample) is very flat relative to permutations. In terms of that metric, 
-`r signif(mean(llikeTest/llikeTest[truePerm] < 1.10),2)*100`% of permutations 
+of about `r round(mean(likelihoods$llikeTest < likelihoods$llikeTest[truePerm]), 2)`\% which forecast better. It is also important to note here, that the penalized negative log-likelihood 
+(out-of-sample) is very flat relative to permutations. In terms of that metric, 
+`r signif(mean(likelihoods$llikeTest / likelihoods$llikeTest[truePerm] < 1.1), 2) * 100`% of permutations 
 are within 10% of the true permutation.
 The true model arranges the data as
 \begin{quotation}
-`r names(testerr)`
+`r series_names[perms[truePerm, ]]`
 \end{quotation}
 \noindent while the best one by out-of-sample log-likelihood is 
 \begin{quotation}
-`r names(testerr)[perms[top20llike[1],]]`.
+`r series_names[perms[top20llike[1],]]`.
 \end{quotation}
 \noindent This model is pretty clearly scary to a macroeconomist. 
 In the Appendix, we take this model to 
@@ -1182,20 +1362,32 @@ consider, but rather simply investigates all possible such parameters.
 #             'r[pi]' (response to inflation)
 #             'r[y]' (response to deviation of output from potential)
 #             'r[Delta][y]' (response to changes in output deviation)
-pars = parmEst[,-c(1:5)]
-parmDeep = which(parmGreek=='phi1'):length(parmGreek)
-parmTaylor = seq(from=which(parmGreek=='r[pi]'),length.out = 4)
-covary = as_tibble(cor(pars)[parmDeep,parmTaylor])
-covary$parm = tab$parameter[parmDeep]
-covary = covary %>% select(parm, everything())
+parmDeep = parmGreek[which(parmGreek == 'phi1'):length(parmGreek)]
+parmTaylor = parmGreek[seq(from = which(parmGreek == 'r[pi]'), length.out = 4)]
+pars <- parm_error %>% 
+  select(parm, value) %>% 
+  filter(parm %in% unique(c(parmDeep, parmTaylor))) %>%
+  pivot_wider(names_from = parm, values_from = value) %>% 
+  unnest(everything()) %>%
+  as.matrix()
+covary = as_tibble(cor(pars)[parmDeep, parmTaylor])
+covary$parm = parameter_latex[which(parmGreek == 'phi1'):length(parmGreek)]
+covary = covary %>% relocate(parm)
 
 
-covary %>% mutate_if(is.numeric, function(x) {
-  cell_spec(round(x,2), bold = text_spec(abs(x)>.3))
-  }) %>%
-knitr::kable(digits=2, booktabs=TRUE, align="r",
-             caption="Correlations between ``deep'' parameters and Taylor rule parameters from the ``Simulate and estimate'' exercise.", 
-             escape=FALSE, col.names = c("",tab$parameter[parmTaylor]))
+covary %>% 
+  mutate(
+    across(
+      where(is.numeric), 
+      ~ cell_spec(round(.x, 2), bold = text_spec(abs(.x) > .3)
+      ))) %>%
+  knitr::kable(
+    digits = 2, 
+    booktabs = TRUE, 
+    align = "r",
+    caption = "Correlations between ``deep'' parameters and Taylor rule parameters from the ``Simulate and estimate'' exercise.", 
+    escape = FALSE, 
+    col.names = c("", parmTaylor))
 ```
 
 
