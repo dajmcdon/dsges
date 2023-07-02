@@ -529,7 +529,8 @@ plot_ribbons <- function(dat, col, centre = c("median", "mean"),
   g <- dat %>% 
     ggplot(aes(x = nestim)) +
     ggdist::geom_lineribbon(aes(ymin = ymin, ymax = ymax)) +
-    scale_fill_brewer()
+    scale_fill_brewer() +
+    scale_x_continuous(expand = expansion(), breaks = 1:4 * 250)
   
   if ("median" %in% centre) 
     g <- g + geom_line(aes(y = y), color = line_cols["median"])
@@ -597,7 +598,7 @@ scaled_test_error %>%
 7 series).  As we would expect, the variability declines as the size of the
 training set increases, though not the average.  \autoref{fig:test-error} shows
 the average prediction error over the 7 series.  It improves markedly as the
-training set increases to about 400 observations (=100 years) but then
+training set increases to about 400 observations ($=100$ years) but then
 plateaus.  This is troubling: as we get more and more data, we can not predict
 new data any better.  This indicates one of three possibilities: (1) that with
 about 400 observations, we can estimate the parameters nearly perfectly, (2)
@@ -636,7 +637,7 @@ plot_ribbons(msparm_error, msparm, "median") +
 simest %>%
   select(nestim, lltrain) %>%
   mutate(lltrain = lltrain / nestim) %>%
-  plot_ribbons(lltrain, "median")
+  plot_ribbons(lltrain, "median") +
   ylab('(penalized) negative log-likelihood (training data)')
 ```
 
@@ -772,7 +773,7 @@ parm_error %>%
 ```
 
 Figures \ref{fig:shock-sds}--\ref{fig:deep3} show the estimates of each
-parameter individually.  The horizontal red lines indicate the truth. Here we
+parameter individually.  The horizontal orange lines indicate the truth. Here we
 can see that while many parameters are well-estimated with decreasing
 variability as the training sets grow, others converge to the wrong values, or
 fail to converge at all.  This phenomenon holds especially for both of the
@@ -795,7 +796,7 @@ decreasing) variability with more data.
 
 [^bias]: It is possible, though not all that plausible, that a misspecified linearized model might be _unbiased_ for these parameters inside the original nonlinear model.
 
-To examine case (3)---that the data is so correlated that even 250 years is too little to produce accurate estimates of the true parameters---we may ask how closely the information per observation displayed in \autoref{fig:pen-negll} approaches the theoretical asymptotic limit.\footnote{We are adapting a procedure recommended by \citet{Andy-Fraser-on-HMMs} for evaluating general hidden Markov models.}  For essentially any stationary ergodic stochastic process, the limit of the negative loglikelihood per observation as the number of observations approaches infinity exists and is unique \citep{Gray-entropy-2nd}. This limit is the _entropy rate_ of the process. Mathematically, with probability 1,
+To examine case (3)---that the data is so correlated that even 250 years is too little to produce accurate estimates of the true parameters---we may ask how closely the information per observation displayed in \autoref{fig:pen-negll} approaches the theoretical asymptotic limit.\footnote{We are adapting a procedure recommended by \citet{Andy-Fraser-on-HMMs} for evaluating general hidden Markov models.}  For essentially any stationary ergodic stochastic process, the limit of the negative loglikelihood per observation as the number of observations approaches infinity exists and is unique \citep{Gray-entropy-2nd}. This limit is the _entropy rate_ of the process. Mathematically, with probability~1,
 \[
 \lim_{n\rightarrow\infty} -\frac{1}{n}\ell(X_{1:n}; \theta_0) = h(\theta_0),
 \]
@@ -841,7 +842,7 @@ minimize the (penalized) negative log likelihood. The model is trained using
 the first `r length(trainset)` time points and its predictive performance is
 tested on the remaining `r length(testset)`.
 
-```{r mean-percent-improvement, fig.cap="Average percentage improvement in out-of-sample forecast MSE. The horizontal red line represents baseline performance. Lower values are better."}
+```{r mean-percent-improvement, fig.cap="Average percentage improvement in out-of-sample forecast MSE. The horizontal orange line represents baseline performance. Lower values are better."}
 df <- logperc %>%
   group_by(permutation) %>%
   summarise(value = mean(value)) %>%
@@ -873,7 +874,7 @@ series. The best model had an average percentage improvement of `r -round(min(df
 relative to the baseline model. The vertical line at zero represents performance
 equivalent to baseline. About `r round(mean(df$value < 0) * 100, 0)`\% of permutations had better predictive performance than the baseline model.
 
-```{r series-percent-improvement, fig.cap="Percentage improvement in out-of-sample forecast MSE for each data series individually. The horizontal red line represents baseline performance. Values to the left are better."}
+```{r series-percent-improvement, fig.cap="Percentage improvement in out-of-sample forecast MSE for each data series individually. The horizontal orange line represents baseline performance. Values to the left are better."}
 percent_better_models <- round(mean(df$value < 0) * 100, 0)
 logperc %>% 
   ggplot(aes(name, value)) + 
@@ -886,7 +887,7 @@ logperc %>%
   xlab('')
 ```
 
-```{r mean-scaled-mse, fig.cap="Average improvement in out-of-sample forecast MSE scaled by the variance of the data. The horizontal red line represents baseline performance."}
+```{r mean-scaled-mse, fig.cap="Average improvement in out-of-sample forecast MSE scaled by the variance of the data. The horizontal orange line represents baseline performance."}
 yvar <- t(apply(y, 1, var))
 colnames(yvar) <- series_names
 yvar <- as_tibble(yvar) %>% 
@@ -911,7 +912,7 @@ ggplot(df, aes(x, value)) +
   xlab(paste0(imp,"% of permutations improved"))
 ```
 
-```{r series-scaled-mse, fig.cap="Improvement in out-of-sample forecast MSE scaled by the variance of the data for each data series individually. The red dots represents baseline performance."}
+```{r series-scaled-mse, fig.cap="Improvement in out-of-sample forecast MSE scaled by the variance of the data for each data series individually. The orange dots represents baseline performance."}
 sc_test_err %>% 
   ggplot(aes(name)) + 
   geom_violin(aes(y = value, fill = name)) + 
@@ -940,7 +941,7 @@ series. Again, about `r round(imp,0)`\% of permutations achieved better average 
 than the baseline model. The best permutation achieved an average scaled MSE of
 `r round(min(df$value), 2)` relative to `r round(sw_sc_test_err, 2)` for the baseline model.
 \autoref{fig:series-scaled-mse} shows
-boxplots for the scaled MSE separately for each series. Red dots indicate the
+boxplots for the scaled MSE separately for each series. Orange dots indicate the
 performance of the baseline model.
 
 ```{r likelihood-preprocessing}
@@ -1000,9 +1001,9 @@ likelihoods %>%
   xlab(paste0(imp,"% of permutations improved"))
 ```
 
-<!--Finally, \autoref{fig:loglike-train} shows the negative log posterior for each
-permutation. The red horizontal line indicates the negative log posterior for
-the baseline model. -->
+Finally, \autoref{fig:loglike-train} shows the negative log posterior for each
+permutation. The orange horizontal line indicates the negative log posterior for
+the baseline model.
 A total of `r sum(likelihoods$lpost < likelihoods$lpost[truePerm])` permutations resulted in a lower negative
 penalized log likelihood. A Bayesian interpretation of these results would be
 that none of the permuted "models" are preferable to the true, unpermuted,
@@ -1058,7 +1059,7 @@ best_perms <- tibble(
 best_tab = testerr %>% right_join(best_perms, by = "permutation") %>%
   select(-permutation) %>%
   pivot_wider(names_from = name, values_from = value)
-kable(best_tab, booktabs = T, digits = 2,
+kable(best_tab, booktabs = T, digits = 2,col.names = c("", names(best_tab)[-1]),
       caption = "Series MSEs for SW and top models.") %>%
   kable_styling(latex_options = "scale_down")
 ```
@@ -1119,7 +1120,7 @@ params <- left_join(
 ptrue = params %>% filter(permutation == truePerm)
 ```
 
-```{r scaled-parameter-boxplots, fig.cap="Parameter estimates rescaled to [0,1] based on the prior limits. Red points indicate the SW estimates. Black points are outliers relative to the bulk of the permuted estimates.",fig.height=6}
+```{r scaled-parameter-boxplots, fig.cap="Parameter estimates rescaled to [0,1] based on the prior limits. Orange points indicate the SW estimates. Black points are outliers relative to the bulk of the permuted estimates.",fig.height=6}
 params %>%
   ggplot(aes(name, scaled)) + 
   geom_boxplot(outlier.shape = ".", width = .5, fill = "cornflowerblue") + 
@@ -1147,7 +1148,7 @@ params %>%
 
 
 \autoref{fig:scaled-parameter-boxplots} shows boxplots for the parameter estimates across
-permutations scaled to $[0,1]$ by the prior range. Red dots indicate the SW model
+permutations scaled to $[0,1]$ by the prior range. Orange dots indicate the SW model
 estimates. Clearly, some parameters change very little
 from permutation to permutation while others change dramatically. \autoref{fig:perc-parameter-deviation} displays
 the same parameter estimates as percent deviations from the SW model estimates.
@@ -1387,7 +1388,7 @@ covary %>%
     align = "r",
     caption = "Correlations between ``deep'' parameters and Taylor rule parameters from the ``Simulate and estimate'' exercise.", 
     escape = FALSE, 
-    col.names = c("", parmTaylor))
+    col.names = c("", parameter_latex[seq(from = which(parmGreek == 'r[pi]'), length.out = 4)]))
 ```
 
 
