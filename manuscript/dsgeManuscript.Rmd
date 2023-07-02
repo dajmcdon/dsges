@@ -502,8 +502,8 @@ idealized scenario.[^industrev]
 
 [^industrev]: It is, of course, wildly implausible to imagine a 275 year interval which does _not_ see massive changes to tastes, technologies and institutions. The differences between 1746 and 2021 are obvious, but your favorite economic historian will explain at length that these were all transformed between 1471 and 1746, too.  Recognizing this hardly makes DSGEs _more_ attractive.
 
-All figures in this section show the mean in red along with 50%, 75%, and
-90% confidence bands calculated from the replications.
+All figures in this section show the median in black along with 50%, 80%, and
+95% confidence bands calculated from the replications.
 
 ```{r}
 simest <- read_rds(here::here("update2022", "simulate_estimate.rds"))
@@ -529,7 +529,7 @@ plot_ribbons <- function(dat, col, centre = c("median", "mean"),
   g <- dat %>% 
     ggplot(aes(x = nestim)) +
     ggdist::geom_lineribbon(aes(ymin = ymin, ymax = ymax)) +
-    scale_fill_brewer() +
+    scale_fill_brewer(guide = "none") +
     scale_x_continuous(expand = expansion(), breaks = 1:4 * 250)
   
   if ("median" %in% centre) 
