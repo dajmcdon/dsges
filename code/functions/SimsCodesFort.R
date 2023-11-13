@@ -71,7 +71,24 @@ qz.sims <- function(a=array(1,dim=1,1),b=array(1,dim=1,1)) {
               rc=out[[21]]))
 }
     
-
+qz_sims <- function(a, b, LWORK = 33 * N) {
+  # update to bypass the function above
+  # function is the same without the deprecated .Fortran + chr warnings
+  # Values identical at the SW pvec via gensolution()
+  N <- nrow(a)
+  a <- matrix(as.complex(a), N, N)
+  b <- matrix(as.complex(b), N, N)
+  
+  out <- QZ::qz.zgges(a, b, LWORK = LWORK)
+  return(list(
+    a = out$S,
+    b = out$T,
+    q = out$Q,
+    z = out$Z,
+    gev = cbind(out$ALPHA, out$BETA),
+    rc = out$INFO
+  ))
+}
 
 
 qzdiv <- function(stake, qzlist){
@@ -88,7 +105,7 @@ qzdiv <- function(stake, qzlist){
     ## root[,1] = root[,1]-(root[,1]<1.e-13)*(root[,1]+root[,2])
     ## root[,2] = root[,2]/root[,1]
     bottom = !(root[,2] > stake | root[,2] < -.1)
-    out = qz.ztgsen(a, b, q, z, bottom, ijob = 4L, want.Q = TRUE, want.Z = TRUE)
+    out = QZ::qz.ztgsen(a, b, q, z, bottom, ijob = 4L, want.Q = TRUE, want.Z = TRUE)
     qzlist$a = out$S
     qzlist$b = out$T
     qzlist$q = out$Q
@@ -115,7 +132,7 @@ gensys <- function(g0, g1, c0=matrix(0,dim(g0)[1],1), psi, pi, div=-1)
     fixdiv <- (div>0)
     n <- dim(g0)[1]
     nshock <- if (is.matrix(psi)) dim(psi)[2] else if (is.null(psi)) 0 else 1
-    qzl <- qz.sims(g0,g1)
+    qzl <- qz_sims(g0,g1)
     zxz <- any((abs(diag(qzl$a))<realsmall) & (abs(diag(qzl$b))<realsmall))
     if (zxz) {
       ## "Coincident zeros.  Indeterminacy and/or nonexistence.\n"

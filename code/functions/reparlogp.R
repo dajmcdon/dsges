@@ -1,16 +1,15 @@
 dinvgamma <- function(x, shape = 1, rate = 1, scale = 1/rate, log = FALSE) {
     # return( shape^rate / gamma(rate) * exp(-shape/x) * x^(-rate-1) )
     logval = rate*log(shape) - lgamma(rate) - shape/x - (rate+1)*log(x)
-    if (log)
-	return(logval)
-    else
-	return(exp(logval))
+    if (log) return(logval)
+    else return(exp(logval))
 }
 
 # pinvgamma: cumulative distribution function of the inverse-gamma distribution
 pinvgamma <- function(q, shape = 1, rate = 1, scale=1/rate,
-			lower.tail = TRUE, log.p = FALSE) {
-    return( pgamma(1/q, shape, scale=scale, lower.tail=!lower.tail, log.p=log.p) )
+                      lower.tail = TRUE, log.p = FALSE) {
+    return( pgamma(1/q, shape, scale=scale, lower.tail=!lower.tail, 
+                   log.p=log.p) )
 }
 
 rinvgamma <- function(n, shape = 1, rate = 1, scale=1/rate) {

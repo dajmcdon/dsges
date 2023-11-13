@@ -1,4 +1,4 @@
-require(BatchExperiments)
+library(batchtools)
 reg = loadRegistry('SWSimulateEstimate-files')
 source('DSGEs/code/processClustOutput/SimEstClustfuncs.R')
 load('DSGEs/StdPvec.Rdata')
